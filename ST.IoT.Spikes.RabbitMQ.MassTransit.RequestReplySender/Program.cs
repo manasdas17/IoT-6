@@ -35,21 +35,19 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplySender
             var handle = busControl.Start();
             Console.WriteLine("Started bus");
 
-            //var client = busControl.CreateRequestClient<IRequestMessage, IReplyMessage>(
-            var client = busControl.CreateRequestClient<string, string>(
+            var client = busControl.CreateRequestClient<IRequestMessage, IReplyMessage>(
+            //var client = busControl.CreateRequestClient<string, string>(
                 new Uri(url + "/" + "test_queue"),
                 TimeSpan.FromSeconds(2));
 
             try
             {
-                /*
                 Console.WriteLine((await client.Request(new RequestMesssge() { TheMessage = "1" })).TheReply);
                 Console.WriteLine((await client.Request(new RequestMesssge() { TheMessage = "2" })).TheReply);
                 Console.WriteLine((await client.Request(new RequestMesssge() { TheMessage = "3" })).TheReply);
-                 * */
-                Console.WriteLine(await client.Request("a"));
-                Console.WriteLine(await client.Request("b"));
-                Console.WriteLine(await client.Request("c"));
+//                Console.WriteLine(await client.Request("a"));
+  //              Console.WriteLine(await client.Request("b"));
+    //            Console.WriteLine(await client.Request("c"));
             }
             catch (Exception ex)
             {

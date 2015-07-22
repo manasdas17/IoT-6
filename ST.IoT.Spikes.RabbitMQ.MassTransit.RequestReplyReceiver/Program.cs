@@ -28,7 +28,7 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
 
                 x.ReceiveEndpoint(host, queue, e =>
                 {
-                    e.Consumer<RequestConsumer2>();
+                    e.Consumer<RequestConsumer>();
                     //e.AutoDelete(true);
                     //e.Exclusive(true);
                 });
@@ -46,7 +46,7 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
             Console.WriteLine("Stopped");
         }
     }
-/*
+
     public class RequestConsumer : IConsumer<IRequestMessage>
     {
         public async Task Consume(ConsumeContext<IRequestMessage> context)
@@ -56,7 +56,7 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
             await Task.FromResult(0);
         }
     }
- * */
+ 
     public class RequestConsumer2 : IConsumer<string>
     {
         public async Task Consume(ConsumeContext<string> context)
