@@ -64,6 +64,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Spikes.RabbitMQ.MassTransit.Messages\ST.IoT.Spikes.RabbitMQ.MassTransit.Messages.csproj">
+      <Project>{1a6e21e3-fd11-4531-a89b-a33d291d1b86}</Project>
+      <Name>ST.IoT.Spikes.RabbitMQ.MassTransit.Messages</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native", "Native", "{565499
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplySender", "ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplySender\ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplySender.csproj", "{3074D5C0-B361-4A99-8F3F-36CD0DCC0D7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Spikes.RabbitMQ.MassTransit.Messages", "ST.IoT.Spikes.RabbitMQ.MassTransit.Messages\ST.IoT.Spikes.RabbitMQ.MassTransit.Messages.csproj", "{1A6E21E3-FD11-4531-A89B-A33D291D1B86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{3074D5C0-B361-4A99-8F3F-36CD0DCC0D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3074D5C0-B361-4A99-8F3F-36CD0DCC0D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3074D5C0-B361-4A99-8F3F-36CD0DCC0D7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A6E21E3-FD11-4531-A89B-A33D291D1B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A6E21E3-FD11-4531-A89B-A33D291D1B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A6E21E3-FD11-4531-A89B-A33D291D1B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A6E21E3-FD11-4531-A89B-A33D291D1B86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,5 +142,6 @@ Global
 		{29BEF99B-9792-4284-8E96-4A9BFE7D0E17} = {73CB2A9A-F92A-47BC-B3C8-E7677B371897}
 		{56549915-42D7-4A09-ABEE-C2E267552974} = {29BEF99B-9792-4284-8E96-4A9BFE7D0E17}
 		{3074D5C0-B361-4A99-8F3F-36CD0DCC0D7F} = {56549915-42D7-4A09-ABEE-C2E267552974}
+		{1A6E21E3-FD11-4531-A89B-A33D291D1B86} = {56549915-42D7-4A09-ABEE-C2E267552974}
 	EndGlobalSection
 EndGlobal

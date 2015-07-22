@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3074D5C0-B361-4A99-8F3F-36CD0DCC0D7F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{1A6E21E3-FD11-4531-A89B-A33D291D1B86}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplySender</RootNamespace>
-    <AssemblyName>SpikesRequestReplySender</AssemblyName>
+    <RootNamespace>ST.IoT.Spikes.RabbitMQ.MassTransit.Messages</RootNamespace>
+    <AssemblyName>ST.IoT.Spikes.RabbitMQ.MassTransit.Messages</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,22 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MassTransit">
-      <HintPath>..\packages\MassTransit.3.0.10-beta\lib\net45\MassTransit.dll</HintPath>
-    </Reference>
-    <Reference Include="MassTransit.RabbitMqTransport">
-      <HintPath>..\packages\MassTransit.RabbitMQ.3.0.10-beta\lib\net45\MassTransit.RabbitMqTransport.dll</HintPath>
-    </Reference>
-    <Reference Include="NewId">
-      <HintPath>..\packages\NewId.2.1.3\lib\net45\NewId.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.5.3\lib\net40\RabbitMQ.Client.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,18 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ST.IoT.Spikes.RabbitMQ.MassTransit.Messages\ST.IoT.Spikes.RabbitMQ.MassTransit.Messages.csproj">
-      <Project>{1a6e21e3-fd11-4531-a89b-a33d291d1b86}</Project>
-      <Name>ST.IoT.Spikes.RabbitMQ.MassTransit.Messages</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

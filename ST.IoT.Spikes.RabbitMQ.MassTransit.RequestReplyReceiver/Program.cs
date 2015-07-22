@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using MassTransit.Logging;
 using MassTransit.RabbitMqTransport;
+using ST.IoT.Spikes.RabbitMQ.MassTransit.Messages;
 
 namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
 {
@@ -27,7 +28,7 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
 
                 x.ReceiveEndpoint(host, queue, e =>
                 {
-                    e.Consumer<RequestConsumer>();
+                    e.Consumer<RequestConsumer2>();
                     //e.AutoDelete(true);
                     //e.Exclusive(true);
                 });
@@ -45,19 +46,24 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
             Console.WriteLine("Stopped");
         }
     }
-
-    public class RequestConsumer : IConsumer<IBasicRequest>
+/*
+    public class RequestConsumer : IConsumer<IRequestMessage>
     {
-        public async Task Consume(ConsumeContext<IBasicRequest> context)
+        public async Task Consume(ConsumeContext<IRequestMessage> context)
         {
-            context.Respond("reply to: " + context.Message.CustomerId);
+            Console.WriteLine("Got: " + context.Message.TheMessage);
+            context.Respond(new ReplyMesssge() {TheReply = "reply to: " + context.Message.TheMessage});
             await Task.FromResult(0);
         }
     }
-
-    public interface IBasicRequest
+ * */
+    public class RequestConsumer2 : IConsumer<string>
     {
-        DateTime Timestamp { get; }
-        string CustomerId { get; }
+        public async Task Consume(ConsumeContext<string> context)
+        {
+            Console.WriteLine("Got: " + context.Message);
+            context.Respond(new ReplyMesssge() { TheReply = "reply to: " + context.Message });
+            await Task.FromResult(0);
+        }
     }
 }

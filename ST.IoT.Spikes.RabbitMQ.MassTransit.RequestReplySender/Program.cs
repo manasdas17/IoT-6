@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using MassTransit;
 using MassTransit.RabbitMqTransport;
 
+using ST.IoT.Spikes.RabbitMQ.MassTransit.Messages;
+
 namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplySender
 {
     class Program
@@ -33,15 +35,21 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplySender
             var handle = busControl.Start();
             Console.WriteLine("Started bus");
 
+            //var client = busControl.CreateRequestClient<IRequestMessage, IReplyMessage>(
             var client = busControl.CreateRequestClient<string, string>(
                 new Uri(url + "/" + "test_queue"),
                 TimeSpan.FromSeconds(2));
 
             try
             {
-                Console.WriteLine(await client.Request("1"));
-                Console.WriteLine(await client.Request("2"));
-                Console.WriteLine(await client.Request("3"));
+                /*
+                Console.WriteLine((await client.Request(new RequestMesssge() { TheMessage = "1" })).TheReply);
+                Console.WriteLine((await client.Request(new RequestMesssge() { TheMessage = "2" })).TheReply);
+                Console.WriteLine((await client.Request(new RequestMesssge() { TheMessage = "3" })).TheReply);
+                 * */
+                Console.WriteLine(await client.Request("a"));
+                Console.WriteLine(await client.Request("b"));
+                Console.WriteLine(await client.Request("c"));
             }
             catch (Exception ex)
             {
@@ -50,8 +58,8 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplySender
             finally
             {
                 Console.WriteLine("Stopping queue");
-                handle.Stop();
-                handle.Dispose();
+                handle.Stop().Wait();
+                //  handle.Dispose();
                 Console.WriteLine("Queue stopped");
             }
         }
