@@ -65,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Messaging.Messages.REST.Routing\ST.IoT.Messaging.Messages.REST.Routing.csproj">
+      <Project>{6b75f104-47ae-4c3c-b33d-e88d18bfcc52}</Project>
+      <Name>ST.IoT.Messaging.Messages.REST.Routing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Spikes.RabbitMQ.MassTransit.Messages\ST.IoT.Spikes.RabbitMQ.MassTransit.Messages.csproj">
       <Project>{1a6e21e3-fd11-4531-a89b-a33d291d1b86}</Project>
       <Name>ST.IoT.Spikes.RabbitMQ.MassTransit.Messages</Name>

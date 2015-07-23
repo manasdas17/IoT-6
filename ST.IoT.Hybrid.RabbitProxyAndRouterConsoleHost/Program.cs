@@ -22,6 +22,7 @@ namespace ST.IoT.Hybrid.RabbitProxyAndRouterConsoleHost
 
         static void Main(string[] args)
         {
+            /*
             _kernel = new StandardKernel();
 
             _kernel.Bind<IRabbitBusFactory>().ToMethod(
@@ -49,7 +50,7 @@ namespace ST.IoT.Hybrid.RabbitProxyAndRouterConsoleHost
 
             //proxy.Stop();
             router.Stop();
-
+            */
             Console.WriteLine("Bye!");
         }
     }

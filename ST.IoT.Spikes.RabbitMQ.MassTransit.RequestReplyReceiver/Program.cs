@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using MassTransit.Logging;
 using MassTransit.RabbitMqTransport;
+using ST.IoT.Messaging.Messages.REST.Routing;
 using ST.IoT.Spikes.RabbitMQ.MassTransit.Messages;
 
 namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
@@ -18,7 +19,8 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
             var busControl = Bus.Factory.CreateUsingRabbitMq(x =>
             {
                 var url = "rabbitmq://localhost";
-                var queue = "test_queue";
+//                var queue = "test_queue";
+                var queue = "rest_api_requests";
 
                 var host = x.Host(new Uri(url), h =>
                 {
@@ -28,7 +30,7 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
 
                 x.ReceiveEndpoint(host, queue, e =>
                 {
-                    e.Consumer<RequestConsumer>();
+                    e.Consumer<RequestConsumer2>();
                     //e.AutoDelete(true);
                     //e.Exclusive(true);
                 });
@@ -57,9 +59,9 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
         }
     }
  
-    public class RequestConsumer2 : IConsumer<string>
+    public class RequestConsumer2 : IConsumer<RestProxyToRouterMessage>
     {
-        public async Task Consume(ConsumeContext<string> context)
+        public async Task Consume(ConsumeContext<RestProxyToRouterMessage> context)
         {
             Console.WriteLine("Got: " + context.Message);
             context.Respond(new ReplyMesssge() { TheReply = "reply to: " + context.Message });

@@ -7,6 +7,7 @@ using MassTransit;
 using MassTransit.Logging;
 using MassTransit.RabbitMqTransport;
 using ST.IoT.Common;
+using ST.IoT.Messaging.RabbitMQ;
 
 namespace ST.IoT.Messaging.BusFactories.RabbitMQ
 {
@@ -24,55 +25,92 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
         private IRabbitMqBusFactoryConfigurator _configurator;
         public IRabbitMqBusFactoryConfigurator Configurator { get { return _configurator; } }
 
-        private Uri _baseUrl;
-        private Dictionary<string, Func<IConsumer>> _consumers;
-
-        public RabbitBusFactory() : this(RabbitMQConstants.FullBaseUrl, RabbitMQConstants.Username, RabbitMQConstants.Password,
-            null)
+        public RabbitBusFactory()
         {
+            
         }
 
-        public RabbitBusFactory(Uri baseUrl, string username, string password, Dictionary<string, Func<IConsumer>> consumers) 
+        private string _baseUrl;
+        public IRabbitBusFactory BaseUrl(string baseUrl)
         {
             _baseUrl = baseUrl;
-            _consumers = consumers;
+            return this;
+        }
 
+        private string _username;
+        public IRabbitBusFactory Username(string username)
+        {
+            _username = username;
+            return this;
+        }
+
+        private string _password;
+        public IRabbitBusFactory Password(string password)
+        {
+            _password = password;
+            return this;
+        }
+
+        private class ConsumerInfo
+        {
+            public Func<IConsumer> Factory { get; set; }
+            public string QueueName { get; set; }
+            public object Consumer { get; set; }
+            public Type ConsumerType { get; set; }
+        }
+
+        private List<ConsumerInfo> _consumers = new List<ConsumerInfo>();
+
+        public IRabbitBusFactory AddConsumer<T>(string queueName, Func<ConsumeContext<T>, object> handler) where T : class
+        {
+            _consumers.Add(new ConsumerInfo()
+            {
+                Factory = () => new RequestConsumer<T>(handler),
+                QueueName = queueName,
+                ConsumerType = typeof(RequestConsumer<T>)
+            });
+
+            return this;
+        }
+
+        public Action<IRabbitMqHost, IRabbitMqBusFactoryConfigurator> ConfigureHook { get; set; }
+
+        public void Start()
+        {
             _busControl = Bus.Factory.CreateUsingRabbitMq(x =>
             {
                 _configurator = x;
-                _host = x.Host(baseUrl, h =>
+                _host = x.Host(new Uri(_baseUrl), h =>
                 {
-                    h.Username(username);
-                    h.Password(password);
+                    h.Username(_username);
+                    h.Password(_password);
                 });
-                if (_consumers != null)
+                
+                if (ConfigureHook != null)
+                {
+                    ConfigureHook(_host, _configurator);
+                }
+                else
                 {
                     foreach (var consumer in _consumers)
                     {
-                        _configurator.ReceiveEndpoint(_host, consumer.Key, e =>
+                        var consumer1 = consumer;
+                        _configurator.ReceiveEndpoint(_host, consumer.QueueName, e =>
                         {
-                            e.Consumer(() => consumer.Value());
+                            e.Consumer(consumer1.ConsumerType, _ => consumer1.Factory());
                         });
                     }
                 }
             });
-        }
 
-        public void AddReceiveEndpoint<T>(string queueName, IConsumer<T> consumer) where T : class
-        {
-            /*
-            _configurator.ReceiveEndpoint(_host, "rest_api_requests", e =>
-            {
-                //e.Consumer(() => consumer);
-                //e.Consumer<RequestConsumer>();
-            });
-             * */
-        }
-
-        public void Start()
-        {
             _busHandle = _busControl.Start();
         }
+
+        public void AddReceiveEndpoint<T>(string name, IConsumer<T> consumer) where T : class
+        {
+            
+        }
+
 
         public void Stop()
         {
@@ -81,7 +119,8 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
 
         public IRequestClient<T, V> CreateRequestClient<T, V>(string queueName) where T : class where V : class
         {
-            var result = _busControl.CreateRequestClient<T, V>(new Uri(_baseUrl + queueName), TimeSpan.FromSeconds(50));
+            var address = _baseUrl + "/" + queueName;
+            var result = _busControl.CreateRequestClient<T, V>(new Uri(address), TimeSpan.FromSeconds(50));
             return result; 
         }
     }

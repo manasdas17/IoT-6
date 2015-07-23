@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using ST.IoT.Messaging.BusFactories.RabbitMQ;
 using ST.IoT.Messaging.HttpRequestGateway.Interfaces;
+using ST.IoT.Messaging.Messages.REST.Routing;
 
 namespace bSeamless.IoT.Messaging.HttpRequestGateway
 {
@@ -38,8 +39,21 @@ namespace bSeamless.IoT.Messaging.HttpRequestGateway
             request2.Content.Headers.Add("Content-Type", "application/http;msgtype=request");
             var r3 = request2.Content.ReadAsHttpRequestMessageAsync().Result;
 
-            var client = _busFactory.CreateRequestClient<string, string>("rest_api_requests");
-            var reply = await client.Request("HI!", cancellationToken);
+            try
+            {
+                var client = _busFactory.CreateRequestClient<RestProxyToRouterMessage, string>("rest_api_requests");
+                var reply = await client.Request(
+                    new RestProxyToRouterMessage()
+                    {
+                    },
+                    cancellationToken);
+
+                Console.WriteLine(reply);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             var response = new HttpResponseMessage(HttpStatusCode.Accepted);
             return response;

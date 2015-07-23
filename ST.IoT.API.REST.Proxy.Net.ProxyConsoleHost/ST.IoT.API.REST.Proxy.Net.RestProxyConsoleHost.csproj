@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.0.1\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -60,6 +63,10 @@
     <ProjectReference Include="..\ST.IoT.API.REST.Proxy.OWIN\ST.IoT.API.REST.Proxy.OWIN.csproj">
       <Project>{ef152b6f-e350-4865-ae93-56622ca5bd0e}</Project>
       <Name>ST.IoT.API.REST.Proxy.OWIN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.BusFactories.RabbitMQ\ST.IoT.Messaging.BusFactories.RabbitMQ.csproj">
+      <Project>{d180f34b-c16c-4eef-a8a4-80a101b6a279}</Project>
+      <Name>ST.IoT.Messaging.BusFactories.RabbitMQ</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.HttpRequestGateway.Interfaces\ST.IoT.Messaging.HttpRequestGateway.Interfaces.csproj">
       <Project>{4b56ae1c-7fc1-4fc7-9c2e-bd40dea84cd6}</Project>

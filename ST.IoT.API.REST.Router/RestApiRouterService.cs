@@ -22,7 +22,6 @@ namespace ST.IoT.API.REST.Router
         public RestApiRouterService(IRabbitBusFactory busFactory)
         {
             _busFactory = busFactory;
-            //_busFactory.AddReceiveEndpoint("rest_api_requests", new RequestConsumer<string>());
         }
 
         public void Start()

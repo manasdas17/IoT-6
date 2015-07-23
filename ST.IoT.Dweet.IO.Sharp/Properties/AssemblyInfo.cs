@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ST.IoT.Messaging.RabbitMQ")]
+[assembly: AssemblyTitle("ST.IoT.Dweet.IO.Sharp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ST.IoT.Messaging.RabbitMQ")]
+[assembly: AssemblyProduct("ST.IoT.Dweet.IO.Sharp")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("285c6d03-3f50-4af1-97e3-f29dc7eabb09")]
+[assembly: Guid("02cca9b5-870b-4fdd-abbd-e1c1c47ae1f0")]
 
 // Version information for an assembly consists of the following four values:
 //

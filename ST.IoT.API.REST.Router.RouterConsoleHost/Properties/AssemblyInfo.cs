@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ST.IoT.Messaging.RabbitMQ")]
+[assembly: AssemblyTitle("ST.IoT.API.REST.Router.RouterConsoleHost")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ST.IoT.Messaging.RabbitMQ")]
+[assembly: AssemblyProduct("ST.IoT.API.REST.Router.RouterConsoleHost")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("285c6d03-3f50-4af1-97e3-f29dc7eabb09")]
+[assembly: Guid("364031c7-91a5-43f8-b74b-061324e5ea5c")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -67,6 +67,10 @@
       <Project>{9f834d0e-3e8f-436c-aed7-fc87978df7b9}</Project>
       <Name>ST.IoT.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.RabbitMQ\ST.IoT.Messaging.RabbitMQ.csproj">
+      <Project>{2f550b99-21f0-4b0e-ac15-7521e29a0dc8}</Project>
+      <Name>ST.IoT.Messaging.RabbitMQ</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

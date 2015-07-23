@@ -12,7 +12,6 @@ namespace ST.IoT.API.REST.Proxy.OWIN
     public class OwinRestApiProxyHost : IRestApiProxyHost
     {
         private const string _address = @"http://*:8080/";
-        private Proxy _proxy;
 
         public OwinRestApiProxyHost(IHttpRequestGateway webRequestGateway)
         {
