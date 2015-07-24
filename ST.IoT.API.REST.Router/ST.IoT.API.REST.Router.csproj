@@ -29,6 +29,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Minions %28Debug%29|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Minions %28Debug%29\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MassTransit">
       <HintPath>..\packages\MassTransit.3.0.10-beta\lib\net45\MassTransit.dll</HintPath>
@@ -57,6 +66,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.API.REST.Router.Plugins.Minions\ST.IoT.API.REST.Router.Plugins.Minions.csproj">
+      <Project>{ee120167-b72e-4f3a-85d3-16a83bbe0f6d}</Project>
+      <Name>ST.IoT.API.REST.Router.Plugins.Minions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.BusFactories.RabbitMQ\ST.IoT.Messaging.BusFactories.RabbitMQ.csproj">
       <Project>{d180f34b-c16c-4eef-a8a4-80a101b6a279}</Project>
       <Name>ST.IoT.Messaging.BusFactories.RabbitMQ</Name>
