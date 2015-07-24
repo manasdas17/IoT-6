@@ -1,0 +1,5 @@
+﻿// update your minion
+{
+    "action":  "quote/for",
+    "content": "--your quote as json here--"
+}
