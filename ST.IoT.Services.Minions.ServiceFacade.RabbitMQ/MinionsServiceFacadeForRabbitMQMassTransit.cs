@@ -5,23 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
 using MassTransit.RabbitMqTransport;
-using ST.IoT.Services.Interfaces;
+using ST.IoT.Services.Minions.Interfaces;
 using ST.IoT.Services.Minions.Messages;
 
-namespace ST.IoT.Services.Minions
+namespace ST.IoT.Services.Minions.ServiceFacade.RabbitMQ
 {
-    public class MinionsService : IIoTService
+    public class MinionsServiceFacadeForRabbitMQMassTransit : IMinionsServiceFacade
     {
+        private string _address = "rabbitmq://localhost/minions_virtual_host";
         private IBusControl _bus;
         private IRabbitMqHost _host;
         private BusHandle _handle;
-
-        private const string _address = "rabbitmq://localhost/minions_virtual_host";
+        private IRequestClient<MinionsRequestMessage, MinionsResponseMessage> _client;
+ 
+        public async Task<MinionsResponseMessage> ProcessRequestAsync(MinionsRequestMessage request)
+        {
+            var response = await _client.Request(request);
+            return response;
+        }
 
         public void Start()
         {
-            Console.WriteLine("Creating bus");
-
             _bus = Bus.Factory.CreateUsingRabbitMq(x =>
             {
                 _host = x.Host(new Uri(_address), h =>
@@ -29,13 +33,12 @@ namespace ST.IoT.Services.Minions
                     h.Username("minion_boss");
                     h.Password("minion_boss");
                 });
-
-                x.ReceiveEndpoint(_host, "minion_requests", e => { e.Consumer<MinionsRequestMessageConsumer>(); });
             });
 
-            Console.WriteLine("Starting bus");
             _handle = _bus.Start();
-            Console.WriteLine("Started bus");
+
+            var address = _address + "/" + "minion_requests";
+            _client = _bus.CreateRequestClient<MinionsRequestMessage, MinionsResponseMessage>(new Uri(address), TimeSpan.FromSeconds(10));
         }
 
         public void Stop()

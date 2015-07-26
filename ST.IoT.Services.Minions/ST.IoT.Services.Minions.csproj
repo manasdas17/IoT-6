@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MinionsRequestMessageConsumer.cs" />
     <Compile Include="MinionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +71,10 @@
     <ProjectReference Include="..\ST.IoT.Services.Minions.Impl\ST.IoT.Services.Minions.Impl.csproj">
       <Project>{ca70397f-6809-4fc6-8fcc-a1faca830e89}</Project>
       <Name>ST.IoT.Services.Minions.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Messages\ST.IoT.Services.Minions.Messages.csproj">
+      <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>
+      <Name>ST.IoT.Services.Minions.Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

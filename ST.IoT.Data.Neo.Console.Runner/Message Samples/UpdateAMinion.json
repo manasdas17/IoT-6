@@ -1,0 +1,14 @@
+﻿// update a minion
+{
+    "Thing": {
+        "ID": "thingie-1",
+    },
+    "State": {
+        "Content": "{"i-am\": "a-minion number 2"}"
+    },
+    "Meta": {
+        "Class": "Minion" ,
+        "Context":  "IoT-Minions"
+    }
+}
+

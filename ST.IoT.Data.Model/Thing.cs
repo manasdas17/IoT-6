@@ -10,11 +10,7 @@ namespace ST.IoT.Data.Model
 {
     public class Thing : JObject
     {
-        public string ID
-        {
-            get { return this["ID"].ToString(); }
-            set { this["ID"] = value; }
-        }
+        public string ID { get; set; }
 
         public Thing()
         {

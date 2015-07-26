@@ -1,0 +1,14 @@
+﻿// get the most recent state for a minion
+{
+    "Thing": {
+        "ID": "thingie-1"
+    },
+    "Return": {
+        "Properties":  "*"
+    },
+    "Meta": {
+        "Class": "Minion",
+        "Context": "IoT-Minions",
+        "Limit": 1
+    }
+}

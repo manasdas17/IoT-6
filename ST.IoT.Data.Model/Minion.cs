@@ -9,15 +9,10 @@ namespace ST.IoT.Data.Model
 {
     public class Minion : Thing
     {
-        public string Content
-        {
-            get { return this["Content"].ToString(); }
-            set { this["Content"] = value; }
-        }
-
+        public string Content { get; set; }
         public Minion()
         {
-            this["Content"] = "1";
+            this.Content = "";
         }
     }
 }

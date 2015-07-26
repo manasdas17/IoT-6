@@ -49,6 +49,18 @@
       <Project>{2493adbe-0d46-4b93-b236-4ffb1989c70b}</Project>
       <Name>ST.IoT.API.REST.Router.Plugins.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
+      <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>
+      <Name>ST.IoT.Services.Minions.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Messages\ST.IoT.Services.Minions.Messages.csproj">
+      <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>
+      <Name>ST.IoT.Services.Minions.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.ServiceFacade.RabbitMQ\ST.IoT.Services.Minions.ServiceFacade.RabbitMQ.csproj">
+      <Project>{0d02f329-47d6-4b80-a4c1-b62b883da142}</Project>
+      <Name>ST.IoT.Services.Minions.ServiceFacade.RabbitMQ</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
