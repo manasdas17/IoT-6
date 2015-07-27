@@ -11,7 +11,9 @@
     <AssemblyName>ST.IoT.Data.Neo.Console.Runner</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>2b8a6286</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>6a0fc57c</NuGetPackageImportStamp>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -51,29 +55,25 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Content\Message Samples\Neo-DL\MInion-Samples\CreateAMinion.json">
+      <Link>Message Samples\CreateAMinion.json</Link>
+    </None>
+    <None Include="..\Content\Message Samples\Neo-DL\MInion-Samples\GetAllStatusesForMinion.json">
+      <Link>Message Samples\GetAllStatusesForMinion.json</Link>
+    </None>
+    <None Include="..\Content\Message Samples\Neo-DL\MInion-Samples\GetLatestStatusForMinion.json">
+      <Link>Message Samples\GetLatestStatusForMinion.json</Link>
+    </None>
+    <None Include="..\Content\Message Samples\Neo-DL\MInion-Samples\UpdateAMinion.json">
+      <Link>Message Samples\UpdateAMinion.json</Link>
+    </None>
     <None Include="App.config" />
-    <Content Include="Message Samples\CreateAMinion.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Message Samples\UpdateAMinion.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Message Samples\GetLatestStatusForMinion.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Message Samples\GetAllStatusesForMinion.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ST.IoT.Data.Interfaces\ST.IoT.Data.Interfaces.csproj">
       <Project>{e439691a-4eaf-48ce-a18c-b1f561e5a8f0}</Project>
       <Name>ST.IoT.Data.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Data.Model\ST.IoT.Data.Model.csproj">
-      <Project>{6ca7f09d-7b3f-4f60-8f1a-5b18aff5ac91}</Project>
-      <Name>ST.IoT.Data.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Data.Neo\ST.IoT.Data.Neo.csproj">
       <Project>{778db354-010a-45aa-929a-d16c2a22b23f}</Project>

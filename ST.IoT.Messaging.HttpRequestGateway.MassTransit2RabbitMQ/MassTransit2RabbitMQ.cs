@@ -33,24 +33,30 @@ namespace bSeamless.IoT.Messaging.HttpRequestGateway
         {
             var serialized = new HttpMessageContent(request).ReadAsByteArrayAsync().Result;
 
+            HttpResponseMessage response = null;
+
             try
             {
                 var client = _busFactory.CreateRequestClient<RestProxyToRouterMessage, RestRouterReplyMessage>("rest_api_requests");
-                var reply = await client.Request(
-                    new RestProxyToRouterMessage()
-                    {
-                        HttpRequest =  serialized
-                    },
-                    cancellationToken);
+                var the_request = new RestProxyToRouterMessage()
+                {
+                    HttpRequest = serialized
+                };
+                var reply = await client.Request(the_request, cancellationToken);
 
-                Console.WriteLine(reply);
+                var ms = new MemoryStream(reply.HttpResponse);
+                var r1 = new HttpResponseMessage();
+                r1.Content = new ByteArrayContent(ms.ToArray());
+                r1.Content.Headers.Add("Content-Type", "application/http;msgtype=response");
+                response = r1.Content.ReadAsHttpResponseMessageAsync().Result;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
 
-            var response = new HttpResponseMessage(HttpStatusCode.Accepted);
             return response;
         }
     }

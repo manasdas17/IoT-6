@@ -58,7 +58,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RequestConsumer.cs" />
     <Compile Include="RestApiRouterService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

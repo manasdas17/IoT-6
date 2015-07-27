@@ -56,20 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicJsonConverter.cs" />
     <Compile Include="Neo4jThingsDataFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThingWithDictionaryJsonConverter.cs" />
-    <Compile Include="TypeBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ST.IoT.Data.Interfaces\ST.IoT.Data.Interfaces.csproj">
       <Project>{e439691a-4eaf-48ce-a18c-b1f561e5a8f0}</Project>
       <Name>ST.IoT.Data.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Data.Model\ST.IoT.Data.Model.csproj">
-      <Project>{6ca7f09d-7b3f-4f60-8f1a-5b18aff5ac91}</Project>
-      <Name>ST.IoT.Data.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

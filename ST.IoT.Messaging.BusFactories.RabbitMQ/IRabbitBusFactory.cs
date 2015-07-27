@@ -13,7 +13,7 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
         IRabbitBusFactory BaseUrl(string baseUrl);
         IRabbitBusFactory Username(string username);
         IRabbitBusFactory Password(string password);
-        IRabbitBusFactory AddConsumer<T>(string queueName, Func<ConsumeContext<T>, object> handler) where T : class;
+        IRabbitBusFactory AddConsumer<T>(string queueName, Func<ConsumeContext<T>, Task<object>> handler) where T : class;
 
         void Start();
         void Stop();

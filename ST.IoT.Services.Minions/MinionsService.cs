@@ -1,49 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
 using MassTransit.RabbitMqTransport;
+using Newtonsoft.Json.Linq;
 using ST.IoT.Services.Interfaces;
+using ST.IoT.Services.Minions.Data.Interfaces;
+using ST.IoT.Services.Minions.Interfaces;
 using ST.IoT.Services.Minions.Messages;
 
 namespace ST.IoT.Services.Minions
 {
     public class MinionsService : IIoTService
     {
-        private IBusControl _bus;
-        private IRabbitMqHost _host;
-        private BusHandle _handle;
+        private IMinionsReceiveRequestEndpoint _endpoint;
+        private IMinionsDataService _dataService;
 
-        private const string _address = "rabbitmq://localhost/minions_virtual_host";
+        private Dictionary<string, Func<JObject, MinionsRequestMessage, MinionsResponseMessage>> _handlers; 
+
+        public MinionsService(IMinionsReceiveRequestEndpoint endpoint, IMinionsDataService dataService)
+        {
+            _endpoint = endpoint;
+            _dataService = dataService;
+
+            _endpoint.ReceivedRequestMessage += _endpoint_ReceivedRequestMessage;
+
+            _handlers = new Dictionary<string, Func<JObject, MinionsRequestMessage, MinionsResponseMessage>>()
+            {
+                {"quote/for", quote_for}
+            };
+        }
+
+        void _endpoint_ReceivedRequestMessage(object sender, MinionsRequestMessageReceivedEventArgs e)
+        {
+            try
+            {
+                var request = JObject.Parse(e.RequestMessage.Request);
+
+                var action = request["action"].ToString();
+                if (_handlers.ContainsKey(action))
+                {
+                    e.ResponseMessage = _handlers[action](request, e.RequestMessage);
+                }
+                else
+                {
+                    e.ResponseMessage = new MinionsResponseMessage(
+                        HttpStatusCode.BadRequest,
+                        "Invalid action: " + action);
+                }
+            }
+            catch (Exception ex)
+            {
+                e.ResponseMessage = new MinionsResponseMessage(
+                    HttpStatusCode.BadRequest,
+                    ex.Message);
+            }
+        }
+
+        private MinionsResponseMessage quote_for(JObject request, MinionsRequestMessage message)
+        {
+            try
+            {
+                var name = request["name"];
+                if (name == null)
+                {
+                    return new MinionsResponseMessage(
+                        HttpStatusCode.BadRequest,
+                        "Name field not specified");
+                }
+                var content = request["content"];
+                if (content == null)
+                {
+                    return new MinionsResponseMessage(
+                        HttpStatusCode.BadRequest,
+                        "Content field not specified");
+                }
+
+                var result = _dataService.PutMinion(message);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                return new MinionsResponseMessage(
+                    HttpStatusCode.BadRequest,
+                    ex.Message);
+            }
+        }
 
         public void Start()
         {
-            Console.WriteLine("Creating bus");
-
-            _bus = Bus.Factory.CreateUsingRabbitMq(x =>
-            {
-                _host = x.Host(new Uri(_address), h =>
-                {
-                    h.Username("minion_boss");
-                    h.Password("minion_boss");
-                });
-
-                x.ReceiveEndpoint(_host, "minion_requests", e => { e.Consumer<MinionsRequestMessageConsumer>(); });
-            });
-
-            Console.WriteLine("Starting bus");
-            _handle = _bus.Start();
-            Console.WriteLine("Started bus");
+            _endpoint.Start();
         }
 
         public void Stop()
         {
-            if (_handle != null)
-            {
-                _handle.Stop();
-            }
+            _endpoint.Stop();
         }
     }
 }

@@ -38,7 +38,7 @@ namespace ST.IoT.Services.Minions.ServiceFacade.RabbitMQ
             _handle = _bus.Start();
 
             var address = _address + "/" + "minion_requests";
-            _client = _bus.CreateRequestClient<MinionsRequestMessage, MinionsResponseMessage>(new Uri(address), TimeSpan.FromSeconds(10));
+            _client = _bus.CreateRequestClient<MinionsRequestMessage, MinionsResponseMessage>(new Uri(address), TimeSpan.FromSeconds(500));
         }
 
         public void Stop()

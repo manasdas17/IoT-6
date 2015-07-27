@@ -4,10 +4,10 @@
         "ID": "thingie-1",
     },
     "State": {
-        "Content": "{"i-am\": "a-minion"}"
+        "Content": "{ \"i-am\": \"a minion\"" 
     },
     "Meta": {
-        "Class": "Minion" ,
-        "Context":  "IoT-Minions"
+        "Class": "Minion",
+        "Context": "IoT-Minions"
     }
 }

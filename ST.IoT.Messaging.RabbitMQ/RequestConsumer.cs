@@ -10,22 +10,22 @@ namespace ST.IoT.Messaging.RabbitMQ
 {
     public class RequestConsumer<T> : IConsumer<T> where T : class
     {
-        private Func<ConsumeContext<T>, object> _consumer;
+        private Func<ConsumeContext<T>, Task<object>> _consumer;
 
         public RequestConsumer()
         {
             
         }
 
-        public RequestConsumer(Func<ConsumeContext<T>, object> consumer)
+        public RequestConsumer(Func<ConsumeContext<T>, Task<object>> consumer)
         {
             _consumer = consumer;
         }
 
-        public Task Consume(ConsumeContext<T> context)
+        public async Task Consume(ConsumeContext<T> context)
         {
-            var response = _consumer(context);
-            return context.RespondAsync(response);
+            var response = await _consumer(context);
+            context.RespondAsync(response);
         }
     }
 }

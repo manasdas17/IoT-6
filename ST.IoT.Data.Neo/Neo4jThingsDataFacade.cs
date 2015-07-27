@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using ST.IoT.Data.Interfaces;
-using ST.IoT.Data.Model;
 
 namespace ST.IoT.Data.Neo
 {

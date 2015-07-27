@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ST.IoT.Services.Minions.Data.Neo")]
+[assembly: AssemblyTitle("ST.IoT.Services.Minions.Endpoints.RabbitMQMassTransit")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ST.IoT.Services.Minions.Data.Neo")]
+[assembly: AssemblyProduct("ST.IoT.Services.Minions.Endpoints.RabbitMQMassTransit")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6c100c1d-3633-4127-9db3-f6d565eed8e8")]
+[assembly: Guid("8d6a609c-872a-4b24-a164-28c19a872c7c")]
 
 // Version information for an assembly consists of the following four values:
 //

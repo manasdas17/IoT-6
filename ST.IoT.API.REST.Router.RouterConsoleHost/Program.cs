@@ -21,7 +21,7 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
     {
         private static IKernel _kernel;
 
-        [ImportMany] public IEnumerable<Lazy<IRestRouterPlugin, IRestRouterPluginMetadata>> _plugins;
+        [ImportMany] public IEnumerable<Lazy<IRestRouterPlugin, IRestRouterPluginMetadata>> _plugins = null;
 
         private static void Main(string[] args)
         {
@@ -77,8 +77,6 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
             r1.Content.Headers.Add("Content-Type", "application/http;msgtype=request");
             var request = r1.Content.ReadAsHttpRequestMessageAsync().Result;
 
-            var content = await request.Content.ReadAsStringAsync();
-
             Console.WriteLine(request.RequestUri.Host);
 
             var response = new RestRouterReplyMessage()
@@ -91,7 +89,8 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
                 var plugin = _plugins.FirstOrDefault(p => p.Metadata.Services == "minions");
                 if (plugin != null)
                 {
-                    response.HttpResponse = encode(await plugin.Value.HandleAsync(request));
+                    var resp = await plugin.Value.HandleAsync(request);
+                    response.HttpResponse = encode(resp);
                 }
             }
             return context.RespondAsync(response);

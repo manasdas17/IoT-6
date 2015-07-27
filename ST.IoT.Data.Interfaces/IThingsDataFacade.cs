@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using ST.IoT.Data.Model;
 
 namespace ST.IoT.Data.Interfaces
 {

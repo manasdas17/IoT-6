@@ -61,7 +61,7 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
 
         private List<ConsumerInfo> _consumers = new List<ConsumerInfo>();
 
-        public IRabbitBusFactory AddConsumer<T>(string queueName, Func<ConsumeContext<T>, object> handler) where T : class
+        public IRabbitBusFactory AddConsumer<T>(string queueName, Func<ConsumeContext<T>, Task<object>> handler) where T : class
         {
             _consumers.Add(new ConsumerInfo()
             {
@@ -120,7 +120,7 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
         public IRequestClient<T, V> CreateRequestClient<T, V>(string queueName) where T : class where V : class
         {
             var address = _baseUrl + "/" + queueName;
-            var result = _busControl.CreateRequestClient<T, V>(new Uri(address), TimeSpan.FromSeconds(50));
+            var result = _busControl.CreateRequestClient<T, V>(new Uri(address), TimeSpan.FromSeconds(500));
             return result; 
         }
     }

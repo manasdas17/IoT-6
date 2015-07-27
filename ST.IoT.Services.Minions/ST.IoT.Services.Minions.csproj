@@ -55,22 +55,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MinionsRequestMessageConsumer.cs" />
     <Compile Include="MinionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="sample_messages.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ST.IoT.Services.Interfaces\ST.IoT.Services.Interfaces.csproj">
       <Project>{38af213b-6320-4c46-8878-a21ba73c38cf}</Project>
       <Name>ST.IoT.Services.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Services.Minions.Impl\ST.IoT.Services.Minions.Impl.csproj">
-      <Project>{ca70397f-6809-4fc6-8fcc-a1faca830e89}</Project>
-      <Name>ST.IoT.Services.Minions.Impl</Name>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Data.Interfaces\ST.IoT.Services.Minions.Data.Interfaces.csproj">
+      <Project>{6dfdceb5-0ec8-45f8-8b9d-1b4444d747db}</Project>
+      <Name>ST.IoT.Services.Minions.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Data.STNeo\ST.IoT.Services.Minions.Data.STNeo.csproj">
+      <Project>{76d96b84-46b3-495e-b319-6174a5211d51}</Project>
+      <Name>ST.IoT.Services.Minions.Data.STNeo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
+      <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>
+      <Name>ST.IoT.Services.Minions.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions.Messages\ST.IoT.Services.Minions.Messages.csproj">
       <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>

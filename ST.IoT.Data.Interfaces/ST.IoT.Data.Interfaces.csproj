@@ -47,12 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ST.IoT.Data.Model\ST.IoT.Data.Model.csproj">
-      <Project>{6ca7f09d-7b3f-4f60-8f1a-5b18aff5ac91}</Project>
-      <Name>ST.IoT.Data.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

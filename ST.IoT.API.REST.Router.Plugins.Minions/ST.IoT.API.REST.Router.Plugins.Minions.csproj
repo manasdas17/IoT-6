@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -57,10 +61,14 @@
       <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>
       <Name>ST.IoT.Services.Minions.Messages</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Services.Minions.ServiceFacade.RabbitMQ\ST.IoT.Services.Minions.ServiceFacade.RabbitMQ.csproj">
-      <Project>{0d02f329-47d6-4b80-a4c1-b62b883da142}</Project>
-      <Name>ST.IoT.Services.Minions.ServiceFacade.RabbitMQ</Name>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Messaging.Endpoints.Send.MTRMQ\ST.IoT.Services.Minions.Messaging.Endpoints.Send.MTRMQ.csproj">
+      <Project>{7d6645ef-9134-4375-9c3a-5743c39f2fbd}</Project>
+      <Name>ST.IoT.Services.Minions.Messaging.Endpoints.Send.MTRMQ</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

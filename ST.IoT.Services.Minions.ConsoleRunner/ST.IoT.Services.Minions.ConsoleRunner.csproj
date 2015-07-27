@@ -32,6 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,11 +54,39 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="messages\neo_put_minion_template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Data.Interfaces\ST.IoT.Data.Interfaces.csproj">
+      <Project>{e439691a-4eaf-48ce-a18c-b1f561e5a8f0}</Project>
+      <Name>ST.IoT.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Data.Neo\ST.IoT.Data.Neo.csproj">
+      <Project>{778db354-010a-45aa-929a-d16c2a22b23f}</Project>
+      <Name>ST.IoT.Data.Neo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Interfaces\ST.IoT.Services.Interfaces.csproj">
       <Project>{38af213b-6320-4c46-8878-a21ba73c38cf}</Project>
       <Name>ST.IoT.Services.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Data.Interfaces\ST.IoT.Services.Minions.Data.Interfaces.csproj">
+      <Project>{6dfdceb5-0ec8-45f8-8b9d-1b4444d747db}</Project>
+      <Name>ST.IoT.Services.Minions.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Data.STNeo\ST.IoT.Services.Minions.Data.STNeo.csproj">
+      <Project>{76d96b84-46b3-495e-b319-6174a5211d51}</Project>
+      <Name>ST.IoT.Services.Minions.Data.STNeo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
+      <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>
+      <Name>ST.IoT.Services.Minions.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ\ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ.csproj">
+      <Project>{682c188d-450c-48f2-9ddb-efb39275a93f}</Project>
+      <Name>ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions\ST.IoT.Services.Minions.csproj">
       <Project>{6d091ca1-24c8-4d1e-887d-f456ae5d6d7d}</Project>
