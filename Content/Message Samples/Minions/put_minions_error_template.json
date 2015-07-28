@@ -1,0 +1,6 @@
+﻿{
+    "This": "Failed",
+    "Status": "{code}",
+    "For": {request},
+    "Detail": "{detail}"
+}

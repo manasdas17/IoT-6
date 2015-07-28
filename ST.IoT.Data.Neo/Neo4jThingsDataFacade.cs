@@ -10,6 +10,7 @@ using Neo4jClient.Cypher;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using NLog;
 using ST.IoT.Data.Interfaces;
 
 namespace ST.IoT.Data.Neo
@@ -19,15 +20,19 @@ namespace ST.IoT.Data.Neo
         private GraphClient _client;
         private IRawGraphClient _rawclient;
 
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         public void reset()
         {
             connect();
 
             var cypher = @"
-                MATCH (thing:Thing)-[r1]->()
-                MATCH ()-[r2]->(state:State)
-                MATCH (state_collection:StateCollection)-[r3]->(n)
-                DELETE r1, thing, r2, state,  r3, n, state_collection
+MATCH (state:State)<-[s_2_si]-()
+MATCH (si:StateItem)<-[si_2_sc]-()
+MATCH (thing:Thing)-[t_others]->()
+MATCH (state_collection:StateCollection)-[sc_context]->()
+MATCH (c:Context)
+DELETE s_2_si, state, si_2_sc, si, t_others, thing, sc_context, state_collection, c
             ";
 
             executeCypher(cypher, null, CypherResultMode.Set);
@@ -35,90 +40,143 @@ namespace ST.IoT.Data.Neo
 
         public void Put(string json)
         {
-            var jo = JObject.Parse(json);
+            _logger.Info(json);
 
-            // TODO: check all properties available in json
+            try
+            {
+                var jo = JObject.Parse(json);
 
-            var thing = jo["Thing"];
-            var state = jo["State"];
-            var meta = jo["Meta"];
+                // TODO: check all properties available in json
 
-            var cypher = @"
-                MERGE (thing:Thing {ID: {thing_id}}) ON CREATE SET thing = {thing_props} 
-                MERGE (context:Context {Name: {context_name}}) ON CREATE SET context = {context_props} 
-                CREATE UNIQUE (thing)-[r_thing_state:HAS_STATE]->(state_collection:StateCollection) 
-                CREATE (state:State)<-[r_states_has_states:THE_STATES]-(state_collection) 
-                SET state = {state_props} 
-                CREATE UNIQUE thing-[r_thing_context:IN_CONTEXT]->(context)
-                CREATE UNIQUE state_collection-[r_state__collection_context:IN_CONTEXT]->(context) 
-            ";
+                var thing = jo["Thing"];
+                var state = jo["State"];
+                var meta = jo["Meta"];
 
-            var thing_id = thing["ID"].ToString();
-            var context_name = meta["Context"].ToString();
-            var class_name = meta["Class"].ToString();
+                var time = DateTime.UtcNow.ToString();
 
-            var parameters = buildDict(
-                "thing_id", thing_id,
-                "thing_props", buildDict("ID", thing_id, "Name", thing_id),
-                "state_props", state.asProperties(),
-                "context_name", context_name,
-                "class_name", class_name,
-                "context_props", buildDict("Name", context_name),
-                "class_props", buildDict("Name", class_name)
-                );
+                var cypher = @"
+                    MERGE (thing:Thing {ID: {thing_id}}) ON CREATE SET thing = {thing_props} 
+                    MERGE (context:Context {Name: {context_name}}) ON CREATE SET context = {context_props} 
+                    CREATE UNIQUE (thing)-[r_thing_state:HAS_STATE]->(state_collection:StateCollection) 
+                    CREATE (state_item:StateItem)<-[r_states_has_state_items:THE_STATES]-(state_collection) 
+                    CREATE (state:State)<-[r_state_item_state:STATE_ITEM]-(state_item) 
+                    SET state = {state_data} 
+                    SET state_item = {state_props}
+                    CREATE UNIQUE thing-[r_thing_context:IN_CONTEXT]->(context)
+                    CREATE UNIQUE state_collection-[r_state__collection_context:IN_CONTEXT]->(context) 
+                ";
 
-            executeCypher(cypher, parameters);
+                var thing_id = thing["ID"].ToString();
+                var context_name = meta["Context"].ToString();
+                var class_name = meta["Class"].ToString();
+
+                var parameters = buildDict(
+                    "thing_id", thing_id,
+                    "thing_props", buildDict("ID", thing_id, "Name", thing_id),
+                    "state_data", state,
+                    "context_name", context_name,
+                    "class_name", class_name,
+                    "context_props", buildDict("Name", context_name),
+                    "class_props", buildDict("Name", class_name),
+                    "state_props", buildDict("CreateAtUTC", time)
+                    );
+
+                executeCypher(cypher, parameters);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw;
+            }
+            finally
+            {
+                _logger.Info("Done PUT");
+                
+            }
         }
 
         public string Get(string json)
         {
-            var jo = JObject.Parse(json);
-
-            // TODO: check all properties available in json
-
-            var thing = jo["Thing"];
-            var meta = jo["Meta"];
-
-            var cypher = @"
-                MATCH most_recent_state = (thing:Thing)-[:IN_CONTEXT]->(context:Context)
-                MATCH (thing)-[:HAS_STATE]->(state_collection:StateCollection)
-                MATCH (state_collection)-[:THE_STATES]->(state:State)
-                WHERE thing.ID = {thing_id} AND context.Name = {context_name}
-                RETURN state
-                ORDER BY ID(state) DESC
-            ";
-
-            var thing_id = thing["ID"].ToString();
-            var context_name = meta["Context"].ToString();
-
-            var parameters = buildDict(
-                "thing_id", thing_id,
-                "context_name", context_name);
-
-            if (meta["Limit"] != null)
+            try
             {
-                parameters["limit"] = meta["Limit"].ToObject<int>();
-                cypher += "LIMIT {limit}";
+                var jo = JObject.Parse(json);
+
+                // TODO: check all properties available in json
+
+                var thing = jo["Thing"];
+                var meta = jo["Meta"];
+
+                /*
+                var cypher = @"
+MATCH most_recent_state = (thing:Thing)-[:IN_CONTEXT]->(context:Context)
+MATCH (thing)-[:HAS_STATE]->(state_collection:StateCollection)
+MATCH (state_collection)-[:THE_STATES]->(state:State)
+WHERE thing.ID = {thing_id} AND context.Name = {context_name}
+RETURN state
+ORDER BY ID(state) DESC
+            ";
+                */
+                var cypher = @"
+MATCH (t:Thing{Name:{thing_id} })-[]->(c:Context{Name:{context_name} })
+MATCH (t)-[]->(sc:StateCollection)-[]->(c)
+MATCH (sc)-[]->(si:StateItem)-[]-(s:State)
+RETURN s
+ORDER BY ID(s) DESC
+";
+
+                var thing_id = thing["ID"].ToString();
+                var context_name = meta["Context"].ToString();
+
+                var parameters = buildDict(
+                    "thing_id", thing_id,
+                    "context_name", context_name);
+
+                if (meta["Paging"] != null)
+                {
+                    var paging = meta["Paging"];
+                    if (paging["Skip"] != null)
+                    {
+                        parameters["skip"] = paging["Skip"].ToObject<int>();
+                        cypher += "SKIP {skip}";
+
+                    }
+                    if (paging["Limit"] != null)
+                    {
+                        parameters["limit"] = paging["Limit"].ToObject<int>();
+                        cypher += "LIMIT {limit}";
+
+                    }
+                }
+
+                var results = executeCypherWithResults<string>(cypher, parameters);
+
+                var foo = "[" + string.Join(",", results) + "]";
+
+                var rb = new StringBuilder();
+                rb.AppendLine("{");
+                rb.AppendLine("  \"Request\":");
+                rb.AppendLine(json + ",");
+                rb.AppendLine("  \"Results\":");
+                rb.AppendLine(foo);
+                rb.AppendLine("}");
+
+                var rs = rb.ToString();
+
+                var jobject_result = JObject.Parse(rs);
+
+                var return_value = jobject_result.ToString();
+                return return_value;
+
             }
-
-            var results = executeCypherWithResults<string>(cypher, parameters);
-
-            var foo = "[" + string.Join(",", results) + "]";
-
-            var rb = new StringBuilder();
-            rb.AppendLine("{");
-            rb.AppendLine("  \"Request\":");
-            rb.AppendLine(json + ",");
-            rb.AppendLine("  \"Results\":");
-            rb.AppendLine(foo);
-            rb.AppendLine("}");
-
-            var rs = rb.ToString();
-
-            var jobject_result = JObject.Parse(rs);
-
-            var return_value = jobject_result.ToString();
-            return return_value;
+            catch (Exception ex)
+            {
+                _logger.Info(ex.Message);
+                throw;
+            }
+            finally
+            {
+                _logger.Info("Done GET");
+            }
         }
 
         private Dictionary<string, object> buildDict(params object[] parms)
@@ -135,30 +193,81 @@ namespace ST.IoT.Data.Neo
 
         private void connect()
         {
+            _logger.Info("Connecting");
             if (_client == null)
             {
+                _logger.Info("Creating GraphClient");
                 _client = new GraphClient(new Uri("http://neo4j:rush2112@localhost:7474/db/data"));
                 _rawclient = _client;
             }
-            if (!_client.IsConnected)
+            try
             {
-                _client.Connect();
+                if (!_client.IsConnected)
+                {
+                    _logger.Info("Not connected: attempting to connect");
+                    try
+                    {
+                        _client.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error("Hard error");
+                        _logger.Error(ex.Message);
+                    }
+                    _logger.Info("Connected");
+                }
+            }
+            catch (AggregateException aex)
+            {
+                _logger.Error(aex.InnerExceptions.First().Message);
+                throw aex.InnerExceptions.First();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw;
+            }
+            finally
+            {
+                _logger.Info("Leaving connect");
             }
         }
 
         private void executeCypher(string cypherQueryText, Dictionary<string, object> parameters, CypherResultMode resultMode = CypherResultMode.Set)
         {
-            connect();
-            var query = new CypherQuery(cypherQueryText, parameters, CypherResultMode.Set);
-            _rawclient.ExecuteCypher(query);
+            try
+            {
+                _logger.Debug("Attempting to execute cypher");
+                connect();
+                var query = new CypherQuery(cypherQueryText, parameters, CypherResultMode.Set);
+                _logger.Info(query.DebugQueryText);
+                _rawclient.ExecuteCypher(query);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw;
+            }
         }
 
         private IEnumerable<T> executeCypherWithResults<T>(string cypherQueryText, Dictionary<string, object> parameters, CypherResultMode resultMode = CypherResultMode.Set)
         {
-            connect();
-            var query = new CypherQuery(cypherQueryText, parameters, CypherResultMode.Set);
-            var results = _rawclient.ExecuteGetCypherResults<T>(query);
-            return results;
+            try
+            {
+                _logger.Debug("Attempting to execute cypher with results");
+                connect();
+                var query = new CypherQuery(cypherQueryText, parameters, CypherResultMode.Set);
+                _logger.Info(query.DebugQueryText);
+                var results = _rawclient.ExecuteGetCypherResults<T>(query);
+                _logger.Info(results);
+                return results;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+                throw;
+            }
         }
     }
 

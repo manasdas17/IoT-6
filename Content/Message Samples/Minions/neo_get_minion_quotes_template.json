@@ -1,0 +1,9 @@
+﻿{
+    "Thing": {
+        "ID": "{id}"
+    },
+    "Meta": {
+        "Class": "Minion",
+        "Context": "IoT-Minions"
+    }
+}

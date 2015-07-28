@@ -18,9 +18,9 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
         void Start();
         void Stop();
 
-        void AddReceiveEndpoint<T>(string name, IConsumer<T> consumer) where T : class;
+        //void AddReceiveEndpoint<T>(string name, IConsumer<T> consumer) where T : class;
         IRequestClient<T, V> CreateRequestClient<T, V>(string queueName) where T : class where V : class;
 
-        Action<IRabbitMqHost, IRabbitMqBusFactoryConfigurator> ConfigureHook { get; set; }
+        //Action<IRabbitMqHost, IRabbitMqBusFactoryConfigurator> ConfigureHook { get; set; }
     }
 }

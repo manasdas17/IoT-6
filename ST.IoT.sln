@@ -27,13 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{442A32
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Messaging.BusFactories.RabbitMQ", "ST.IoT.Messaging.BusFactories.RabbitMQ\ST.IoT.Messaging.BusFactories.RabbitMQ.csproj", "{D180F34B-C16C-4EEF-A8A4-80A101B6A279}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hybrid", "Hybrid", "{72B7C7B2-8F35-42BC-8C3E-B6E87748AC36}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Common", "ST.IoT.Common\ST.IoT.Common.csproj", "{9F834D0E-3E8F-436C-AED7-FC87978DF7B9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Hybrid.RabbitProxyAndRouterConsoleHost", "ST.IoT.Hybrid.RabbitProxyAndRouterConsoleHost\ST.IoT.Hybrid.RabbitProxyAndRouterConsoleHost.csproj", "{2891CCE1-71CD-4916-8357-F3AA0B21D7F9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{CBD9C6BE-4AC7-471D-A029-A5E525E644DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spikes", "Spikes", "{73CB2A9A-F92A-47BC-B3C8-E7677B371897}"
 EndProject
@@ -123,8 +117,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Message Samples", "Message 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Minions", "Minions", "{C9A21E47-8E7A-4526-A75D-DAF2923D5BAD}"
 	ProjectSection(SolutionItems) = preProject
+		Content\Message Samples\Minions\get_latest_quote_for_minion_template.json = Content\Message Samples\Minions\get_latest_quote_for_minion_template.json
+		Content\Message Samples\Minions\get_minion_detail_single.json = Content\Message Samples\Minions\get_minion_detail_single.json
+		Content\Message Samples\Minions\get_minion_success_template.json = Content\Message Samples\Minions\get_minion_success_template.json
+		Content\Message Samples\Minions\get_minions_success_template.json = Content\Message Samples\Minions\get_minions_success_template.json
+		Content\Message Samples\Minions\get_quotes_for_minion_template.json = Content\Message Samples\Minions\get_quotes_for_minion_template.json
+		Content\Message Samples\Minions\neo_get_minion_quotes_template.json = Content\Message Samples\Minions\neo_get_minion_quotes_template.json
 		Content\Message Samples\Minions\neo_put_minion_template.json = Content\Message Samples\Minions\neo_put_minion_template.json
-		Content\Message Samples\Minions\put_minion_sample.json = Content\Message Samples\Minions\put_minion_sample.json
+		Content\Message Samples\Minions\put_minion_template.json = Content\Message Samples\Minions\put_minion_template.json
+		Content\Message Samples\Minions\put_minions_error_template.json = Content\Message Samples\Minions\put_minions_error_template.json
+		Content\Message Samples\Minions\put_minions_success_template.json = Content\Message Samples\Minions\put_minions_success_template.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Neo-DL", "Neo-DL", "{2BCF240A-8E73-4F8C-B6BA-C15615361098}"
@@ -136,6 +138,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Minion-Samples", "Minion-Sa
 		Content\Message Samples\Neo-DL\MInion-Samples\GetLatestStatusForMinion.json = Content\Message Samples\Neo-DL\MInion-Samples\GetLatestStatusForMinion.json
 		Content\Message Samples\Neo-DL\MInion-Samples\UpdateAMinion.json = Content\Message Samples\Neo-DL\MInion-Samples\UpdateAMinion.json
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{30885704-4DFD-4237-85B9-C1518A2293A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runners", "Runners", "{F3B41A6F-BBC7-4C16-A309-5DF612EACC12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -192,12 +198,6 @@ Global
 		{9F834D0E-3E8F-436C-AED7-FC87978DF7B9}.Minions (Debug)|Any CPU.Build.0 = Minions (Debug)|Any CPU
 		{9F834D0E-3E8F-436C-AED7-FC87978DF7B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F834D0E-3E8F-436C-AED7-FC87978DF7B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2891CCE1-71CD-4916-8357-F3AA0B21D7F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2891CCE1-71CD-4916-8357-F3AA0B21D7F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2891CCE1-71CD-4916-8357-F3AA0B21D7F9}.Minions (Debug)|Any CPU.ActiveCfg = Minions (Debug)|Any CPU
-		{2891CCE1-71CD-4916-8357-F3AA0B21D7F9}.Minions (Debug)|Any CPU.Build.0 = Minions (Debug)|Any CPU
-		{2891CCE1-71CD-4916-8357-F3AA0B21D7F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2891CCE1-71CD-4916-8357-F3AA0B21D7F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3228798E-5937-4DB1-B668-1130217F0EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3228798E-5937-4DB1-B668-1130217F0EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3228798E-5937-4DB1-B668-1130217F0EE4}.Minions (Debug)|Any CPU.ActiveCfg = Minions (Debug)|Any CPU
@@ -366,16 +366,15 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FD954637-E856-44EA-9F64-574C8D9FF5A2} = {D8B2BA5C-87E7-445B-8275-78DDAD1A5DA6}
-		{2850AEB6-3AA5-455C-BDD1-FA442993B5BD} = {FD954637-E856-44EA-9F64-574C8D9FF5A2}
-		{3F935D88-4B4A-4169-83DB-181A64DDC7A4} = {FD954637-E856-44EA-9F64-574C8D9FF5A2}
-		{EF152B6F-E350-4865-AE93-56622CA5BD0E} = {FD954637-E856-44EA-9F64-574C8D9FF5A2}
+		{2850AEB6-3AA5-455C-BDD1-FA442993B5BD} = {F3B41A6F-BBC7-4C16-A309-5DF612EACC12}
+		{3F935D88-4B4A-4169-83DB-181A64DDC7A4} = {30885704-4DFD-4237-85B9-C1518A2293A1}
+		{EF152B6F-E350-4865-AE93-56622CA5BD0E} = {30885704-4DFD-4237-85B9-C1518A2293A1}
 		{4B56AE1C-7FC1-4FC7-9C2E-BD40DEA84CD6} = {3467793A-F4A5-42D3-8059-9106828E9A78}
 		{9250E7A7-02FB-45D2-8400-413B7C9087BA} = {3467793A-F4A5-42D3-8059-9106828E9A78}
 		{4882B679-73CA-4CD1-ADE8-2231FD9495A2} = {D8B2BA5C-87E7-445B-8275-78DDAD1A5DA6}
 		{74974273-3FC3-44BA-BD83-67782FD91AA4} = {4882B679-73CA-4CD1-ADE8-2231FD9495A2}
 		{D180F34B-C16C-4EEF-A8A4-80A101B6A279} = {3467793A-F4A5-42D3-8059-9106828E9A78}
 		{9F834D0E-3E8F-436C-AED7-FC87978DF7B9} = {442A32E6-3E5D-4A9D-8723-EA7078FDC8AA}
-		{2891CCE1-71CD-4916-8357-F3AA0B21D7F9} = {72B7C7B2-8F35-42BC-8C3E-B6E87748AC36}
 		{3228798E-5937-4DB1-B668-1130217F0EE4} = {73CB2A9A-F92A-47BC-B3C8-E7677B371897}
 		{F76CAEB2-3AA6-462C-9154-C4A1BDD55D56} = {56549915-42D7-4A09-ABEE-C2E267552974}
 		{29BEF99B-9792-4284-8E96-4A9BFE7D0E17} = {73CB2A9A-F92A-47BC-B3C8-E7677B371897}
@@ -418,5 +417,7 @@ Global
 		{C9A21E47-8E7A-4526-A75D-DAF2923D5BAD} = {84E82B9E-AFAC-4A15-9851-9F7AE209C0A5}
 		{2BCF240A-8E73-4F8C-B6BA-C15615361098} = {84E82B9E-AFAC-4A15-9851-9F7AE209C0A5}
 		{9142FEDE-2D61-42B4-9464-937763FFB67A} = {2BCF240A-8E73-4F8C-B6BA-C15615361098}
+		{30885704-4DFD-4237-85B9-C1518A2293A1} = {FD954637-E856-44EA-9F64-574C8D9FF5A2}
+		{F3B41A6F-BBC7-4C16-A309-5DF612EACC12} = {FD954637-E856-44EA-9F64-574C8D9FF5A2}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,6 @@
+﻿{
+    "This": "Succeeded",
+    "Status": "{code}",
+    "For":  {request},
+    "With": {detail}
+}

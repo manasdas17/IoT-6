@@ -6,10 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
 using Ninject;
+using NLog;
 using ST.IoT.API.REST.Router.Plugins.Interfaces;
 using ST.IoT.Common;
 using ST.IoT.Messaging.BusFactories.RabbitMQ;
@@ -23,6 +25,8 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
 
         [ImportMany] public IEnumerable<Lazy<IRestRouterPlugin, IRestRouterPluginMetadata>> _plugins = null;
 
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         private static void Main(string[] args)
         {
             new Program().run();
@@ -30,6 +34,7 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
 
         private void run()
         {
+            _logger.Info("Starting rest router");
             _kernel = new StandardKernel();
 
             var aggCatalog = new AggregateCatalog();
@@ -40,7 +45,11 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
             aggCatalog.Catalogs.Add(directoryCatalog);
 
             var container = new CompositionContainer(aggCatalog);
+
+            _logger.Info("Composing router plugings");
             container.ComposeParts(this);
+            _logger.Info("Found the following plugins:");
+            _plugins.ToList().ForEach(p => Console.WriteLine(p.Value.GetType().Name));
 
             _kernel.Bind<IRabbitBusFactory>()
                 .ToMethod(c =>
@@ -58,26 +67,28 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
 
             var router = _kernel.Get<IRestApiRouterService>();
 
-            Console.WriteLine("Starting router");
+            _logger.Info("Starting router");
             router.Start();
-            Console.WriteLine("Started router");
+            _logger.Info("Started router, press enter to exit");
 
             Console.ReadLine();
 
+            _logger.Info("Stopping");
             router.Stop();
+            _logger.Info("stopped");
         }
-
-        
 
         async Task<object> processRestMessage(ConsumeContext<RestProxyToRouterMessage> context)
         {
+            _logger.Info("Deserializing message");
             var ms = new MemoryStream(context.Message.HttpRequest);
             var r1 = new HttpRequestMessage();
             r1.Content = new ByteArrayContent(ms.ToArray());
             r1.Content.Headers.Add("Content-Type", "application/http;msgtype=request");
             var request = r1.Content.ReadAsHttpRequestMessageAsync().Result;
 
-            Console.WriteLine(request.RequestUri.Host);
+            _logger.Info("Message is routed to {0}", request.RequestUri.Host);
+            _logger.Info(request.ToString());
 
             var response = new RestRouterReplyMessage()
             {
@@ -86,35 +97,36 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
 
             if (request.RequestUri.Host.StartsWith("minions."))
             {
+                _logger.Info("got a request for minions");
                 var plugin = _plugins.FirstOrDefault(p => p.Metadata.Services == "minions");
                 if (plugin != null)
                 {
-                    var resp = await plugin.Value.HandleAsync(request);
-                    response.HttpResponse = encode(resp);
+                    var http_response = await plugin.Value.HandleAsync(request);
+                    response.HttpResponse = encode(http_response);
+                }
+                else
+                {
+                    _logger.Info("There is no service to handle minions");
                 }
             }
+            else
+            {
+                _logger.Warn("Didn't recognize how to route: {0}", request.RequestUri.Host);
+            }
+
+            _logger.Info("Replying");
+            _logger.Info(response);
+
             return context.RespondAsync(response);
         }
 
         private byte[] encode(HttpResponseMessage httpResponseMessage)
         {
+
+            _logger.Info("Encoding response message");
             var serialized = new HttpMessageContent(httpResponseMessage).ReadAsByteArrayAsync().Result;
+            _logger.Info("Done encoding");
             return serialized;
         }
     }
-    /*
-    public class RequestConsumer2 : IConsumer<RestProxyToRouterMessage>
-    {
-        public RequestConsumer2()
-        {
-            
-        }
-        public async Task Consume(ConsumeContext<RestProxyToRouterMessage> context)
-        {
-            Console.WriteLine("Got: " + context.Message);
-            //context.Respond(new ReplyMesssge() { TheReply = "reply to: " + context.Message });
-            await Task.FromResult(0);
-        }
-    }
-     * */
 }

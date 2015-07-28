@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
-using MassTransit.Logging;
 using MassTransit.RabbitMqTransport;
+using NLog;
 using ST.IoT.Common;
 using ST.IoT.Messaging.RabbitMQ;
+using Logger = MassTransit.Logging.Logger;
 
 namespace ST.IoT.Messaging.BusFactories.RabbitMQ
 {
@@ -24,6 +25,8 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
 
         private IRabbitMqBusFactoryConfigurator _configurator;
         public IRabbitMqBusFactoryConfigurator Configurator { get { return _configurator; } }
+
+        private static NLog.Logger _logger = LogManager.GetCurrentClassLogger();
 
         public RabbitBusFactory()
         {
@@ -63,6 +66,8 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
 
         public IRabbitBusFactory AddConsumer<T>(string queueName, Func<ConsumeContext<T>, Task<object>> handler) where T : class
         {
+            _logger.Info("Adding consumer: {0}", queueName);
+
             _consumers.Add(new ConsumerInfo()
             {
                 Factory = () => new RequestConsumer<T>(handler),
@@ -73,54 +78,57 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
             return this;
         }
 
-        public Action<IRabbitMqHost, IRabbitMqBusFactoryConfigurator> ConfigureHook { get; set; }
-
         public void Start()
         {
+            _logger.Info("Starting bus factory");
+
             _busControl = Bus.Factory.CreateUsingRabbitMq(x =>
             {
                 _configurator = x;
+                _logger.Info("Creating host");
+
                 _host = x.Host(new Uri(_baseUrl), h =>
                 {
                     h.Username(_username);
                     h.Password(_password);
                 });
                 
-                if (ConfigureHook != null)
+                foreach (var consumer in _consumers)
                 {
-                    ConfigureHook(_host, _configurator);
-                }
-                else
-                {
-                    foreach (var consumer in _consumers)
+                    var consumer1 = consumer;
+                    _configurator.ReceiveEndpoint(_host, consumer.QueueName, e =>
                     {
-                        var consumer1 = consumer;
-                        _configurator.ReceiveEndpoint(_host, consumer.QueueName, e =>
-                        {
-                            e.Consumer(consumer1.ConsumerType, _ => consumer1.Factory());
-                        });
-                    }
+                        _logger.Info("Adding receive consumer: {0}", consumer1.ConsumerType);
+                        e.Consumer(consumer1.ConsumerType, _ => consumer1.Factory());
+                    });
                 }
             });
 
+            _logger.Info("Starting bus");
             _busHandle = _busControl.Start();
+            _logger.Info("Started bus");
         }
 
+        /*
         public void AddReceiveEndpoint<T>(string name, IConsumer<T> consumer) where T : class
         {
             
         }
-
+        */
 
         public void Stop()
         {
+            _logger.Info("Stopping bus");
             if (_busHandle != null) _busHandle.Stop(TimeSpan.FromSeconds(30));
+            _logger.Info("Stopped");
         }
 
         public IRequestClient<T, V> CreateRequestClient<T, V>(string queueName) where T : class where V : class
         {
+            _logger.Info("Creating request client: {0}", queueName);
             var address = _baseUrl + "/" + queueName;
             var result = _busControl.CreateRequestClient<T, V>(new Uri(address), TimeSpan.FromSeconds(500));
+            _logger.Info("Created");
             return result; 
         }
     }

@@ -1,11 +1,8 @@
-﻿// set state of a minion (put)
-{
+﻿{
     "Thing": {
-        "ID": "{id}",
+        "ID": "{id}"
     },
-    "State": {
-        "Content": "{content}" 
-    },
+    "State": {content},
     "Meta": {
         "Class": "Minion",
         "Context": "IoT-Minions"

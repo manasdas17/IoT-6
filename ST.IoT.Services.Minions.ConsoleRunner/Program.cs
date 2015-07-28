@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ninject;
+using NLog;
 using ST.IoT.Data.Interfaces;
 using ST.IoT.Data.Neo;
 using ST.IoT.Services.Interfaces;
@@ -18,6 +19,8 @@ namespace ST.IoT.Services.Minions.ConsoleRunner
     {
         private static IKernel _kernel;
 
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         static void Main(string[] args)
         {
             _kernel = new StandardKernel();
@@ -31,10 +34,16 @@ namespace ST.IoT.Services.Minions.ConsoleRunner
 
         private void run()
         {
+            _logger.Info("Starting minions service");
             var service = _kernel.Get<IIoTService>();
             service.Start();
+            _logger.Info("Started service, prees enter to exit");
+            
             Console.ReadLine();
+            
+            _logger.Info("Stopping service");
             service.Stop();
+            _logger.Info("Stoppes");
         }
     }
 }

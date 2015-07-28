@@ -1,0 +1,4 @@
+﻿{
+    "action": "get/quotes/for",
+    "name": "{name}"
+}

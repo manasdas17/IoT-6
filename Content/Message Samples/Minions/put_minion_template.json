@@ -1,0 +1,5 @@
+﻿{
+    "action": "quote/for",
+    "name": "{name}",
+    "content": {quote}
+}

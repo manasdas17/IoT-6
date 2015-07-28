@@ -6,9 +6,11 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Hosting;
+using NLog;
 using Owin;
 using ST.IoT.API.REST.Proxy.OWIN;
 using ST.IoT.Messaging.HttpRequestGateway.Interfaces;
+using ILogger = Microsoft.Owin.Logging.ILogger;
 
 [assembly: OwinStartup(typeof(Proxy))]
 
@@ -20,6 +22,8 @@ namespace ST.IoT.API.REST.Proxy.OWIN
         static List<IDisposable> _apps = new List<IDisposable>();
         public static IHttpRequestGateway HttpRequestGateway { get; set; }
 
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         public Proxy()
         {
         }
@@ -28,32 +32,38 @@ namespace ST.IoT.API.REST.Proxy.OWIN
         {
             try
             {
+                _logger.Trace("Starting proxy");
+
                 // Start OWIN proxy host 
                 _apps.Add(WebApp.Start<Proxy>(proxyAddress));
 
-                Trace.WriteLine("Proxy server is running at " + proxyAddress);
+                _logger.Trace("Proxy server is running at :" + proxyAddress);
             }
             catch (Exception ex)
             {
-                string message = ex.Message;
+                var message = ex.Message;
                 if (ex.InnerException != null)
                     message += ":" + ex.InnerException.Message;
 
-                Trace.TraceInformation(message);
+                _logger.Error(message);
             }
         }
 
         public static void Stop()
         {
+            _logger.Trace("Stopping proxy");
             foreach (var app in _apps)
             {
                 if (app != null)
                     app.Dispose();
             }
+            _logger.Trace("Proxy stopped");
         }
 
         public void Configuration(IAppBuilder appBuilder)
         {
+            _logger.Trace("Configuring OWIN");
+
             appBuilder.MapSignalR();
 
             // Configure Web API for self-host. 
@@ -74,6 +84,8 @@ namespace ST.IoT.API.REST.Proxy.OWIN
                 constraints: null);
             
             appBuilder.UseWebApi(httpconfig);
+
+            _logger.Trace("OWIN configured");
         }
     }
 }
