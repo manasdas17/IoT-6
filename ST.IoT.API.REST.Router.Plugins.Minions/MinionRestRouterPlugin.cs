@@ -79,6 +79,12 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
                         Parts = new[] {"/", "get/", "quotes/", "for/"},
                         Handler = outer.doGetQuotesFor,
                     },
+                    new UriPattern()
+                    {
+                        Method = HttpMethod.Get,
+                        Parts = new[] {"/", "listen/", "for/", "quotes/", "from/"},
+                        Handler = outer.doGetQuotesFor,
+                    },
                 };
             }
 

@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using NLog;
 using ST.IoT.Data.Interfaces;
+using ST.IoT.Messaging.Endpoints.Interfaces;
 
 namespace ST.IoT.Data.Neo
 {
@@ -21,6 +22,13 @@ namespace ST.IoT.Data.Neo
         private IRawGraphClient _rawclient;
 
         private static Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private IThingUpdated _thingUpdated = null;
+
+        public Neo4jThingsDataFacade(IThingUpdated thingUpdated)
+        {
+            _thingUpdated = thingUpdated;
+        }
 
         public void reset()
         {
@@ -55,15 +63,15 @@ DELETE s_2_si, state, si_2_sc, si, t_others, thing, sc_context, state_collection
                 var time = DateTime.UtcNow.ToString();
 
                 var cypher = @"
-                    MERGE (thing:Thing {ID: {thing_id}}) ON CREATE SET thing = {thing_props} 
-                    MERGE (context:Context {Name: {context_name}}) ON CREATE SET context = {context_props} 
-                    CREATE UNIQUE (thing)-[r_thing_state:HAS_STATE]->(state_collection:StateCollection) 
-                    CREATE (state_item:StateItem)<-[r_states_has_state_items:THE_STATES]-(state_collection) 
-                    CREATE (state:State)<-[r_state_item_state:STATE_ITEM]-(state_item) 
-                    SET state = {state_data} 
-                    SET state_item = {state_props}
-                    CREATE UNIQUE thing-[r_thing_context:IN_CONTEXT]->(context)
-                    CREATE UNIQUE state_collection-[r_state__collection_context:IN_CONTEXT]->(context) 
+MERGE (thing:Thing {ID: {thing_id}}) ON CREATE SET thing = {thing_props} 
+MERGE (context:Context {Name: {context_name}}) ON CREATE SET context = {context_props} 
+CREATE UNIQUE (thing)-[r_thing_state:HAS_STATE]->(state_collection:StateCollection) 
+CREATE (state_item:StateItem)<-[r_states_has_state_items:THE_STATES]-(state_collection) 
+CREATE (state:State)<-[r_state_item_state:STATE_ITEM]-(state_item) 
+SET state = {state_data} 
+SET state_item = {state_props}
+CREATE UNIQUE thing-[r_thing_context:IN_CONTEXT]->(context)
+CREATE UNIQUE state_collection-[r_state__collection_context:IN_CONTEXT]->(context) 
                 ";
 
                 var thing_id = thing["ID"].ToString();
@@ -82,6 +90,11 @@ DELETE s_2_si, state, si_2_sc, si, t_others, thing, sc_context, state_collection
                     );
 
                 executeCypher(cypher, parameters);
+
+                if (_thingUpdated != null)
+                {
+                    _thingUpdated.ThingWasUpdated(json);
+                }
             }
             catch (Exception ex)
             {
@@ -91,7 +104,6 @@ DELETE s_2_si, state, si_2_sc, si, t_others, thing, sc_context, state_collection
             finally
             {
                 _logger.Info("Done PUT");
-                
             }
         }
 
@@ -106,16 +118,6 @@ DELETE s_2_si, state, si_2_sc, si, t_others, thing, sc_context, state_collection
                 var thing = jo["Thing"];
                 var meta = jo["Meta"];
 
-                /*
-                var cypher = @"
-MATCH most_recent_state = (thing:Thing)-[:IN_CONTEXT]->(context:Context)
-MATCH (thing)-[:HAS_STATE]->(state_collection:StateCollection)
-MATCH (state_collection)-[:THE_STATES]->(state:State)
-WHERE thing.ID = {thing_id} AND context.Name = {context_name}
-RETURN state
-ORDER BY ID(state) DESC
-            ";
-                */
                 var cypher = @"
 MATCH (t:Thing{Name:{thing_id} })-[]->(c:Context{Name:{context_name} })
 MATCH (t)-[]->(sc:StateCollection)-[]->(c)

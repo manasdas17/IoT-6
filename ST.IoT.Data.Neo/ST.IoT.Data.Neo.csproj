@@ -69,6 +69,10 @@
       <Project>{e439691a-4eaf-48ce-a18c-b1f561e5a8f0}</Project>
       <Name>ST.IoT.Data.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
+      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

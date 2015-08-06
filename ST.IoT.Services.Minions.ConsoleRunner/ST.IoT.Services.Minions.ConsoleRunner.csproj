@@ -80,6 +80,18 @@
       <Project>{778db354-010a-45aa-929a-d16c2a22b23f}</Project>
       <Name>ST.IoT.Data.Neo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.BusFactories.RabbitMQ\ST.IoT.Messaging.BusFactories.RabbitMQ.csproj">
+      <Project>{d180f34b-c16c-4eef-a8a4-80a101b6a279}</Project>
+      <Name>ST.IoT.Messaging.BusFactories.RabbitMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
+      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated\ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated.csproj">
+      <Project>{067fed25-b527-49eb-bbff-3337cd25b3f6}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Interfaces\ST.IoT.Services.Interfaces.csproj">
       <Project>{38af213b-6320-4c46-8878-a21ba73c38cf}</Project>
       <Name>ST.IoT.Services.Interfaces</Name>

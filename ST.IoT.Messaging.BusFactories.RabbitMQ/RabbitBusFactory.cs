@@ -109,13 +109,6 @@ namespace ST.IoT.Messaging.BusFactories.RabbitMQ
             _logger.Info("Started bus");
         }
 
-        /*
-        public void AddReceiveEndpoint<T>(string name, IConsumer<T> consumer) where T : class
-        {
-            
-        }
-        */
-
         public void Stop()
         {
             _logger.Info("Stopping bus");

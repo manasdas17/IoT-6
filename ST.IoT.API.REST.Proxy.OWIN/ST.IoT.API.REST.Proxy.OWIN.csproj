@@ -105,6 +105,14 @@
       <Project>{3f935d88-4b4a-4169-83db-181a64ddc7a4}</Project>
       <Name>ST.IoT.API.REST.Proxy.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.API.REST.PushRequestHttpHandler\ST.IoT.API.REST.PushRequestHttpHandler.csproj">
+      <Project>{c184c5de-0b82-4b19-b654-c266b96153d0}</Project>
+      <Name>ST.IoT.API.REST.PushRequestHttpHandler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated.csproj">
+      <Project>{eabdeaaa-ee39-4fde-a5f1-c133eae52445}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.HttpRequestGateway.Interfaces\ST.IoT.Messaging.HttpRequestGateway.Interfaces.csproj">
       <Project>{4b56ae1c-7fc1-4fc7-9c2e-bd40dea84cd6}</Project>
       <Name>ST.IoT.Messaging.HttpRequestGateway.Interfaces</Name>

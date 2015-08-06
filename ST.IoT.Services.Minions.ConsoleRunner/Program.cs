@@ -7,6 +7,8 @@ using Ninject;
 using NLog;
 using ST.IoT.Data.Interfaces;
 using ST.IoT.Data.Neo;
+using ST.IoT.Messaging.Endpoints.Interfaces;
+using ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated;
 using ST.IoT.Services.Interfaces;
 using ST.IoT.Services.Minions.Data.Interfaces;
 using ST.IoT.Services.Minions.Data.STNeo;
@@ -24,6 +26,7 @@ namespace ST.IoT.Services.Minions.ConsoleRunner
         static void Main(string[] args)
         {
             _kernel = new StandardKernel();
+            _kernel.Bind<IThingUpdated>().To<ThingUpdatedSendEndpoint>();
             _kernel.Bind<IThingsDataFacade>().To<Neo4jThingsDataFacade>();
             _kernel.Bind<IMinionsDataService>().To<MinionsSeamlessThingiesNeo4JDataFacade>();
             _kernel.Bind<IIoTService>().To<MinionsService>().InSingletonScope();

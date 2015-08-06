@@ -23,7 +23,7 @@ namespace ST.IoT.Data.Neo.Console.Runner
 
         private void doCreateUpdate()
         {
-            var df = new Neo4jThingsDataFacade();
+            var df = new Neo4jThingsDataFacade(null);
             df.reset();
 
             df.Put(File.ReadAllText("Message Samples/CreateAMinion.json"));
@@ -32,7 +32,7 @@ namespace ST.IoT.Data.Neo.Console.Runner
 
         private void doGetMostRecentState()
         {
-            var df = new Neo4jThingsDataFacade();
+            var df = new Neo4jThingsDataFacade(null);
             //df.reset();
             
             //doCreateUpdate();
@@ -43,7 +43,7 @@ namespace ST.IoT.Data.Neo.Console.Runner
 
         private void doGetAllStates()
         {
-            var df = new Neo4jThingsDataFacade();
+            var df = new Neo4jThingsDataFacade(null);
             //df.reset();
             
             //doCreateUpdate();

@@ -9,6 +9,7 @@ using Microsoft.Owin.Hosting;
 using NLog;
 using Owin;
 using ST.IoT.API.REST.Proxy.OWIN;
+using ST.IoT.API.REST.PushRequestHttpHandler;
 using ST.IoT.Messaging.HttpRequestGateway.Interfaces;
 using ILogger = Microsoft.Owin.Logging.ILogger;
 
@@ -77,6 +78,7 @@ namespace ST.IoT.API.REST.Proxy.OWIN
                         innerHandler: new HttpClientHandler(), 
                         handlers: new [] 
                                     { 
+                                        new MinionsChunkedWebRequestHandler(),
                                         HttpRequestGateway as DelegatingHandler, 
                                     }
                     ),

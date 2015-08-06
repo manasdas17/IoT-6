@@ -95,7 +95,7 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
                 CorrelatedRequestInternalMessageID = context.Message.InternalMessageID
             };
 
-            if (request.RequestUri.Host.StartsWith("minions."))
+            if (request.RequestUri.Host.StartsWith("minions.") || request.RequestUri.Host.Contains("the-mionions.io"))
             {
                 _logger.Info("got a request for minions");
                 var plugin = _plugins.FirstOrDefault(p => p.Metadata.Services == "minions");
@@ -111,6 +111,7 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
             }
             else
             {
+
                 _logger.Warn("Didn't recognize how to route: {0}", request.RequestUri.Host);
             }
 
