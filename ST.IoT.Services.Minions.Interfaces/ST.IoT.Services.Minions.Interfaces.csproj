@@ -40,10 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMinionsReceiveRequestEndpoint.cs" />
+    <Compile Include="IMinionsService.cs" />
     <Compile Include="IMinionsServiceFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Services.Interfaces\ST.IoT.Services.Interfaces.csproj">
+      <Project>{38af213b-6320-4c46-8878-a21ba73c38cf}</Project>
+      <Name>ST.IoT.Services.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions.Messages\ST.IoT.Services.Minions.Messages.csproj">
       <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>
       <Name>ST.IoT.Services.Minions.Messages</Name>

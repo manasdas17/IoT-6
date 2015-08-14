@@ -11,6 +11,14 @@ using ST.IoT.Messaging.Messages.Push;
 
 namespace ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated
 {
+    public class NullThingUpdatedSink : IThingUpdated
+    {
+
+        public void ThingWasUpdated(string thing_json)
+        {
+        }
+    }
+
     public class ThingUpdatedReceiveEndpoint : IThingUpdated
     {
         private IBusControl _bus;

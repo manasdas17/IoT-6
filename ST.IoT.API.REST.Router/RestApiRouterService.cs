@@ -5,7 +5,6 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
-using ST.IoT.Messaging.BusFactories.RabbitMQ;
 
 namespace ST.IoT.API.REST.Router
 {
@@ -14,7 +13,7 @@ namespace ST.IoT.API.REST.Router
         void Start();
         void Stop();
     }
-
+    /*
     public class RestApiRouterService : IRestApiRouterService
     {
         private IRabbitBusFactory _busFactory;
@@ -34,4 +33,5 @@ namespace ST.IoT.API.REST.Router
             _busFactory.Stop();
         }
     }
+     * */
 }

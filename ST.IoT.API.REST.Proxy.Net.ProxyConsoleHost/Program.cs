@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using bSeamless.IoT.Messaging.HttpRequestGateway;
 using Ninject;
 using NLog;
 using ST.IoT.API.REST.Proxy.Interfaces;
 using ST.IoT.API.REST.Proxy.OWIN;
-using ST.IoT.Messaging.BusFactories.RabbitMQ;
+//using ST.IoT.Messaging.BusFactories.RabbitMQ;
 using ST.IoT.Messaging.HttpRequestGateway.Interfaces;
 
 namespace ST.IoT.API.REST.Proxy.RestProxyConsoleHost
@@ -22,6 +21,8 @@ namespace ST.IoT.API.REST.Proxy.RestProxyConsoleHost
         {
             _logger.Info("Starting");
 
+            /*
+
             _kernel = new StandardKernel();
             _kernel.Bind<IRabbitBusFactory>()
                 .ToMethod(c =>
@@ -34,7 +35,9 @@ namespace ST.IoT.API.REST.Proxy.RestProxyConsoleHost
                 })
                 .WhenInjectedInto<MassTransit2RabbitMQ>();
 
-            _kernel.Bind<IHttpRequestGateway>().To<MassTransit2RabbitMQ>();
+            //_kernel.Bind<IHttpRequestGateway>().To<MassTransit2RabbitMQ>();
+            */
+            
             _kernel.Bind<IRestApiProxyHost>().To<OwinRestApiProxyHost>().InSingletonScope();
 
             _logger.Info("Creating and starting proxy host");

@@ -13,6 +13,7 @@ using ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated;
 
 namespace ST.IoT.API.REST.PushRequestHttpHandler
 {
+    /*
     public class UpdateStatusManager
     {
         private ThingUpdatedReceiveEndpoint _updateReceiver;
@@ -120,4 +121,5 @@ namespace ST.IoT.API.REST.PushRequestHttpHandler
             }
         }
     }
+     * */
 }

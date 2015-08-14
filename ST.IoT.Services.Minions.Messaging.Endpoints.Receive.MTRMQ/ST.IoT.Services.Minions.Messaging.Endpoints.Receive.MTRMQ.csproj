@@ -51,6 +51,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MinionsRabbitMQMassTransitReceiveEndpoint.cs" />
+    <Compile Include="MinionsMTRMQReceiveEndpoint.cs" />
     <Compile Include="MinionsRequestMessageConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,6 +69,26 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Messaging.Busses.Factories.Core\ST.IoT.Messaging.Busses.Factories.Core.csproj">
+      <Project>{f4fd8b32-e969-4792-96ac-d19e3a908f5f}</Project>
+      <Name>ST.IoT.Messaging.Busses.Factories.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Busses.Factories.MTRMQ\ST.IoT.Messaging.Busses.Factories.MTRMQ.csproj">
+      <Project>{9886da28-3b8d-4d00-b896-76a2eb74d6bf}</Project>
+      <Name>ST.IoT.Messaging.Busses.Factories.MTRMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Generic.Core\ST.IoT.Messaging.Endpoints.Generic.Core.csproj">
+      <Project>{9720899d-13ef-4e6b-890d-251ca4c1b045}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.Generic.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
+      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ\ST.IoT.Messaging.Endpoints.MTRMQ.csproj">
+      <Project>{a78892a8-4628-425b-98c6-10fbbca43a0b}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.MTRMQ</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
       <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>
       <Name>ST.IoT.Services.Minions.Interfaces</Name>

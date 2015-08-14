@@ -9,6 +9,7 @@ using ST.IoT.Services.Minions.Messages;
 
 namespace ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ
 {
+    /*
     internal class MinionsRequestMessageConsumer : IConsumer<MinionsRequestMessage>
     {
         private IMinionsReceiveRequestEndpoint _receiver;
@@ -29,4 +30,5 @@ namespace ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ
             context.RespondAsync(result);
         }
     }
+     * */
 }

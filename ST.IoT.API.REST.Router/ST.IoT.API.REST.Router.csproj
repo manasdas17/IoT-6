@@ -71,10 +71,6 @@
       <Project>{ee120167-b72e-4f3a-85d3-16a83bbe0f6d}</Project>
       <Name>ST.IoT.API.REST.Router.Plugins.Minions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.BusFactories.RabbitMQ\ST.IoT.Messaging.BusFactories.RabbitMQ.csproj">
-      <Project>{d180f34b-c16c-4eef-a8a4-80a101b6a279}</Project>
-      <Name>ST.IoT.Messaging.BusFactories.RabbitMQ</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

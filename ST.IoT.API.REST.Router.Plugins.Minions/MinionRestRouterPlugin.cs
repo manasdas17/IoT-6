@@ -107,11 +107,17 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
         public MinionRestRouterPlugin()
         {
             _logger.Info("Creating send endpoint");
-
+            /*
             _patternDispatcher = new UrlPatternDispatcher(this);
 
             _minionsServiceFacade = new MinionsSendEndpointMTRMQ();
             _minionsServiceFacade.Start();
+             * */
+        }
+
+        public bool CanHandle(HttpRequestMessage request)
+        {
+            return request.RequestUri.Host.StartsWith("minions.local") || request.RequestUri.Host.Contains("the-mionions.io");
         }
 
         public async Task<HttpResponseMessage> HandleAsync(HttpRequestMessage request)

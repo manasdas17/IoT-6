@@ -64,8 +64,8 @@
       <HintPath>..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.1.0-alpha1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.5.4.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
@@ -114,10 +114,6 @@
     <ProjectReference Include="..\ST.IoT.Common\ST.IoT.Common.csproj">
       <Project>{9f834d0e-3e8f-436c-aed7-fc87978df7b9}</Project>
       <Name>ST.IoT.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.BusFactories.RabbitMQ\ST.IoT.Messaging.BusFactories.RabbitMQ.csproj">
-      <Project>{d180f34b-c16c-4eef-a8a4-80a101b6a279}</Project>
-      <Name>ST.IoT.Messaging.BusFactories.RabbitMQ</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Messages.REST.Routing\ST.IoT.Messaging.Messages.REST.Routing.csproj">
       <Project>{6b75f104-47ae-4c3c-b33d-e88d18bfcc52}</Project>

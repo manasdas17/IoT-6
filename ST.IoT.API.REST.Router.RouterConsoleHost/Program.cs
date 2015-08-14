@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using Ninject;
 using NLog;
+using NLog.LayoutRenderers.Wrappers;
 using ST.IoT.API.REST.Router.Plugins.Interfaces;
 using ST.IoT.Common;
 using ST.IoT.Messaging.BusFactories.RabbitMQ;
@@ -34,7 +36,7 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
 
         private void run()
         {
-            _logger.Info("Starting rest router");
+            _logger.Info("Starting REST router");
             _kernel = new StandardKernel();
 
             var aggCatalog = new AggregateCatalog();
@@ -111,7 +113,6 @@ namespace ST.IoT.API.REST.Router.RouterConsoleHost
             }
             else
             {
-
                 _logger.Warn("Didn't recognize how to route: {0}", request.RequestUri.Host);
             }
 

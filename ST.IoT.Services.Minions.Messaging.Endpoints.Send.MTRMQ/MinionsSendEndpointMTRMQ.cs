@@ -12,7 +12,7 @@ namespace ST.IoT.Services.Minions.Endpoints.Send.MTRMQ
 {
     public class MinionsSendEndpointMTRMQ : IMinionsServiceFacade
     {
-        private string _address = "rabbitmq://localhost/minions_virtual_host";
+        private string _address = "rabbitmq://localhost/minions";
         private IBusControl _bus;
         private IRabbitMqHost _host;
         private BusHandle _handle;

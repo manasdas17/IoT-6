@@ -10,6 +10,8 @@ using NLog;
 using Owin;
 using ST.IoT.API.REST.Proxy.OWIN;
 using ST.IoT.API.REST.PushRequestHttpHandler;
+using ST.IoT.Messaging.Bus.Core;
+using ST.IoT.Messaging.Endpoints.Interfaces;
 using ST.IoT.Messaging.HttpRequestGateway.Interfaces;
 using ILogger = Microsoft.Owin.Logging.ILogger;
 
@@ -21,16 +23,20 @@ namespace ST.IoT.API.REST.Proxy.OWIN
     public class Proxy
     {
         static List<IDisposable> _apps = new List<IDisposable>();
-        public static IHttpRequestGateway HttpRequestGateway { get; set; }
+        public static DelegatingHandler HttpRequestGateway { get; set; }
 
         private static Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private static IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage> _endpoint;
 
         public Proxy()
         {
         }
 
-        public static void Start(string proxyAddress)
+        public static void Start(string proxyAddress, IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage> endpoint)
         {
+            _endpoint = endpoint;
+
             try
             {
                 _logger.Trace("Starting proxy");
@@ -59,6 +65,8 @@ namespace ST.IoT.API.REST.Proxy.OWIN
                     app.Dispose();
             }
             _logger.Trace("Proxy stopped");
+
+            _endpoint.Stop();
         }
 
         public void Configuration(IAppBuilder appBuilder)
@@ -78,8 +86,8 @@ namespace ST.IoT.API.REST.Proxy.OWIN
                         innerHandler: new HttpClientHandler(), 
                         handlers: new [] 
                                     { 
-                                        new MinionsChunkedWebRequestHandler(),
-                                        HttpRequestGateway as DelegatingHandler, 
+//                                        new MinionsChunkedWebRequestHandler(),
+                                        new RestRequestForwarder(_endpoint) as DelegatingHandler
                                     }
                     ),
                 defaults: new { path = RouteParameter.Optional },

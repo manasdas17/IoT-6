@@ -20,11 +20,8 @@ namespace ST.IoT.Services.Minions.Interfaces
         }
     }
 
-    public interface IMinionsReceiveRequestEndpoint
+    public interface IMinionsReceiveRequestEndpoint 
     {
-        void Start();
-        void Stop();
-
         Task<MinionsResponseMessage> ProcessRequestAsync(MinionsRequestMessage request);
 
         event EventHandler<MinionsRequestMessageReceivedEventArgs> ReceivedRequestMessage;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,6 +10,7 @@ using MassTransit;
 using MassTransit.RabbitMqTransport;
 using Newtonsoft.Json.Linq;
 using NLog;
+using ST.IoT.Messaging.Endpoints.Interfaces;
 using ST.IoT.Services.Interfaces;
 using ST.IoT.Services.Minions.Data.Interfaces;
 using ST.IoT.Services.Minions.Interfaces;
@@ -16,24 +18,25 @@ using ST.IoT.Services.Minions.Messages;
 
 namespace ST.IoT.Services.Minions
 {
-    public class MinionsService : IIoTService
+    public class MinionsService : IMinionsService
     {
-        private IMinionsReceiveRequestEndpoint _endpoint;
+        private IRequestReplyReceiveEndpoint<MinionsRequestMessage, MinionsResponseMessage> _endpoint;
         private IMinionsDataService _dataService;
 
         private Dictionary<string, Func<JObject, MinionsRequestMessage, MinionsResponseMessage>> _handlers;
 
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-
-        public MinionsService(IMinionsReceiveRequestEndpoint endpoint, IMinionsDataService dataService)
+        [ImportingConstructor]
+        public MinionsService(IRequestReplyReceiveEndpoint<MinionsRequestMessage, MinionsResponseMessage> endpoint, IMinionsDataService dataService)
         {
             _logger.Info("Configuring minions service");
 
             _endpoint = endpoint;
             _dataService = dataService;
 
-            _endpoint.ReceivedRequestMessage += _endpoint_ReceivedRequestMessage;
+
+            //_endpoint.ReceivedRequestMessage += _endpoint_ReceivedRequestMessage;
 
             _handlers = new Dictionary<string, Func<JObject, MinionsRequestMessage, MinionsResponseMessage>>()
             {
@@ -47,12 +50,12 @@ namespace ST.IoT.Services.Minions
 
         public void Start()
         {
-            _endpoint.Start();
+            _endpoint.Rez();
         }
 
         public void Stop()
         {
-            _endpoint.Stop();
+            _endpoint.DeRez();
         }
 
 

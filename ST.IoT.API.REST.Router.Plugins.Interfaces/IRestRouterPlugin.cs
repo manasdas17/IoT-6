@@ -9,6 +9,7 @@ namespace ST.IoT.API.REST.Router.Plugins.Interfaces
 {
     public interface IRestRouterPlugin
     {
+        bool CanHandle(HttpRequestMessage request);
         Task<HttpResponseMessage> HandleAsync(HttpRequestMessage request);
     }
 }

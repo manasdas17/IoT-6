@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Owin;
+using ST.IoT.Subscriptions.Agents.PushUpdates.Core;
 
 namespace IoT.Services.SignalR.ThingUpdateConsoleRunner
 {
@@ -45,11 +48,20 @@ namespace IoT.Services.SignalR.ThingUpdateConsoleRunner
         }
     }
 
+
+
     public class ListenHub : Hub
     {
+        private static CorePushUpdateManager<SignalRSubscriptionHandle> _subscriptionManager;
+
+        static ListenHub()
+        {
+            _subscriptionManager = new CorePushUpdateManager<SignalRSubscriptionHandle>();
+        }
         public class Subscription
         {
-            
+            public StatefulSignalProxy Client { get; set; }
+            public string ThingID { get; set; }
         }
 
         public void ThingUpdated(string thing)
@@ -59,13 +71,11 @@ namespace IoT.Services.SignalR.ThingUpdateConsoleRunner
 
         public void ListenForQuotesFrom(string thingID)
         {
-            Console.WriteLine("Request to listen for quotes from: " + thingID);
+            _subscriptionManager.subscribe(
+                thingID,
+                new SignalRSubscriptionHandle(Clients, Context.ConnectionId));
 
-            Task.Delay(5000).ContinueWith(
-                a =>
-                {
-                    ThingUpdated("leave my thing alone!");
-                });
+            Console.WriteLine("Request to listen for quotes from: " + thingID);
         }
 
         public override Task OnConnected()
@@ -76,6 +86,8 @@ namespace IoT.Services.SignalR.ThingUpdateConsoleRunner
 
         public override Task OnDisconnected(bool stopCalled)
         {
+            _subscriptionManager.unsubscribeByHandleID(Context.ConnectionId);
+
             Console.WriteLine("On Disconnected");
             return base.OnDisconnected(stopCalled);
         }
@@ -87,3 +99,4 @@ namespace IoT.Services.SignalR.ThingUpdateConsoleRunner
         }
     }
 }
+             

@@ -40,8 +40,8 @@
       <HintPath>..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.1.0-alpha1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -80,17 +80,41 @@
       <Project>{778db354-010a-45aa-929a-d16c2a22b23f}</Project>
       <Name>ST.IoT.Data.Neo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.BusFactories.RabbitMQ\ST.IoT.Messaging.BusFactories.RabbitMQ.csproj">
-      <Project>{d180f34b-c16c-4eef-a8a4-80a101b6a279}</Project>
-      <Name>ST.IoT.Messaging.BusFactories.RabbitMQ</Name>
+    <ProjectReference Include="..\ST.IoT.Hosts.Interfaces\ST.IoT.Hosts.Interfaces.csproj">
+      <Project>{0ecbfd73-630b-4871-8cc0-c6d9488291fe}</Project>
+      <Name>ST.IoT.Hosts.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Hosts.Minions\ST.IoT.Hosts.Minions.csproj">
+      <Project>{feefc040-5165-4f03-8afa-ec0fe85a594b}</Project>
+      <Name>ST.IoT.Hosts.Minions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Busses.Factories.Core\ST.IoT.Messaging.Busses.Factories.Core.csproj">
+      <Project>{f4fd8b32-e969-4792-96ac-d19e3a908f5f}</Project>
+      <Name>ST.IoT.Messaging.Busses.Factories.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Busses.Factories.MTRMQ\ST.IoT.Messaging.Busses.Factories.MTRMQ.csproj">
+      <Project>{9886da28-3b8d-4d00-b896-76a2eb74d6bf}</Project>
+      <Name>ST.IoT.Messaging.Busses.Factories.MTRMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Generic.Core\ST.IoT.Messaging.Endpoints.Generic.Core.csproj">
+      <Project>{9720899d-13ef-4e6b-890d-251ca4c1b045}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.Generic.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
       <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
       <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated.csproj">
+      <Project>{eabdeaaa-ee39-4fde-a5f1-c133eae52445}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated\ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated.csproj">
       <Project>{067fed25-b527-49eb-bbff-3337cd25b3f6}</Project>
       <Name>ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ\ST.IoT.Messaging.Endpoints.MTRMQ.csproj">
+      <Project>{a78892a8-4628-425b-98c6-10fbbca43a0b}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.MTRMQ</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Interfaces\ST.IoT.Services.Interfaces.csproj">
       <Project>{38af213b-6320-4c46-8878-a21ba73c38cf}</Project>
@@ -107,6 +131,10 @@
     <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
       <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>
       <Name>ST.IoT.Services.Minions.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Messages\ST.IoT.Services.Minions.Messages.csproj">
+      <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>
+      <Name>ST.IoT.Services.Minions.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ\ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ.csproj">
       <Project>{682c188d-450c-48f2-9ddb-efb39275a93f}</Project>

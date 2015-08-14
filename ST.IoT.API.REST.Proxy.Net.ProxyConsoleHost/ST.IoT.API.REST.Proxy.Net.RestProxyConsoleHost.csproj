@@ -70,7 +70,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Owin.Host.HttpListener">
@@ -79,8 +79,8 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.1.0-alpha1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -102,7 +102,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="ST.IoT.API.REST.Proxy.Net.RestProxyConsoleHost_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ST.IoT.API.REST.Proxy.Interfaces\ST.IoT.API.REST.Proxy.Interfaces.csproj">
@@ -113,10 +112,6 @@
       <Project>{ef152b6f-e350-4865-ae93-56622ca5bd0e}</Project>
       <Name>ST.IoT.API.REST.Proxy.OWIN</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.BusFactories.RabbitMQ\ST.IoT.Messaging.BusFactories.RabbitMQ.csproj">
-      <Project>{d180f34b-c16c-4eef-a8a4-80a101b6a279}</Project>
-      <Name>ST.IoT.Messaging.BusFactories.RabbitMQ</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated.csproj">
       <Project>{eabdeaaa-ee39-4fde-a5f1-c133eae52445}</Project>
       <Name>ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated</Name>
@@ -124,10 +119,6 @@
     <ProjectReference Include="..\ST.IoT.Messaging.HttpRequestGateway.Interfaces\ST.IoT.Messaging.HttpRequestGateway.Interfaces.csproj">
       <Project>{4b56ae1c-7fc1-4fc7-9c2e-bd40dea84cd6}</Project>
       <Name>ST.IoT.Messaging.HttpRequestGateway.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.HttpRequestGateway.MassTransit2RabbitMQ\ST.IoT.Messaging.HttpRequestGateway.MassTransit2RabbitMQ.csproj">
-      <Project>{9250e7a7-02fb-45d2-8400-413b7c9087ba}</Project>
-      <Name>ST.IoT.Messaging.HttpRequestGateway.MassTransit2RabbitMQ</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Messages.Push\ST.IoT.Messaging.Messages.Push.csproj">
       <Project>{f501eb19-20a8-42b7-9b60-c7e5c37f40d4}</Project>

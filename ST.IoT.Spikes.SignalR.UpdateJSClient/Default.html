@@ -35,12 +35,15 @@
             var listen = $.connection.listenHub;
 
             $.connection.hub.start().done(function() {
-                listen.server.listenForQuotesFrom("seamless-thingies-1");
             });
 
             listen.client.thingUpdated = function(thing) {
                 alert(thing);
             };
+            $('#sendmessage').click(function () {
+                listen.server.listenForQuotesFrom("minion-1");
+                alert('Now listenting');
+            });
             /*
             // Declare a proxy to reference the hub.
             var chat = $.connection.myHub;
