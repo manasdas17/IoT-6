@@ -11,6 +11,7 @@
     <AssemblyName>ST.IoT.Hosts.Minions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.1.0-alpha1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
@@ -44,21 +53,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MinionsHost.cs" />
+    <Compile Include="MinionsServiceHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Data.Interfaces\ST.IoT.Data.Interfaces.csproj">
+      <Project>{e439691a-4eaf-48ce-a18c-b1f561e5a8f0}</Project>
+      <Name>ST.IoT.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Data.Neo\ST.IoT.Data.Neo.csproj">
+      <Project>{778db354-010a-45aa-929a-d16c2a22b23f}</Project>
+      <Name>ST.IoT.Data.Neo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Hosts.Interfaces\ST.IoT.Hosts.Interfaces.csproj">
       <Project>{0ecbfd73-630b-4871-8cc0-c6d9488291fe}</Project>
       <Name>ST.IoT.Hosts.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
+      <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
+      <Name>ST.IoT.Messaging.Bus.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Interfaces\ST.IoT.Services.Interfaces.csproj">
       <Project>{38af213b-6320-4c46-8878-a21ba73c38cf}</Project>
       <Name>ST.IoT.Services.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Data.Interfaces\ST.IoT.Services.Minions.Data.Interfaces.csproj">
+      <Project>{6dfdceb5-0ec8-45f8-8b9d-1b4444d747db}</Project>
+      <Name>ST.IoT.Services.Minions.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Data.STNeo\ST.IoT.Services.Minions.Data.STNeo.csproj">
+      <Project>{76d96b84-46b3-495e-b319-6174a5211d51}</Project>
+      <Name>ST.IoT.Services.Minions.Data.STNeo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Endpoints\ST.IoT.Services.Minions.Endpoints.csproj">
+      <Project>{45f7c829-7f5c-467c-9cd2-e66cbaada36d}</Project>
+      <Name>ST.IoT.Services.Minions.Endpoints</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
       <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>
       <Name>ST.IoT.Services.Minions.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Messages\ST.IoT.Services.Minions.Messages.csproj">
+      <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>
+      <Name>ST.IoT.Services.Minions.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions\ST.IoT.Services.Minions.csproj">
       <Project>{6d091ca1-24c8-4d1e-887d-f456ae5d6d7d}</Project>

@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IoT.Services.SignalR.ThingUpdateConsoleRunner</RootNamespace>
     <AssemblyName>IoT.Services.SignalR.ThingUpdateConsoleRunner</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -89,6 +90,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
+      <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
+      <Name>ST.IoT.Messaging.Bus.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Subscriptions.Agents.PushUpdates.Core\ST.IoT.Subscriptions.Agents.PushUpdates.Core.csproj">
       <Project>{9a5884da-0701-4346-a32f-1c38b2e5fd31}</Project>
       <Name>ST.IoT.Subscriptions.Agents.PushUpdates.Core</Name>

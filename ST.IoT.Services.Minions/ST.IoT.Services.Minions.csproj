@@ -11,6 +11,7 @@
     <AssemblyName>ST.IoT.Services.Minions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -91,9 +92,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
-      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
+    <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
+      <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
+      <Name>ST.IoT.Messaging.Bus.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Interfaces\ST.IoT.Services.Interfaces.csproj">
       <Project>{38af213b-6320-4c46-8878-a21ba73c38cf}</Project>
@@ -106,6 +107,10 @@
     <ProjectReference Include="..\ST.IoT.Services.Minions.Data.STNeo\ST.IoT.Services.Minions.Data.STNeo.csproj">
       <Project>{76d96b84-46b3-495e-b319-6174a5211d51}</Project>
       <Name>ST.IoT.Services.Minions.Data.STNeo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Endpoints\ST.IoT.Services.Minions.Endpoints.csproj">
+      <Project>{45f7c829-7f5c-467c-9cd2-e66cbaada36d}</Project>
+      <Name>ST.IoT.Services.Minions.Endpoints</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
       <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>

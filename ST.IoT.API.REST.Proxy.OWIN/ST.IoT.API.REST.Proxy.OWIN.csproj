@@ -11,6 +11,7 @@
     <AssemblyName>ST.IoT.API.REST.Proxy.OWIN</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -111,21 +112,17 @@
       <Project>{c184c5de-0b82-4b19-b654-c266b96153d0}</Project>
       <Name>ST.IoT.API.REST.PushRequestHttpHandler</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.API.REST.Router.Messaging.Endpoints\ST.IoT.API.REST.Router.Messaging.Endpoints.csproj">
+      <Project>{2aabbdff-a470-4bc5-b7eb-dd65ee2fa7a2}</Project>
+      <Name>ST.IoT.API.REST.Router.Messaging.Endpoints</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
       <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
       <Name>ST.IoT.Messaging.Bus.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
-      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated.csproj">
-      <Project>{eabdeaaa-ee39-4fde-a5f1-c133eae52445}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.HttpRequestGateway.Interfaces\ST.IoT.Messaging.HttpRequestGateway.Interfaces.csproj">
-      <Project>{4b56ae1c-7fc1-4fc7-9c2e-bd40dea84cd6}</Project>
-      <Name>ST.IoT.Messaging.HttpRequestGateway.Interfaces</Name>
+    <ProjectReference Include="..\ST.IoT.Messaging.Messages.REST.Routing\ST.IoT.Messaging.Messages.REST.Routing.csproj">
+      <Project>{6b75f104-47ae-4c3c-b33d-e88d18bfcc52}</Project>
+      <Name>ST.IoT.Messaging.Messages.REST.Routing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

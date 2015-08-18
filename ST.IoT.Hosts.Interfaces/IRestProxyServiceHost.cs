@@ -7,8 +7,11 @@ using ST.IoT.API.REST.Proxy.Interfaces;
 
 namespace ST.IoT.Hosts.Interfaces
 {
-    public interface IRestProxyServiceHost 
+    public interface IRestProxyServiceHost : IHostableService
     {
         IRestApiProxyHost RestApiProxyHost { get; set; }
+
+        void Start();
+        void Stop();
     }
 }

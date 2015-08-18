@@ -14,128 +14,71 @@ using Ninject;
 using NLog;
 using RabbitMQ.Client.Events;
 using ST.IoT.API.REST.Router;
+using ST.IoT.API.REST.Router.Messaging.Endpoints;
 using ST.IoT.API.REST.Router.Plugins.Interfaces;
 using ST.IoT.Hosts.Interfaces;
+using ST.IoT.Messaging.Bus.Core;
 using ST.IoT.Messaging.Busses.Factories.MTRMQ;
-using ST.IoT.Messaging.Endpoints.Interfaces;
 using ST.IoT.Messaging.Messages.REST.Routing;
 
 namespace ST.IoT.Hosts.RestRouter
 {
-    [Export(typeof (IHostableService))]
-    public class RestRouterHost : IHostableService
+    public interface IRestRouterHost : IHostableService
     {
+        void Start();
+        void Stop();
+    }
+
+    [Export(typeof(IHostableService))]
+    public class RestRouterHost : IRestRouterHost
+    {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private IRestApiRouterService _routerService;
         private static IKernel _kernel;
 
-  ///      [ImportMany]
-//        public IEnumerable<Lazy<IRestRouterPlugin, IRestRouterPluginMetadata>> _plugins = null;
-        [ImportMany]
-        public IEnumerable<IRestRouterPlugin> _plugins = null;
+        private static IRestRouterHost _host;
 
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
-        private IReceiveRESTRequestForRoutingEndpoint _endpoint;
-
-        [ImportingConstructor]
-        public RestRouterHost(IReceiveRESTRequestForRoutingEndpoint endpoint)
+        public RestRouterHost(IRestApiRouterService routerService)
         {
-            _endpoint = endpoint;
-            _endpoint.Handler = processRestMessage;
+            _routerService = routerService;
         }
 
         public void Start()
         {
-            _logger.Info("Starting REST router");
-            _kernel = new StandardKernel();
-
-            loadPlugins();
-
-            _logger.Info("REST router started");
+            _routerService.Start();
         }
 
         public void Stop()
         {
-            _logger.Info("REST router stopped");
+            _routerService.Stop();
         }
 
-
-        private void loadPlugins()
+        public static void start(IKernel kernel = null)
         {
-            _logger.Info("Loading plugins");
-            var aggCatalog = new AggregateCatalog();
-            var directoryCatalog = new DirectoryCatalog(
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                "ST.IoT.API.REST.Router.Plugins.*.dll");
+            var k = kernel ?? _kernel;
+            if (k == null) throw new Exception("Not wired!");
 
-            aggCatalog.Catalogs.Add(directoryCatalog);
+            _host = _kernel.Get<IRestRouterHost>();
+            _host.Start();
 
-            var container = new CompositionContainer(aggCatalog);
-
-            _logger.Info("Composing router plugings");
-            container.ComposeParts(this);
-            _logger.Info("Found the following plugins:");
-            _plugins.ToList().ForEach(p => Console.WriteLine(p.GetType().Name));
-
-            _logger.Info("Started router");
         }
 
-        private async Task<RestRouterReplyMessage> processRestMessage(MassTransitRabbitMQFactory.Consumer<RestProxyToRouterMessage, RestRouterReplyMessage> consumer)
+        public static void stop()
         {
-            var context = consumer.Context;
-
-            _logger.Info("Deserializing message");
-            var ms = new MemoryStream(context.Message.HttpRequest);
-            var r1 = new HttpRequestMessage();
-            r1.Content = new ByteArrayContent(ms.ToArray());
-            r1.Content.Headers.Add("Content-Type", "application/http;msgtype=request");
-            var request = r1.Content.ReadAsHttpRequestMessageAsync().Result;
-
-            _logger.Info("Message is routed to {0}", request.RequestUri.Host);
-            _logger.Info(request.ToString());
-
-            var response = new RestRouterReplyMessage()
-            {
-                CorrelatedRequestInternalMessageID = context.Message.InternalMessageID
-            };
-
-            HttpResponseMessage http_response = null;
-
-            foreach (var p in _plugins)
-            {
-                if (p.CanHandle(request))
-                {
-                    http_response = await p.HandleAsync(request);
-                    break;
-                }
-            }
-
-            if (http_response == null)
-            {
-                _logger.Warn("Didn't recognize how to route: {0}", request.RequestUri.Host);
-                response.HttpResponse =
-                    encode(createHttpErrorResponse(HttpStatusCode.InternalServerError,
-                        "No services opted to handle this request: " + request.RequestUri));
-            }
-
-            _logger.Info("Replying");
-            _logger.Info(response);
-
-            return response;
+            _host.Stop();
         }
 
-        HttpResponseMessage createHttpErrorResponse(HttpStatusCode code, string message)
+        public static void wire(IKernel kernel)
         {
-            var r = new HttpResponseMessage(code);
-            r.Content = new StringContent(message);
-            return r;
-        }
+            _logger.Info("Starting wiring");
 
-        private byte[] encode(HttpResponseMessage httpResponseMessage)
-        {
+            _kernel = kernel;
+            _kernel.Bind<IRestRouterHost>().To<RestRouterHost>();
+            _kernel.Bind<IRestApiRouterService>().To<RestRouterService>();
+            _kernel.Bind<IConsumeRestRequestEndpoint>().To<ConsumeRestRequestEndpoint>();
 
-            _logger.Info("Encoding response message");
-            var serialized = new HttpMessageContent(httpResponseMessage).ReadAsByteArrayAsync().Result;
-            _logger.Info("Done encoding");
-            return serialized;
+            _logger.Info("Finished wiring");
         }
     }
 }

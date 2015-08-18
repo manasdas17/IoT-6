@@ -11,6 +11,7 @@
     <AssemblyName>ST.IoT.Aggregates.Stlth</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,16 +45,24 @@
       <HintPath>..\packages\MassTransit.RabbitMQ.3.0.11-beta\lib\net45\MassTransit.RabbitMqTransport.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin.Host.HttpListener, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.0.1\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NewId, Version=2.1.3.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <HintPath>..\packages\NewId.2.1.3\lib\net45\NewId.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -66,6 +75,10 @@
     </Reference>
     <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.1.0-alpha1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.5.4.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
@@ -95,6 +108,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.API.REST.Proxy.Core\ST.IoT.API.REST.Proxy.Core.csproj">
+      <Project>{162ff58a-3574-416a-8439-17dfb7019938}</Project>
+      <Name>ST.IoT.API.REST.Proxy.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.API.REST.Proxy.Interfaces\ST.IoT.API.REST.Proxy.Interfaces.csproj">
       <Project>{3f935d88-4b4a-4169-83db-181a64ddc7a4}</Project>
       <Name>ST.IoT.API.REST.Proxy.Interfaces</Name>
@@ -103,17 +120,85 @@
       <Project>{ef152b6f-e350-4865-ae93-56622ca5bd0e}</Project>
       <Name>ST.IoT.API.REST.Proxy.OWIN</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.API.REST.Router.Messaging.Endpoints\ST.IoT.API.REST.Router.Messaging.Endpoints.csproj">
+      <Project>{2aabbdff-a470-4bc5-b7eb-dd65ee2fa7a2}</Project>
+      <Name>ST.IoT.API.REST.Router.Messaging.Endpoints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.API.REST.Router.Plugins.Minions\ST.IoT.API.REST.Router.Plugins.Minions.csproj">
+      <Project>{ee120167-b72e-4f3a-85d3-16a83bbe0f6d}</Project>
+      <Name>ST.IoT.API.REST.Router.Plugins.Minions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.API.REST.Router\ST.IoT.API.REST.Router.csproj">
+      <Project>{74974273-3fc3-44ba-bd83-67782fd91aa4}</Project>
+      <Name>ST.IoT.API.REST.Router</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Hosts.Interfaces\ST.IoT.Hosts.Interfaces.csproj">
+      <Project>{0ecbfd73-630b-4871-8cc0-c6d9488291fe}</Project>
+      <Name>ST.IoT.Hosts.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Hosts.Minions\ST.IoT.Hosts.Minions.csproj">
+      <Project>{feefc040-5165-4f03-8afa-ec0fe85a594b}</Project>
+      <Name>ST.IoT.Hosts.Minions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Hosts.ProxyService\ST.IoT.Hosts.RestProxyService.csproj">
+      <Project>{1516e1b3-9a6c-4de2-9979-1f85a5cf7ff2}</Project>
+      <Name>ST.IoT.Hosts.RestProxyService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Hosts.RestRouter\ST.IoT.Hosts.RestRouter.csproj">
+      <Project>{6a0cd153-aa21-4364-9387-1ac21697d6dc}</Project>
+      <Name>ST.IoT.Hosts.RestRouter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Hosts.SignalR.Things\ST.IoT.Hosts.SignalR.Things.csproj">
+      <Project>{b20f722f-4422-40c5-ae8f-afb1c31b435b}</Project>
+      <Name>ST.IoT.Hosts.SignalR.Things</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Hosts.Stlth\ST.IoT.Hosts.Stlth.csproj">
+      <Project>{7981c869-3902-4d3e-9dab-e190bc18d36b}</Project>
+      <Name>ST.IoT.Hosts.Stlth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
       <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
       <Name>ST.IoT.Messaging.Bus.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
-      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Things.Updates\ST.IoT.Messaging.Endpoints.Things.Updates.csproj">
+      <Project>{49f75f87-e9de-4929-95de-bc96340776c5}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.Things.Updates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Messages.REST.Routing\ST.IoT.Messaging.Messages.REST.Routing.csproj">
+      <Project>{6b75f104-47ae-4c3c-b33d-e88d18bfcc52}</Project>
+      <Name>ST.IoT.Messaging.Messages.REST.Routing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Utils.HttpMessages\ST.IoT.Messaging.Utils.HttpMessages.csproj">
+      <Project>{c0c9a698-17cc-40f1-9e7e-939d7ecae3fd}</Project>
+      <Name>ST.IoT.Messaging.Utils.HttpMessages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Endpoints\ST.IoT.Services.Minions.Endpoints.csproj">
+      <Project>{45f7c829-7f5c-467c-9cd2-e66cbaada36d}</Project>
+      <Name>ST.IoT.Services.Minions.Endpoints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
+      <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>
+      <Name>ST.IoT.Services.Minions.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions\ST.IoT.Services.Minions.csproj">
+      <Project>{6d091ca1-24c8-4d1e-887d-f456ae5d6d7d}</Project>
+      <Name>ST.IoT.Services.Minions</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Stlth.Core\ST.IoT.Services.Stlth.Core.csproj">
       <Project>{8c12e7c0-2e1e-4285-b66a-3d178e48bb8e}</Project>
       <Name>ST.IoT.Services.Stlth.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Stlth.Endpoints\ST.IoT.Services.Stlth.Endpoints.csproj">
+      <Project>{c7290067-0ff7-4959-8894-345d73e8e41b}</Project>
+      <Name>ST.IoT.Services.Stlth.Endpoints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Stlth.Messages\ST.IoT.Services.Stlth.Messages.csproj">
+      <Project>{cd0e8be6-0894-4731-a7a0-cb204a7d8e38}</Project>
+      <Name>ST.IoT.Services.Stlth.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Stlth.RestRouterPlugin\ST.IoT.Services.Stlth.RestRouterPlugin.csproj">
+      <Project>{d228ab42-2177-410e-bd51-35faeffa132f}</Project>
+      <Name>ST.IoT.Services.Stlth.RestRouterPlugin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

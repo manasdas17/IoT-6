@@ -28,7 +28,7 @@ namespace ST.IoT.Messaging.Bus.Core
             Username = username;
             Password = password;
             VirtualHost = virtualHost;
-            Timeout = timeout != null ? TimeSpan.FromMilliseconds(timeout.Value) : TimeSpan.FromSeconds(5);
+            Timeout = timeout != null ? TimeSpan.FromMilliseconds(timeout.Value) : TimeSpan.FromSeconds(180);
         }
 
         public Uri Address { get; private set; }
@@ -150,16 +150,6 @@ namespace ST.IoT.Messaging.Bus.Core
         }
     }
 
-    /*
-    public class MassTransitServiceBusRequestReplyEndpointConfig
-    {
-        public Uri Address { get; private set; }
-        public string Username { get; private set; }
-        public string Password { get; private set; }
-        public string VirtualHost { get; private set; }
-    }
-    */
-
 
     public abstract class EndpointConfigurator
     {
@@ -237,7 +227,7 @@ namespace ST.IoT.Messaging.Bus.Core
 
         protected virtual void configure(EndpointBase endpoint, IRabbitMqBusFactoryConfigurator rabbit)
         {
-            var epc = endpoint as RequestReplyConsumeEndpoint;
+            var epc = endpoint as ConsumeEndpoint;
 
             var parameters = _parameters ?? EndpointParameters.Default;
 
@@ -260,8 +250,10 @@ namespace ST.IoT.Messaging.Bus.Core
 
             rabbit.ReceiveEndpoint(endpoint.Host, endpoint.QueueName, receiverConfigure =>
             {
-                _logger.Info("Adding receive consumer: {0}", epc.RequestType);
-                receiverConfigure.Consumer(epc.ConsumerType, t => epc.createConsumer());
+                _logger.Info("Adding receive consumer: {0}", epc.ConsumerType);
+                receiverConfigure.Consumer(
+                    epc.ConsumerType, 
+                    t => epc.createConsumer());
             });
         }
     }
@@ -303,6 +295,8 @@ namespace ST.IoT.Messaging.Bus.Core
             protected virtual void configure(EndpointBase endpoint, IRabbitMqBusFactoryConfigurator rabbit)
             {
                 var parameters = _parameters ?? EndpointParameters.Default;
+
+                if (parameters == null) throw new Exception("No parameters specified for masstransit endpoint");
 
                 var calculatedAddress = parameters.Address;
                 if (!string.IsNullOrEmpty(parameters.VirtualHost))
@@ -374,24 +368,21 @@ namespace ST.IoT.Messaging.Bus.Core
     }
 
 
-    public interface IRequestReplyReceiveEndpoint<Request, Reply> : IMassTransitEndpoint
+    public interface IRequestReplyConsumeEndpoint<Request, Reply> : IMassTransitEndpoint
         where Request : class
         where Reply : class
     {
         Task<Reply> ProcessAsync(Request request);
+        Func<Request, Task<Reply>> Handler { get; set; } 
     }
 
-    public abstract class RequestReplyConsumeEndpoint : EndpointBase
+    public abstract class RequestReplyConsumeEndpoint : ConsumeEndpoint
     {
-        public Type ConsumerType { get; set; }
-        public Type RequestType { get; set; }
         public Type ReplyType { get; set; }
 
-        public RequestReplyConsumeEndpoint(Type requestType, Type replyType, Type consumerType, EndpointConfigurator configurator) : base(configurator)
+        public RequestReplyConsumeEndpoint(string queueName, Type requestType, Type replyType, Type consumerType) : base(queueName, requestType, consumerType)
         {
-            RequestType = requestType;
             ReplyType = replyType;
-            ConsumerType = consumerType;
         }
 
         protected override void wire()
@@ -401,27 +392,14 @@ namespace ST.IoT.Messaging.Bus.Core
         protected override void unwire()
         {
         }
-
-        public abstract IConsumer createConsumer();
     }
 
     public class RequestReplyConsumeEndpoint<Request, Reply> : RequestReplyConsumeEndpoint,
-        IRequestReplyReceiveEndpoint<Request, Reply>
+        IRequestReplyConsumeEndpoint<Request, Reply>
         where Request : class
         where Reply : class
     {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
-
-        public class MessageReceivedEventArgs<Request, Reply> : EventArgs
-        {
-            public Request Message { get; private set; }
-            public Reply Response { get; set; }
-
-            public MessageReceivedEventArgs(Request request)
-            {
-                Message = request;
-            }
-        }
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public class Consumer : IConsumer<Request>
         {
@@ -441,8 +419,6 @@ namespace ST.IoT.Messaging.Bus.Core
             }
         }
 
-        public event EventHandler<MessageReceivedEventArgs<Request, Reply>> MessageReceived;
-
         public override IConsumer createConsumer()
         {
             return new Consumer(handler);
@@ -456,21 +432,22 @@ namespace ST.IoT.Messaging.Bus.Core
 
         private Consumer _consumer;
 
-        public RequestReplyConsumeEndpoint(string queueName) : base(typeof (Request), typeof (Reply), typeof(Consumer), RabbitMqConsumeEndpointConfigurator.Default)
+        public RequestReplyConsumeEndpoint(string queueName) : base(queueName, typeof (Request), typeof (Reply), typeof(Consumer))
         {
-            QueueName = queueName;
         }
+
+        public Func<Request, Task<Reply>> Handler { get; set; } 
 
         public async virtual Task<Reply> ProcessAsync(Request request)
         {
-            if (MessageReceived != null)
-            {
-                var args = new MessageReceivedEventArgs<Request, Reply>(request);
-                MessageReceived(this, args);
-                return args.Response;
+            var result = default(Reply);
 
+            if (Handler != null)
+            {
+                result = await Handler(request);
             }
-            return null;
+
+            return result;
         }
 
         public void Start()
@@ -499,5 +476,209 @@ namespace ST.IoT.Messaging.Bus.Core
             }
         }
     }
+
+    public class RabbitMqPublishEndpointConfigurator : EndpointConfigurator
+    {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public static RabbitMqPublishEndpointConfigurator Default = new RabbitMqPublishEndpointConfigurator();
+
+        public RabbitMqPublishEndpointConfigurator(EndpointParameters parameters = null) : base(parameters)
+        {
+        }
+
+        public override IBusControl Configure(EndpointBase endpoint)
+        {
+            endpoint.BusControl = MassTransit.Bus.Factory.CreateUsingRabbitMq(rabbit => configure(endpoint, rabbit));
+            return endpoint.BusControl;
+        }
+
+        protected virtual void configure(EndpointBase endpoint, IRabbitMqBusFactoryConfigurator rabbit)
+        {
+            var epc = endpoint as PublishEndpointBase;
+
+            var parameters = _parameters ?? EndpointParameters.Default;
+
+            var calculatedAddress = parameters.Address;
+            if (!string.IsNullOrEmpty(parameters.VirtualHost))
+            {
+                calculatedAddress = new Uri(parameters.Address + parameters.VirtualHost + "/");
+            }
+            /*
+            if (!string.IsNullOrEmpty(endpoint.QueueName))
+            {
+                calculatedAddress = new Uri(calculatedAddress + endpoint.QueueName);
+            }
+            */
+            endpoint.Host = rabbit.Host(calculatedAddress, hostConfigure =>
+            {
+                hostConfigure.Username(parameters.Username);
+                hostConfigure.Password(parameters.Password);
+            });
+        }
+    }
+
+    public interface IPublishEndpoint<Message> where Message : class
+    {
+        Task PublishAsync(Message message);
+    }
+
+    public class PublishEndpointBase : EndpointBase
+    {
+        protected override void unwire()
+        {
+        }
+
+        protected override void wire()
+        {
+        }
+    }
+
+    public class PublishEndpoint<Message> : EndpointBase, IPublishEndpoint<Message>
+        where Message : class
+    {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public PublishEndpoint(string queueName) 
+        {
+            QueueName = queueName;
+        }
+
+        public void Start()
+        {
+            wire();
+        }
+
+        public void Stop()
+        {
+            unwire();
+        }
+
+        protected override void wire()
+        {
+            var configurator = EndpointConfigurator ?? RabbitMqPublishEndpointConfigurator.Default;
+            configurator.Configure(this);
+            BusHandle = BusControl.Start();
+        }
+
+        protected override void unwire()
+        {
+            if (BusHandle != null)
+            {
+                BusHandle.Stop();
+                BusHandle.Dispose();
+            }
+        }
+
+        public async Task PublishAsync(Message message)
+        {
+            await this.BusControl.Publish(message);
+        }
+    }
+
+    public interface IConsumeEndpoint<Message> where Message : class
+    {
+        
+    }
+
+    public abstract class ConsumeEndpoint : EndpointBase
+    {
+        public Type MessageType { get; set; }
+        public Type ConsumerType { get; set; }
+
+        public ConsumeEndpoint(string queueName, Type messageType, Type consumerType) : base(RabbitMqConsumeEndpointConfigurator.Default)
+        {
+            QueueName = queueName;
+            MessageType = messageType;
+            ConsumerType = consumerType;
+        }
+
+        protected override void wire()
+        {
+        }
+
+        protected override void unwire()
+        {
+        }
+
+        public abstract IConsumer createConsumer();
+    }
+
+    public class ConsumeEndpoint<Message> : ConsumeEndpoint, IConsumeEndpoint<MessageContext> where Message : class  
+    {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public class Consumer : IConsumer<Message>
+        {
+            public ConsumeContext<Message> Context { get; set; }
+            private Func<Consumer, ConsumeContext<Message>, Task> _handler;
+
+            public Consumer(Func<Consumer, ConsumeContext<Message>, Task> handler)
+            {
+                _handler = handler;
+            }
+
+            public async Task Consume(ConsumeContext<Message> context)
+            {
+                this.Context = context;
+                await _handler(this, context);
+            }
+        }
+
+        public override IConsumer createConsumer()
+        {
+            return new Consumer(handler);
+        }
+
+        protected async Task handler(Consumer consumer, ConsumeContext<Message> context)
+        {
+             await ProcessAsync(context.Message);
+        }
+
+        private Consumer _consumer;
+        public bool AutoDelete { get; set; }
+
+        public ConsumeEndpoint(string queueName, bool autoDelete = false) : base(queueName, typeof(Message), typeof(Consumer))
+        {
+            AutoDelete = autoDelete;
+        }
+
+        public Func<Message, Task> Handler { get; set; }
+
+        public async virtual Task ProcessAsync(Message request)
+        {
+            if (Handler != null)
+            {
+                await Handler(request);
+            }
+        }
+
+        public void Start()
+        {
+            wire();
+        }
+
+        public void Stop()
+        {
+            unwire();
+        }
+
+        protected override void wire()
+        {
+            var configurator = EndpointConfigurator ?? RabbitMqConsumeEndpointConfigurator.Default;
+            configurator.Configure(this);
+            BusHandle = BusControl.Start();
+        }
+
+        protected override void unwire()
+        {
+            if (BusHandle != null)
+            {
+                BusHandle.Stop();
+                BusHandle.Dispose();
+            }
+        }
+    }
+
 }
 

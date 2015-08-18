@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json.Linq;
 using NLog;
 using ST.IoT.API.REST.Router.Plugins.Interfaces;
-using ST.IoT.Services.Minions.Endpoints.Send.MTRMQ;
+using ST.IoT.Services.Minions.Endpoints;
 using ST.IoT.Services.Minions.Messages;
 
 namespace ST.IoT.API.REST.Router.Plugins.Minions
@@ -21,8 +21,6 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
     [ExportMetadata("Services", "minions")]
     public class MinionRestRouterPlugin : IRestRouterPlugin
     {
-        private MinionsSendEndpointMTRMQ _minionsServiceFacade;
-
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         public class UrlPatternDispatcher
@@ -102,17 +100,16 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
         }
 
         private UrlPatternDispatcher _patternDispatcher;
+        private ForwardToMinionsServiceEndpoint _forwarder;
 
-
-        public MinionRestRouterPlugin()
+        [ImportingConstructor]
+        public MinionRestRouterPlugin([Import] IForwardToMinionsServiceEndpoint forwarder)
         {
             _logger.Info("Creating send endpoint");
-            /*
+            
             _patternDispatcher = new UrlPatternDispatcher(this);
 
-            _minionsServiceFacade = new MinionsSendEndpointMTRMQ();
-            _minionsServiceFacade.Start();
-             * */
+            _forwarder = forwarder as ForwardToMinionsServiceEndpoint;
         }
 
         public bool CanHandle(HttpRequestMessage request)
@@ -167,7 +164,7 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
                 var json = JObject.Parse(withsubs);
                 json["content"] = content;
 
-                var reply = await _minionsServiceFacade.ProcessRequestAsync(new MinionsRequestMessage(json.ToString()));
+                var reply = await _forwarder.SendAsync(new MinionsRequestMessage(json.ToString()));
 
                 // TODO: need to analyze the minions response and put it in the HttpResponseMessage
 
@@ -203,7 +200,7 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
                 var withsubs = template.Replace("{name}", uri.Segments[5]);
                 var json = JObject.Parse(withsubs);
 
-                var reply = await _minionsServiceFacade.ProcessRequestAsync(new MinionsRequestMessage(json.ToString()));
+                var reply = await _forwarder.SendAsync(new MinionsRequestMessage(json.ToString()));
 
                 // TODO: need to analyze the minions response and put it in the HttpResponseMessage
 
@@ -239,7 +236,7 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
                 var withsubs = template.Replace("{name}", uri.Segments[4]);
                 var json = JObject.Parse(withsubs);
 
-                var reply = await _minionsServiceFacade.ProcessRequestAsync(new MinionsRequestMessage(json.ToString()));
+                var reply = await _forwarder.SendAsync(new MinionsRequestMessage(json.ToString()));
 
                 // TODO: need to analyze the minions response and put it in the HttpResponseMessage
 
@@ -263,6 +260,16 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
             var response = new HttpResponseMessage(httpStatusCode);
             response.Content = new StringContent(content);
             return response;
+        }
+
+        public void Start()
+        {
+            _forwarder.Start();
+        }
+
+        public void Stop()
+        {
+            _forwarder.Stop();
         }
     }
 }

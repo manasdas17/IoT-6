@@ -12,7 +12,8 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using NLog;
 using ST.IoT.Data.Interfaces;
-using ST.IoT.Messaging.Endpoints.Interfaces;
+using ST.IoT.Messaging.Endpoints.Things.Updates;
+using ST.IoT.Messaging.Messages.Push;
 
 namespace ST.IoT.Data.Neo
 {
@@ -23,11 +24,11 @@ namespace ST.IoT.Data.Neo
 
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private IThingUpdated _thingUpdated = null;
+        private ThingUpdatedPublishEndpoint _thingUpdated = null;
 
-        public Neo4jThingsDataFacade(IThingUpdated thingUpdated)
+        public Neo4jThingsDataFacade(IThingUpdatedPublishEndpoint thingUpdated)
         {
-            _thingUpdated = thingUpdated;
+            _thingUpdated = thingUpdated as ThingUpdatedPublishEndpoint;
         }
 
         public void reset()
@@ -93,7 +94,7 @@ CREATE UNIQUE state_collection-[r_state__collection_context:IN_CONTEXT]->(contex
 
                 if (_thingUpdated != null)
                 {
-                    _thingUpdated.ThingWasUpdated(json);
+                    _thingUpdated.PublishAsync(new ThingUpdatedMessage(json));
                 }
             }
             catch (Exception ex)

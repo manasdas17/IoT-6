@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>b541d5f9</NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Neo4jClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Neo4jClient.1.1.0.1\lib\net45\Neo4jClient.dll</HintPath>
+      <HintPath>..\packages\Neo4jClient.1.1.0.3\lib\net45\Neo4jClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -69,9 +70,17 @@
       <Project>{e439691a-4eaf-48ce-a18c-b1f561e5a8f0}</Project>
       <Name>ST.IoT.Data.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
-      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
+    <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
+      <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
+      <Name>ST.IoT.Messaging.Bus.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Things.Updates\ST.IoT.Messaging.Endpoints.Things.Updates.csproj">
+      <Project>{49f75f87-e9de-4929-95de-bc96340776c5}</Project>
+      <Name>ST.IoT.Messaging.Endpoints.Things.Updates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Messages.Push\ST.IoT.Messaging.Messages.Push.csproj">
+      <Project>{f501eb19-20a8-42b7-9b60-c7e5c37f40d4}</Project>
+      <Name>ST.IoT.Messaging.Messages.Push</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

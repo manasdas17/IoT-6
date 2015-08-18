@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated;
 
 namespace ST.IoT.API.REST.PushRequestHttpHandler
 {

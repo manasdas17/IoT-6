@@ -11,6 +11,7 @@
     <AssemblyName>ST.IoT.Hosts.RestRouter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +100,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.API.REST.Router.Messaging.Endpoints\ST.IoT.API.REST.Router.Messaging.Endpoints.csproj">
+      <Project>{2aabbdff-a470-4bc5-b7eb-dd65ee2fa7a2}</Project>
+      <Name>ST.IoT.API.REST.Router.Messaging.Endpoints</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.API.REST.Router.Plugins.Interfaces\ST.IoT.API.REST.Router.Plugins.Interfaces.csproj">
       <Project>{2493adbe-0d46-4b93-b236-4ffb1989c70b}</Project>
       <Name>ST.IoT.API.REST.Router.Plugins.Interfaces</Name>
@@ -111,13 +116,13 @@
       <Project>{0ecbfd73-630b-4871-8cc0-c6d9488291fe}</Project>
       <Name>ST.IoT.Hosts.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
+      <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
+      <Name>ST.IoT.Messaging.Bus.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Busses.Factories.MTRMQ\ST.IoT.Messaging.Busses.Factories.MTRMQ.csproj">
       <Project>{9886da28-3b8d-4d00-b896-76a2eb74d6bf}</Project>
       <Name>ST.IoT.Messaging.Busses.Factories.MTRMQ</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
-      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Messages.REST.Routing\ST.IoT.Messaging.Messages.REST.Routing.csproj">
       <Project>{6b75f104-47ae-4c3c-b33d-e88d18bfcc52}</Project>

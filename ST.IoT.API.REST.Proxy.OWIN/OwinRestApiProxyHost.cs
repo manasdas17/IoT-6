@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using NLog;
 using ST.IoT.API.REST.Proxy.Interfaces;
+using ST.IoT.API.REST.Router.Messaging.Endpoints;
 using ST.IoT.Messaging.Bus.Core;
-using ST.IoT.Messaging.Endpoints.Interfaces;
-using ST.IoT.Messaging.HttpRequestGateway.Interfaces;
+using ST.IoT.Messaging.Messages.REST.Routing;
 
 namespace ST.IoT.API.REST.Proxy.OWIN
 {
@@ -20,25 +20,16 @@ namespace ST.IoT.API.REST.Proxy.OWIN
         private Logger _logger = LogManager.GetCurrentClassLogger();
         public string BaseAddress { get; set; }
 
-        /*
-        public ISendRESTRequestToRESTRouterEndpoint RestRouterEndpoint
-        {
-            get { return Proxy.HttpRequestGateway as ISendRESTRequestToRESTRouterEndpoint; }
-        }
 
-        private ISendRESTRequestToRESTRouterEndpoint _endpoint;
-        */
-
-        private IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage>  _forwarder;
+        private SendToRestRouterEndpoint _forwarder;
 
         [ImportingConstructor]
-        public OwinRestApiProxyHost(IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage> forwarder,
+        public OwinRestApiProxyHost(ISendToRestRouterEndpoint forwarder,
             string baseAddress = "http://*:8080/")
-//            ISendRESTRequestToRESTRouterEndpoint forwarder)
         {
             // defaults
             BaseAddress = baseAddress;
-            _forwarder = forwarder;
+            _forwarder = forwarder as SendToRestRouterEndpoint;
 
             _logger.Info("Created on address: " + BaseAddress);
             _logger.Info("Using a " + forwarder);

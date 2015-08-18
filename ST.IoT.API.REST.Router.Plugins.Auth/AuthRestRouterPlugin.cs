@@ -22,5 +22,16 @@ namespace ST.IoT.API.REST.Router.Plugins.Auth
         {
             throw new NotImplementedException();
         }
+
+        public void Start()
+        {
+
+        }
+
+        public void Stop()
+        {
+
+        }
+
     }
 }

@@ -10,9 +10,8 @@ using MassTransit;
 using MassTransit.RabbitMqTransport;
 using Newtonsoft.Json.Linq;
 using NLog;
-using ST.IoT.Messaging.Endpoints.Interfaces;
-using ST.IoT.Services.Interfaces;
 using ST.IoT.Services.Minions.Data.Interfaces;
+using ST.IoT.Services.Minions.Endpoints;
 using ST.IoT.Services.Minions.Interfaces;
 using ST.IoT.Services.Minions.Messages;
 
@@ -20,7 +19,7 @@ namespace ST.IoT.Services.Minions
 {
     public class MinionsService : IMinionsService
     {
-        private IRequestReplyReceiveEndpoint<MinionsRequestMessage, MinionsResponseMessage> _endpoint;
+        private ConsumeMinionsRequestEndpoint _consumer;
         private IMinionsDataService _dataService;
 
         private Dictionary<string, Func<JObject, MinionsRequestMessage, MinionsResponseMessage>> _handlers;
@@ -28,15 +27,14 @@ namespace ST.IoT.Services.Minions
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         [ImportingConstructor]
-        public MinionsService(IRequestReplyReceiveEndpoint<MinionsRequestMessage, MinionsResponseMessage> endpoint, IMinionsDataService dataService)
+        public MinionsService([Import] IConsumeMinionsRequestEndpoint consumer, [Import] IMinionsDataService dataService)
         {
             _logger.Info("Configuring minions service");
 
-            _endpoint = endpoint;
+            _consumer = consumer as ConsumeMinionsRequestEndpoint;
+            _consumer.Handler = consumer_ReceivedMessage;
             _dataService = dataService;
 
-
-            //_endpoint.ReceivedRequestMessage += _endpoint_ReceivedRequestMessage;
 
             _handlers = new Dictionary<string, Func<JObject, MinionsRequestMessage, MinionsResponseMessage>>()
             {
@@ -50,36 +48,37 @@ namespace ST.IoT.Services.Minions
 
         public void Start()
         {
-            _endpoint.Rez();
+            _consumer.Start();
         }
 
         public void Stop()
         {
-            _endpoint.DeRez();
+            _consumer.Stop();
         }
 
 
-        void _endpoint_ReceivedRequestMessage(object sender, MinionsRequestMessageReceivedEventArgs e)
+        private async Task<MinionsResponseMessage> consumer_ReceivedMessage(MinionsRequestMessage message)
         {
             _logger.Info("Received a minions request");
-            _logger.Info(e.RequestMessage);
+            _logger.Info(message);
+
+            var response = new MinionsResponseMessage();
 
             try
             {
-                var request = JObject.Parse(e.RequestMessage.Request);
-
+                var request = JObject.Parse(message.Request);
                 var action = request["action"].ToString();
                 if (_handlers.ContainsKey(action))
                 {
                     _logger.Info("Calling handler");
-                    e.ResponseMessage = _handlers[action](request, e.RequestMessage);
+                    response = _handlers[action](request, message);
                     _logger.Info("Got response from handler");
-                    _logger.Info(e.ResponseMessage);
+                    _logger.Info(response);
                 }
                 else
                 {
                     _logger.Warn("Unknown action: " + action);
-                    e.ResponseMessage = new MinionsResponseMessage(
+                    response = new MinionsResponseMessage(
                         HttpStatusCode.BadRequest,
                         "Invalid action: " + action);
                 }
@@ -87,10 +86,12 @@ namespace ST.IoT.Services.Minions
             catch (Exception ex)
             {
                 _logger.Error(ex.Message);
-                e.ResponseMessage = new MinionsResponseMessage(
+                response = new MinionsResponseMessage(
                     HttpStatusCode.BadRequest,
                     ex.Message);
             }
+
+            return response;
         }
 
         private MinionsResponseMessage quote_for(JObject request, MinionsRequestMessage message)

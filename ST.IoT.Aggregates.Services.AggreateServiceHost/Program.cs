@@ -17,13 +17,8 @@ using ST.IoT.Hosts.Minions;
 using ST.IoT.Hosts.RestProxyService;
 using ST.IoT.Hosts.RestRouter;
 using ST.IoT.Messaging.Busses.Factories.MTRMQ;
-using ST.IoT.Messaging.Endpoints.Interfaces;
-using ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated;
-using ST.IoT.Messaging.Endpoints.Receive.RESTRequestForRouting;
-using ST.IoT.Messaging.Endpoints.Send.RESTRequestForProcessing;
 using ST.IoT.Services.Minions;
 using ST.IoT.Services.Minions.Data.STNeo;
-using ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ;
 
 namespace ST.IoT.Aggregates.Services.AggreateServiceHost
 {
@@ -53,7 +48,7 @@ namespace ST.IoT.Aggregates.Services.AggreateServiceHost
                 var kernel = new StandardKernel();
 
                 kernel.Bind<IMassTransitRabbitMQFactory>().To<MassTransitRabbitMQFactory>();
-                kernel.Bind<ISendRESTRequestToRESTRouterEndpoint>().To<RabbitMQViaMassTransit>();
+                //kernel.Bind<ISendRESTRequestToRESTRouterEndpoint>().To<RabbitMQViaMassTransit>();
                 kernel.Bind<IRestApiProxyHost>().To<OwinRestApiProxyHost>();
                 kernel.Bind<IRestProxyServiceHost>().To<RestProxyServiceHost>();
 
@@ -62,6 +57,7 @@ namespace ST.IoT.Aggregates.Services.AggreateServiceHost
                 var f = new MassTransitRabbitMQFactory();
 
                 //var proxy = new RestProxyServiceHost(new OwinRestApiProxyHost(new RabbitMQViaMassTransit(f)));
+                /*
                 var router = new RestRouterHost(new FromRabbitMQViewMassTransit(f));
                 var minions =
                     new MinionsHost(new MinionsService(new MinionsMTRMQReceiveEndpoint(f),
@@ -87,6 +83,7 @@ namespace ST.IoT.Aggregates.Services.AggreateServiceHost
 
                 foreach (var target in allTargets)
                     target.Dispose();
+                    */
 
             }
             catch (Exception ex)

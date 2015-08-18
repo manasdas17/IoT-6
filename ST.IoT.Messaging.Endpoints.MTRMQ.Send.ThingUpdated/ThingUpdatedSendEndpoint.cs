@@ -11,7 +11,7 @@ using ST.IoT.Messaging.Messages.Push;
 
 namespace ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated
 {
-    public class ThingUpdatedSendEndpoint : IThingUpdated
+    public class ThingUpdatedSendEndpointx : IThingUpdated
     {
         private IBusControl _bus;
         private BusHandle _handle;
@@ -20,7 +20,7 @@ namespace ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated
         private const string _address_base = "rabbitmq://localhost/";
         private const string _update_queue_spec = "rabbitmq://localhost/minion_updated";
 
-        public ThingUpdatedSendEndpoint()
+        public ThingUpdatedSendEndpointx()
         {
             var hostAddress = new Uri(_address_base);
 

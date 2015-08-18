@@ -20,15 +20,15 @@ namespace ST.IoT.Messaging.Endpoints.Receive.RESTRequestForRouting
         {
             _factory = factory;
 
-            _factory.CreateConsumer<RestProxyToRouterMessage, RestRouterReplyMessage>("rest_api_requests", handler);
+            _factory.CreateConsumer<RestRequestToRouterMessage, RestRouterReplyMessage>("rest_api_requests", handler);
         }
 
-        private Task<RestRouterReplyMessage> handler(MassTransitRabbitMQFactory.Consumer<RestProxyToRouterMessage, RestRouterReplyMessage> consumer)
+        private Task<RestRouterReplyMessage> handler(MassTransitRabbitMQFactory.Consumer<RestRequestToRouterMessage, RestRouterReplyMessage> consumer)
         {
             if (Handler != null) return Handler(consumer);
             return Task.FromResult(new RestRouterReplyMessage());
         }
 
-        public Func<MassTransitRabbitMQFactory.Consumer<RestProxyToRouterMessage, RestRouterReplyMessage>, Task<RestRouterReplyMessage>> Handler { get; set; }
+        public Func<MassTransitRabbitMQFactory.Consumer<RestRequestToRouterMessage, RestRouterReplyMessage>, Task<RestRouterReplyMessage>> Handler { get; set; }
     }
 }

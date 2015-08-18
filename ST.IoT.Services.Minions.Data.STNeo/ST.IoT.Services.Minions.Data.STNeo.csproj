@@ -66,6 +66,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Content\Message Samples\Minions\neo_get_minion_quotes_template.json">
+      <Link>messages\neo_get_minion_quotes_template.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Message Samples\Minions\neo_put_minion_template.json">
+      <Link>messages\neo_put_minion_template.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

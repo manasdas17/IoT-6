@@ -9,51 +9,34 @@ using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using ST.IoT.Messaging.Bus.Core;
-using ST.IoT.Messaging.Endpoints.Interfaces;
+using ST.IoT.Messaging.Messages.REST.Routing;
 
 namespace ST.IoT.API.REST.Proxy.OWIN
 {
-    public class RestRequestForwarder : DelegatingHandler, ISendRESTRequestToRESTRouterEndpoint
+    public class RestRequestForwarder : DelegatingHandler
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
-        private IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage> _forwarder;
+        private IRequestReplySendEndpoint<RestRequestToRouterMessage, RestRouterReplyMessage> _forwarder;
 
-        public RestRequestForwarder(IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage> forwarder)
+        public RestRequestForwarder(IRequestReplySendEndpoint<RestRequestToRouterMessage, RestRouterReplyMessage> forwarder)
         {
             _forwarder = forwarder;
         }
 
-        protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        // called by OWIN when a request is availbable
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
-            return await ((ISendRESTRequestToRESTRouterEndpoint)this).SendAsync(request, cancellationToken);
-        }
+            var outgoing = new RestRequestToRouterMessage(request);
 
+            _logger.Info("Sending to router");
 
-        async Task<HttpResponseMessage> ISendRESTRequestToRESTRouterEndpoint.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            _logger.Info("Forwarding request");
-            _logger.Info(request);
+            var reply = await _forwarder.SendAsync(outgoing);
 
-            var response = await _forwarder.SendAsync(request, cancellationToken);
+            _logger.Info("Received back from router");
 
-            _logger.Info("Got result for request");
-            _logger.Info(request);
-            return response;
-        }
-
-        public Task<Reply> SendAsync<Request, Reply>(Request request, CancellationToken cancellationToken = default(CancellationToken))
-            where Request : class
-            where Reply : class
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Rez()
-        {
-        }
-
-        public void DeRez()
-        {
+            return reply.HttpResponse;
+            //return new HttpResponseMessage(HttpStatusCode.BadGateway);
         }
     }
 }

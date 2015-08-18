@@ -11,6 +11,7 @@
     <AssemblyName>ST.IoT.Services.Stlth.RestRouterPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -51,6 +60,22 @@
       <Project>{2493adbe-0d46-4b93-b236-4ffb1989c70b}</Project>
       <Name>ST.IoT.API.REST.Router.Plugins.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
+      <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
+      <Name>ST.IoT.Messaging.Bus.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Stlth.Endpoints\ST.IoT.Services.Stlth.Endpoints.csproj">
+      <Project>{c7290067-0ff7-4959-8894-345d73e8e41b}</Project>
+      <Name>ST.IoT.Services.Stlth.Endpoints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Stlth.Messages\ST.IoT.Services.Stlth.Messages.csproj">
+      <Project>{cd0e8be6-0894-4731-a7a0-cb204a7d8e38}</Project>
+      <Name>ST.IoT.Services.Stlth.Messages</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

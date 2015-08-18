@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ST.IoT.Services.Minions.ConsoleRunner</RootNamespace>
     <AssemblyName>MinionsConsole</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -96,26 +97,6 @@
       <Project>{9886da28-3b8d-4d00-b896-76a2eb74d6bf}</Project>
       <Name>ST.IoT.Messaging.Busses.Factories.MTRMQ</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Generic.Core\ST.IoT.Messaging.Endpoints.Generic.Core.csproj">
-      <Project>{9720899d-13ef-4e6b-890d-251ca4c1b045}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.Generic.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.Interfaces\ST.IoT.Messaging.Endpoints.Interfaces.csproj">
-      <Project>{7fb0e5a0-8b26-49ea-bd6d-36dd78d1fbdc}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated\ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated.csproj">
-      <Project>{eabdeaaa-ee39-4fde-a5f1-c133eae52445}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated\ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated.csproj">
-      <Project>{067fed25-b527-49eb-bbff-3337cd25b3f6}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Endpoints.MTRMQ\ST.IoT.Messaging.Endpoints.MTRMQ.csproj">
-      <Project>{a78892a8-4628-425b-98c6-10fbbca43a0b}</Project>
-      <Name>ST.IoT.Messaging.Endpoints.MTRMQ</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Interfaces\ST.IoT.Services.Interfaces.csproj">
       <Project>{38af213b-6320-4c46-8878-a21ba73c38cf}</Project>
       <Name>ST.IoT.Services.Interfaces</Name>
@@ -135,10 +116,6 @@
     <ProjectReference Include="..\ST.IoT.Services.Minions.Messages\ST.IoT.Services.Minions.Messages.csproj">
       <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>
       <Name>ST.IoT.Services.Minions.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ\ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ.csproj">
-      <Project>{682c188d-450c-48f2-9ddb-efb39275a93f}</Project>
-      <Name>ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions\ST.IoT.Services.Minions.csproj">
       <Project>{6d091ca1-24c8-4d1e-887d-f456ae5d6d7d}</Project>

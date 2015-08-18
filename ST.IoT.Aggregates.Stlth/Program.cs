@@ -13,20 +13,18 @@ using Ninject;
 using NLog;
 using ST.IoT.API.REST.Proxy.Interfaces;
 using ST.IoT.API.REST.Proxy.OWIN;
+using ST.IoT.Hosts.Minions;
+using ST.IoT.Hosts.RestProxyService;
+using ST.IoT.Hosts.RestRouter;
+using ST.IoT.Hosts.SignalR.Things;
+using ST.IoT.Hosts.Stlth;
 using ST.IoT.Messaging.Bus.Core;
+using ST.IoT.Messaging.Endpoints.Things.Updates;
 
 namespace ST.IoT.Aggregates.Stlth
 {
-    public class foo
-    {
-        public string Message { get; set; }
-        public override string ToString()
-        {
-            return Message;
-        }
-    }
 
-    class Program
+    internal class Program
     {
         private Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -37,97 +35,130 @@ namespace ST.IoT.Aggregates.Stlth
 
         private void run()
         {
+            //routerOnly();
+            //proxyAndRouter();
+            //justStlth();
+            runStlthAndMinions();
+        }
+
+        private void runStlthAndMinions()
+        {
+            _logger.Info("Starting");
+
+            var kernel = new StandardKernel();
+
             EndpointParameters.Default = new EndpointParameters(new Uri("rabbitmq://localhost"), "iot", "iot", "stlth");
-            var sender = new RequestReplySendEndpoint<foo, foo>("rest_api_requests");
-            var consumer = new RequestReplyConsumeEndpoint<foo, foo>("rest_api_requests");
-            consumer.MessageReceived += (s, args) =>
-            {
-                Console.WriteLine("Got: " + args.Message);
-                args.Response = new foo() {Message = "back at ya"};
-            };
 
-            try
-            {
-                //var sender = new RequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage>();
-                //var consumer = new RequestReplyConsumeEndpoint<HttpRequestMessage, HttpResponseMessage>("rest_api_requests");
-                /*
-                 * */
-                sender.Start();
-                consumer.Start();
+            kernel.Bind<IThingUpdatedPublishEndpoint>().To<ThingUpdatedPublishEndpoint>();
 
-                Console.WriteLine("Started");
+            // wire them
+            RestProxyServiceHost.wire(kernel);
+            RestRouterHost.wire(kernel);
+            MinionsServiceHost.wire(kernel);
+            StlthServiceHost.wire(kernel);
 
-                var response = sender.SendAsync(new foo() { Message = "HI"}).Result;
+            //start em up!
+            RestProxyServiceHost.start();
+            RestRouterHost.start();
+            MinionsServiceHost.start();
+            StlthServiceHost.start();
 
-                Console.WriteLine(response);
-                Console.ReadLine();
+            //var sr = new SignalRThingsUpdateHost();
 
-                Console.WriteLine("Shutting down");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                if (ex.InnerException != null) Console.WriteLine(ex.InnerException.Message);
-            }
-            finally
-            {
-                sender.Stop();
-                consumer.Stop();
-            }
-
-            Console.WriteLine("done");
-
-            /*
-            var busControl = Bus.Factory.CreateUsingRabbitMq(x =>
-            {
-                _logger.Info("Creating host");
-
-                var host = x.Host(new Uri("rabbitmq://localhost/stlth"), h =>
-                {
-                    h.Username("iot");
-                    h.Password("iot");
-                });
-            });
-
-            _logger.Info("Starting bus");
-            var busHandle = busControl.Start();
-            _logger.Info("Started");
+            _logger.Info("Up and running");
 
             Console.ReadLine();
 
-            busHandle.Stop();
-            */
+            _logger.Info("Shutting down");
 
+            RestRouterHost.stop();
+            MinionsServiceHost.stop();
+            RestProxyServiceHost.stop();
+            StlthServiceHost.stop();
+
+            _logger.Info("Stopped");
+        }
+
+        private void justStlth()
+        {
             var kernel = new StandardKernel();
-/*
+
             EndpointParameters.Default = new EndpointParameters(new Uri("rabbitmq://localhost"), "iot", "iot", "stlth");
 
-            kernel.Bind<IRestApiProxyHost>().To<OwinRestApiProxyHost>();
-            kernel.Bind<IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage>>()
-                .ToMethod(c =>
-                {
-                    return new RequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage>();
-                })
-                .WhenInjectedInto<OwinRestApiProxyHost>();
-                    */
-            /*
-            try
+            // wire them
+            StlthServiceHost.wire(kernel);
+
+            //start em up!
+            StlthServiceHost.start();
+
+            Console.ReadLine();
+
+            StlthServiceHost.stop();
+        }
+
+        private void proxyAndRouter()
+        {
+            var kernel = new StandardKernel();
+
+            EndpointParameters.Default = new EndpointParameters(new Uri("rabbitmq://localhost"), "iot", "iot", "stlth");
+
+            // wire them
+            RestProxyServiceHost.wire(kernel);
+            RestRouterHost.wire(kernel);
+
+            //start em up!
+            RestProxyServiceHost.start();
+            RestRouterHost.start();
+
+            Console.ReadLine();
+
+            RestRouterHost.stop();
+            RestProxyServiceHost.stop();
+
+        }
+
+        private void routerOnly()
+        {
+            var kernel = new StandardKernel();
+
+            EndpointParameters.Default = new EndpointParameters(new Uri("rabbitmq://localhost"), "iot", "iot", "stlth");
+
+            // wire them
+            RestRouterHost.wire(kernel);
+
+            //start em up!
+            RestRouterHost.start();
+
+            Console.ReadLine();
+
+            RestRouterHost.stop();
+        }
+
+        private void proxyOnly()
+        {
+            var kernel = new StandardKernel();
+
+            EndpointParameters.Default = new EndpointParameters(new Uri("rabbitmq://localhost"), "iot", "iot", "stlth");
+
+            // wire them
+            RestProxyServiceHost.wire(kernel);
+
+            //start em up!
+            RestProxyServiceHost.start();
+
+            Console.ReadLine();
+
+            RestProxyServiceHost.stop();
+        }
+
+
+        public class foo
+        {
+            public string Message { get; set; }
+            public override string ToString()
             {
-                var proxy = kernel.Get<IRestApiProxyHost>();
-                proxy.Start();
-
-                _logger.Info("Up and running!");
-
-                Console.ReadLine();
-
-                proxy.Stop();
+                return Message;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                if (ex.InnerException != null) Console.WriteLine(ex.InnerException.Message);
-            }
-             * */
         }
     }
 }

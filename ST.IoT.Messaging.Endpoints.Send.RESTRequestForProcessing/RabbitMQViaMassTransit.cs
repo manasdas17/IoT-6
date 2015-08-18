@@ -27,7 +27,7 @@ namespace ST.IoT.Messaging.Endpoints.Send.RESTRequestForProcessing
         private string _password;
         private BusHandle _busHandle;
         private IMassTransitRabbitMQFactory _factory;
-        private IRequestClient<RestProxyToRouterMessage, RestRouterReplyMessage> _client;
+        private IRequestClient<RestRequestToRouterMessage, RestRouterReplyMessage> _client;
 
         [ImportingConstructor]
         public RabbitMQViaMassTransit(IMassTransitRabbitMQFactory factory)
@@ -35,11 +35,12 @@ namespace ST.IoT.Messaging.Endpoints.Send.RESTRequestForProcessing
             _logger.Info("Starting bus factory");
 
             _factory = factory;
-            _client = _factory.CreateRequestClient<RestProxyToRouterMessage, RestRouterReplyMessage>("rest_api_requests");
+            _client = _factory.CreateRequestClient<RestRequestToRouterMessage, RestRouterReplyMessage>("rest_api_requests");
         }
 
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            /*
             _logger.Info("Forwarding request to rabbit - serializing request");
             var serialized = new HttpMessageContent(request).ReadAsByteArrayAsync().Result;
             _logger.Info("Serialized request");
@@ -73,6 +74,8 @@ namespace ST.IoT.Messaging.Endpoints.Send.RESTRequestForProcessing
             }
              
             return response;
+            */
+            return null;
         }
 
         public Task<Reply> SendAsync<Request, Reply>(Request request, CancellationToken cancellationToken = default(CancellationToken))

@@ -58,9 +58,9 @@ namespace ST.IoT.Spikes.RabbitMQ.MassTransit.RequestReplyReceiver
         }
     }
  
-    public class RequestConsumer2 : IConsumer<RestProxyToRouterMessage>
+    public class RequestConsumer2 : IConsumer<RestRequestToRouterMessage>
     {
-        public async Task Consume(ConsumeContext<RestProxyToRouterMessage> context)
+        public async Task Consume(ConsumeContext<RestRequestToRouterMessage> context)
         {
             Console.WriteLine("Got: " + context.Message);
             context.Respond(new ReplyMesssge() { TheReply = "reply to: " + context.Message });

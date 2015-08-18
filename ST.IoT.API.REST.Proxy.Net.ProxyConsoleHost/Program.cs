@@ -8,7 +8,6 @@ using NLog;
 using ST.IoT.API.REST.Proxy.Interfaces;
 using ST.IoT.API.REST.Proxy.OWIN;
 //using ST.IoT.Messaging.BusFactories.RabbitMQ;
-using ST.IoT.Messaging.HttpRequestGateway.Interfaces;
 
 namespace ST.IoT.API.REST.Proxy.RestProxyConsoleHost
 {

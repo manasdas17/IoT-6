@@ -8,32 +8,31 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated;
+using ST.IoT.Messaging.Bus.Core;
+using ST.IoT.Messaging.Messages.Push;
 
 namespace ST.IoT.Subscriptions.Agents.PushUpdates.Core
 {
-    public class CorePushUpdateManager<T> where T : SubscriptionHandle
+    public class CorePushUpdateManager<T> : ConsumeEndpoint<ThingUpdatedMessage> where T : SubscriptionHandle
     {
-        private ThingUpdatedReceiveEndpoint _updateReceiver;
-
         private ConcurrentDictionary<string, ConcurrentDictionary<string, SubscriptionToThing>> _subscriptions
             = new ConcurrentDictionary<string, ConcurrentDictionary<string, SubscriptionToThing>>();
 
-        public CorePushUpdateManager()
+        public CorePushUpdateManager() : base("thing_updated", autoDelete: true)
         {
-            _updateReceiver = new ThingUpdatedReceiveEndpoint(thingUpdated);
+            Start();
         }
 
-        private void thingUpdated(string thing)
+        public async override Task ProcessAsync(ThingUpdatedMessage request)
         {
-            var theThing = JObject.Parse(thing);
+            var theThing = JObject.Parse(request.Thing);
             var id = theThing["Thing"]["ID"].ToString();
 
             if (_subscriptions.ContainsKey(id))
             {
                 // this is important as it will snapshot the subscriptions for iteration
                 var subscriptions = _subscriptions[id].Values.ToList();
-                subscriptions.ForEach(s => s.pushUpdate(thing));
+                subscriptions.ForEach(s => s.pushUpdate(request.Thing));
             }
         }
 

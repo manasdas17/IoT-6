@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
 using RestSharp;
 using System.IO;
+using RestSharp.Authenticators;
 
 namespace ST.IoT.Spikes.DeleteAllQueuesOnRabbitVirtualHost
 {

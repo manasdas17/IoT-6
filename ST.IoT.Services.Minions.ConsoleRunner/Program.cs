@@ -10,16 +10,11 @@ using ST.IoT.Data.Neo;
 using ST.IoT.Hosts.Interfaces;
 using ST.IoT.Hosts.Minions;
 using ST.IoT.Messaging.Busses.Factories.MTRMQ;
-using ST.IoT.Messaging.Endpoints.Interfaces;
-using ST.IoT.Messaging.Endpoints.MTRMQ;
-using ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated;
-using ST.IoT.Messaging.Endpoints.MTRMQ.Send.ThingUpdated;
 using ST.IoT.Services.Interfaces;
 using ST.IoT.Services.Minions.Data.Interfaces;
 using ST.IoT.Services.Minions.Data.STNeo;
 using ST.IoT.Services.Minions.Interfaces;
 using ST.IoT.Services.Minions.Messages;
-using ST.IoT.Services.Minions.Messaging.Endpoints.Receive.MTRMQ;
 
 namespace ST.IoT.Services.Minions.ConsoleRunner
 {
@@ -59,12 +54,12 @@ namespace ST.IoT.Services.Minions.ConsoleRunner
                 .WhenInjectedInto<MinionsService>();
         */
 
-            _kernel.Bind<IThingUpdated>().To<NullThingUpdatedSink>();
+            //_kernel.Bind<IThingUpdated>().To<NullThingUpdatedSink>();
             _kernel.Bind<IThingsDataFacade>().To<Neo4jThingsDataFacade>();
             _kernel.Bind<IMinionsDataService>().To<MinionsSeamlessThingiesNeo4JDataFacade>();
             _kernel.Bind<IMassTransitRabbitMQFactory>().To<MassTransitRabbitMQFactory>();
-            _kernel.Bind<IRequestReplyReceiveEndpoint<MinionsRequestMessage, MinionsResponseMessage>>().To<MinionsMTRMQReceiveEndpoint>();
-            _kernel.Bind<IHostableService>().To<MinionsHost>();
+            //_kernel.Bind<IRequestReplyReceiveEndpoint<MinionsRequestMessage, MinionsResponseMessage>>().To<MinionsMTRMQReceiveEndpoint>();
+            _kernel.Bind<IHostableService>().To<MinionsServiceHost>();
             _kernel.Bind<IMinionsService>().To<MinionsService>();
 
             new Program().run();

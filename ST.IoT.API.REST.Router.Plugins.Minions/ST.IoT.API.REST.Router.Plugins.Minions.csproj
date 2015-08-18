@@ -11,6 +11,7 @@
     <AssemblyName>ST.IoT.API.REST.Router.Plugins.Minions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,6 +58,14 @@
       <Project>{2493adbe-0d46-4b93-b236-4ffb1989c70b}</Project>
       <Name>ST.IoT.API.REST.Router.Plugins.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
+      <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
+      <Name>ST.IoT.Messaging.Bus.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Minions.Endpoints\ST.IoT.Services.Minions.Endpoints.csproj">
+      <Project>{45f7c829-7f5c-467c-9cd2-e66cbaada36d}</Project>
+      <Name>ST.IoT.Services.Minions.Endpoints</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Minions.Interfaces\ST.IoT.Services.Minions.Interfaces.csproj">
       <Project>{631f5af0-71cc-4f6f-a4fb-c75affb76a18}</Project>
       <Name>ST.IoT.Services.Minions.Interfaces</Name>
@@ -65,24 +74,20 @@
       <Project>{626531c9-7a6a-478e-944b-7247806bc176}</Project>
       <Name>ST.IoT.Services.Minions.Messages</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Services.Minions.Messaging.Endpoints.Send.MTRMQ\ST.IoT.Services.Minions.Messaging.Endpoints.Send.MTRMQ.csproj">
-      <Project>{7d6645ef-9134-4375-9c3a-5743c39f2fbd}</Project>
-      <Name>ST.IoT.Services.Minions.Messaging.Endpoints.Send.MTRMQ</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Content\Message Samples\Minions\get_latest_quote_for_minion_template.json">
+    <Content Include="..\Content\Message Samples\Minions\get_latest_quote_for_minion_template.json">
       <Link>message_templates\get_latest_quote_for_minion_template.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Content\Message Samples\Minions\get_quotes_for_minion_template.json">
+    </Content>
+    <Content Include="..\Content\Message Samples\Minions\get_quotes_for_minion_template.json">
       <Link>message_templates\get_quotes_for_minion_template.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Content\Message Samples\Minions\put_minion_template.json">
+    </Content>
+    <Content Include="..\Content\Message Samples\Minions\put_minion_template.json">
       <Link>message_templates\put_minion_template.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

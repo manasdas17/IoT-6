@@ -11,5 +11,8 @@ namespace ST.IoT.API.REST.Router.Plugins.Interfaces
     {
         bool CanHandle(HttpRequestMessage request);
         Task<HttpResponseMessage> HandleAsync(HttpRequestMessage request);
+
+        void Start();
+        void Stop();
     }
 }

@@ -9,7 +9,6 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ST.IoT.Messaging.Endpoints.MTRMQ.Receive.ThingUpdated;
 using ST.IoT.Subscriptions.Agents.PushUpdates.Core;
 
 namespace ST.IoT.API.REST.PushRequestHttpHandler

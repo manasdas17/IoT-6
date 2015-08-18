@@ -11,8 +11,7 @@ using Owin;
 using ST.IoT.API.REST.Proxy.OWIN;
 using ST.IoT.API.REST.PushRequestHttpHandler;
 using ST.IoT.Messaging.Bus.Core;
-using ST.IoT.Messaging.Endpoints.Interfaces;
-using ST.IoT.Messaging.HttpRequestGateway.Interfaces;
+using ST.IoT.Messaging.Messages.REST.Routing;
 using ILogger = Microsoft.Owin.Logging.ILogger;
 
 [assembly: OwinStartup(typeof(Proxy))]
@@ -27,13 +26,13 @@ namespace ST.IoT.API.REST.Proxy.OWIN
 
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private static IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage> _endpoint;
+        private static IRequestReplySendEndpoint<RestRequestToRouterMessage, RestRouterReplyMessage> _endpoint;
 
         public Proxy()
         {
         }
 
-        public static void Start(string proxyAddress, IRequestReplySendEndpoint<HttpRequestMessage, HttpResponseMessage> endpoint)
+        public static void Start(string proxyAddress, IRequestReplySendEndpoint<RestRequestToRouterMessage, RestRouterReplyMessage> endpoint)
         {
             _endpoint = endpoint;
 
@@ -86,7 +85,7 @@ namespace ST.IoT.API.REST.Proxy.OWIN
                         innerHandler: new HttpClientHandler(), 
                         handlers: new [] 
                                     { 
-//                                        new MinionsChunkedWebRequestHandler(),
+                                        //new MinionsChunkedWebRequestHandler(),
                                         new RestRequestForwarder(_endpoint) as DelegatingHandler
                                     }
                     ),
