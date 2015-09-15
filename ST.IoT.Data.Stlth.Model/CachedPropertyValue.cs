@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ST.IoT.Data.Stlth.Model
 {
-    public class Meta
+    public class CachedPropertyValue<T>
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
+        public T Value;
     }
 }

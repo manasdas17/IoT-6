@@ -247,47 +247,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Spikes.SignalR.Conso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Spikes.MassTransit.Mono", "ST.IoT.Spikes.MassTransit.Mono\ST.IoT.Spikes.MassTransit.Mono.csproj", "{1BCD897A-9898-4DD8-B0EF-80CEA89485B6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "active", "active", "{6D3ECA63-B60D-4F72-8F05-7E9D79973B7A}"
-	ProjectSection(SolutionItems) = preProject
-		GraphDBs\Stlth\lock = GraphDBs\Stlth\lock
-		GraphDBs\Stlth\messages.log = GraphDBs\Stlth\messages.log
-		GraphDBs\Stlth\neo4j.properties = GraphDBs\Stlth\neo4j.properties
-		GraphDBs\Stlth\neostore = GraphDBs\Stlth\neostore
-		GraphDBs\Stlth\neostore.counts.db.a = GraphDBs\Stlth\neostore.counts.db.a
-		GraphDBs\Stlth\neostore.id = GraphDBs\Stlth\neostore.id
-		GraphDBs\Stlth\neostore.labeltokenstore.db = GraphDBs\Stlth\neostore.labeltokenstore.db
-		GraphDBs\Stlth\neostore.labeltokenstore.db.id = GraphDBs\Stlth\neostore.labeltokenstore.db.id
-		GraphDBs\Stlth\neostore.labeltokenstore.db.names = GraphDBs\Stlth\neostore.labeltokenstore.db.names
-		GraphDBs\Stlth\neostore.labeltokenstore.db.names.id = GraphDBs\Stlth\neostore.labeltokenstore.db.names.id
-		GraphDBs\Stlth\neostore.nodestore.db = GraphDBs\Stlth\neostore.nodestore.db
-		GraphDBs\Stlth\neostore.nodestore.db.id = GraphDBs\Stlth\neostore.nodestore.db.id
-		GraphDBs\Stlth\neostore.nodestore.db.labels = GraphDBs\Stlth\neostore.nodestore.db.labels
-		GraphDBs\Stlth\neostore.nodestore.db.labels.id = GraphDBs\Stlth\neostore.nodestore.db.labels.id
-		GraphDBs\Stlth\neostore.propertystore.db = GraphDBs\Stlth\neostore.propertystore.db
-		GraphDBs\Stlth\neostore.propertystore.db.arrays = GraphDBs\Stlth\neostore.propertystore.db.arrays
-		GraphDBs\Stlth\neostore.propertystore.db.arrays.id = GraphDBs\Stlth\neostore.propertystore.db.arrays.id
-		GraphDBs\Stlth\neostore.propertystore.db.id = GraphDBs\Stlth\neostore.propertystore.db.id
-		GraphDBs\Stlth\neostore.propertystore.db.index = GraphDBs\Stlth\neostore.propertystore.db.index
-		GraphDBs\Stlth\neostore.propertystore.db.index.id = GraphDBs\Stlth\neostore.propertystore.db.index.id
-		GraphDBs\Stlth\neostore.propertystore.db.index.keys = GraphDBs\Stlth\neostore.propertystore.db.index.keys
-		GraphDBs\Stlth\neostore.propertystore.db.index.keys.id = GraphDBs\Stlth\neostore.propertystore.db.index.keys.id
-		GraphDBs\Stlth\neostore.propertystore.db.strings = GraphDBs\Stlth\neostore.propertystore.db.strings
-		GraphDBs\Stlth\neostore.propertystore.db.strings.id = GraphDBs\Stlth\neostore.propertystore.db.strings.id
-		GraphDBs\Stlth\neostore.relationshipgroupstore.db = GraphDBs\Stlth\neostore.relationshipgroupstore.db
-		GraphDBs\Stlth\neostore.relationshipgroupstore.db.id = GraphDBs\Stlth\neostore.relationshipgroupstore.db.id
-		GraphDBs\Stlth\neostore.relationshipstore.db = GraphDBs\Stlth\neostore.relationshipstore.db
-		GraphDBs\Stlth\neostore.relationshipstore.db.id = GraphDBs\Stlth\neostore.relationshipstore.db.id
-		GraphDBs\Stlth\neostore.relationshiptypestore.db = GraphDBs\Stlth\neostore.relationshiptypestore.db
-		GraphDBs\Stlth\neostore.relationshiptypestore.db.id = GraphDBs\Stlth\neostore.relationshiptypestore.db.id
-		GraphDBs\Stlth\neostore.relationshiptypestore.db.names = GraphDBs\Stlth\neostore.relationshiptypestore.db.names
-		GraphDBs\Stlth\neostore.relationshiptypestore.db.names.id = GraphDBs\Stlth\neostore.relationshiptypestore.db.names.id
-		GraphDBs\Stlth\neostore.schemastore.db = GraphDBs\Stlth\neostore.schemastore.db
-		GraphDBs\Stlth\neostore.schemastore.db.id = GraphDBs\Stlth\neostore.schemastore.db.id
-		GraphDBs\Stlth\neostore.transaction.db.0 = GraphDBs\Stlth\neostore.transaction.db.0
-		GraphDBs\Stlth\rrd = GraphDBs\Stlth\rrd
-		GraphDBs\Stlth\store_lock = GraphDBs\Stlth\store_lock
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stlth", "Stlth", "{6F832B44-2C08-4E37-82B6-BAC2B8A03910}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ST.IoT.Clients.Stlth", "ST.IoT.Clients.Stlth", "{022CFBEF-E291-4016-B43E-8DE93F0B51DF}"
@@ -377,6 +336,26 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Data.Stlth.Model", "ST.IoT.Data.Stlth.Model\ST.IoT.Data.Stlth.Model.csproj", "{300421DE-8FCB-4B1D-93CA-DDED8CDA5C19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Data.Stlth.Api.NeoExtensions", "ST.IoT.Data.Stlth.Api.NeoExtensions\ST.IoT.Data.Stlth.Api.NeoExtensions.csproj", "{9A857E98-EB7B-4BBB-8659-AACD6CB0B4F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Data.Stlth.Api.Build.Runner", "ST.IoT.Data.Stlth.Api.Build.Runner\ST.IoT.Data.Stlth.Api.Build.Runner.csproj", "{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WinIOT", "WinIOT", "{1DB1CC2E-F1B8-45C5-A6C6-F48ECDFE9E94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WinIOT", "WinIOT", "{92629BB6-0161-4796-A8DD-F05980D87672}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Spikes.WinIOT.Blinky", "ST.IoT.Spikes.WinIOT.Blinky\ST.IoT.Spikes.WinIOT.Blinky.csproj", "{B58C88AF-27B3-415B-812C-FC4CBB633762}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runners", "Runners", "{A42A7397-9FFC-4E57-97F2-1C458E5C5EDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Services.Stlth.Runners.ConsoleRunner", "ST.IoT.Services.Stlth.Runners.ConsoleRunner\ST.IoT.Services.Stlth.Runners.ConsoleRunner.csproj", "{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Util", "Util", "{ACED0703-C8AD-4F88-8341-8159F4663322}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.API.REST.Util.UrlPatterns", "ST.IoT.API.REST.Util.UrlPatterns\ST.IoT.API.REST.Util.UrlPatterns.csproj", "{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stlth.io API Mocks", "Stlth.io API Mocks", "{F38033A2-C26D-4C0E-93B8-6DADC630F288}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ST.IoT.Spikes.Slth.ApiMock", "ST.IoT.Spikes.Slth.ApiMock\ST.IoT.Spikes.Slth.ApiMock.csproj", "{540AC8CE-1228-4814-A85A-3CD5D48D6E07}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -1748,6 +1727,142 @@ Global
 		{9A857E98-EB7B-4BBB-8659-AACD6CB0B4F0}.Release|x64.Build.0 = Release|Any CPU
 		{9A857E98-EB7B-4BBB-8659-AACD6CB0B4F0}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A857E98-EB7B-4BBB-8659-AACD6CB0B4F0}.Release|x86.Build.0 = Release|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Debug|ARM.Build.0 = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Debug|x64.Build.0 = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Debug|x86.Build.0 = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Minions (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Minions (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Minions (Debug)|ARM.ActiveCfg = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Minions (Debug)|ARM.Build.0 = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Minions (Debug)|x64.ActiveCfg = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Minions (Debug)|x64.Build.0 = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Minions (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Minions (Debug)|x86.Build.0 = Debug|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Release|ARM.ActiveCfg = Release|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Release|ARM.Build.0 = Release|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Release|x64.ActiveCfg = Release|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Release|x64.Build.0 = Release|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Release|x86.ActiveCfg = Release|Any CPU
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773}.Release|x86.Build.0 = Release|Any CPU
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|ARM.ActiveCfg = Debug|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|ARM.Build.0 = Debug|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|ARM.Deploy.0 = Debug|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|x64.ActiveCfg = Debug|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|x64.Build.0 = Debug|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|x64.Deploy.0 = Debug|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|x86.ActiveCfg = Debug|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|x86.Build.0 = Debug|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Debug|x86.Deploy.0 = Debug|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|Any CPU.ActiveCfg = Release|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|Any CPU.Build.0 = Release|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|Any CPU.Deploy.0 = Release|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|ARM.ActiveCfg = Debug|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|ARM.Build.0 = Debug|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|ARM.Deploy.0 = Debug|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|x64.ActiveCfg = Debug|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|x64.Build.0 = Debug|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|x64.Deploy.0 = Debug|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|x86.ActiveCfg = Debug|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|x86.Build.0 = Debug|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Minions (Debug)|x86.Deploy.0 = Debug|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|Any CPU.ActiveCfg = Release|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|ARM.ActiveCfg = Release|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|ARM.Build.0 = Release|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|ARM.Deploy.0 = Release|ARM
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|x64.ActiveCfg = Release|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|x64.Build.0 = Release|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|x64.Deploy.0 = Release|x64
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|x86.ActiveCfg = Release|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|x86.Build.0 = Release|x86
+		{B58C88AF-27B3-415B-812C-FC4CBB633762}.Release|x86.Deploy.0 = Release|x86
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Debug|x64.Build.0 = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Minions (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Minions (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Minions (Debug)|ARM.ActiveCfg = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Minions (Debug)|ARM.Build.0 = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Minions (Debug)|x64.ActiveCfg = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Minions (Debug)|x64.Build.0 = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Minions (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Minions (Debug)|x86.Build.0 = Debug|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Release|ARM.Build.0 = Release|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Release|x64.ActiveCfg = Release|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Release|x64.Build.0 = Release|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB}.Release|x86.Build.0 = Release|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Debug|x64.Build.0 = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Debug|x86.Build.0 = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Minions (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Minions (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Minions (Debug)|ARM.ActiveCfg = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Minions (Debug)|ARM.Build.0 = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Minions (Debug)|x64.ActiveCfg = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Minions (Debug)|x64.Build.0 = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Minions (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Minions (Debug)|x86.Build.0 = Debug|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Release|ARM.Build.0 = Release|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Release|x64.ActiveCfg = Release|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Release|x64.Build.0 = Release|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Release|x86.ActiveCfg = Release|Any CPU
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4}.Release|x86.Build.0 = Release|Any CPU
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|ARM.ActiveCfg = Debug|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|ARM.Build.0 = Debug|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|ARM.Deploy.0 = Debug|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|x64.ActiveCfg = Debug|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|x64.Build.0 = Debug|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|x64.Deploy.0 = Debug|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|x86.ActiveCfg = Debug|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|x86.Build.0 = Debug|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Debug|x86.Deploy.0 = Debug|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|Any CPU.ActiveCfg = Release|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|Any CPU.Build.0 = Release|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|Any CPU.Deploy.0 = Release|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|ARM.ActiveCfg = Debug|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|ARM.Build.0 = Debug|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|ARM.Deploy.0 = Debug|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|x64.ActiveCfg = Debug|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|x64.Build.0 = Debug|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|x64.Deploy.0 = Debug|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|x86.ActiveCfg = Debug|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|x86.Build.0 = Debug|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Minions (Debug)|x86.Deploy.0 = Debug|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|Any CPU.ActiveCfg = Release|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|ARM.ActiveCfg = Release|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|ARM.Build.0 = Release|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|ARM.Deploy.0 = Release|ARM
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|x64.ActiveCfg = Release|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|x64.Build.0 = Release|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|x64.Deploy.0 = Release|x64
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|x86.ActiveCfg = Release|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|x86.Build.0 = Release|x86
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1855,7 +1970,6 @@ Global
 		{B20F722F-4422-40C5-AE8F-AFB1C31B435B} = {7B141F5D-F41B-4113-BBF9-89B5EDF29813}
 		{1AF5E6CC-C2BB-480A-A5A8-C14A402E8DD4} = {76D33A27-C174-410A-A8AD-040399966C90}
 		{1BCD897A-9898-4DD8-B0EF-80CEA89485B6} = {73CB2A9A-F92A-47BC-B3C8-E7677B371897}
-		{6D3ECA63-B60D-4F72-8F05-7E9D79973B7A} = {BFFAB426-9BFD-40CA-AF38-06DF6BC5BD49}
 		{6F832B44-2C08-4E37-82B6-BAC2B8A03910} = {ACD99B8E-2740-4BDE-B7B3-8F11343DB270}
 		{022CFBEF-E291-4016-B43E-8DE93F0B51DF} = {6F832B44-2C08-4E37-82B6-BAC2B8A03910}
 		{9535A8AF-A9D4-4A9C-80D1-F1E6922C4695} = {022CFBEF-E291-4016-B43E-8DE93F0B51DF}
@@ -1872,5 +1986,15 @@ Global
 		{4E4D1719-CF1B-4480-A80B-12303B711790} = {513FDE47-ABE6-448D-88C0-E4E620E30FB0}
 		{300421DE-8FCB-4B1D-93CA-DDED8CDA5C19} = {513FDE47-ABE6-448D-88C0-E4E620E30FB0}
 		{9A857E98-EB7B-4BBB-8659-AACD6CB0B4F0} = {513FDE47-ABE6-448D-88C0-E4E620E30FB0}
+		{52DC8FF9-9E1F-4AA3-9A83-A7B16A7B1773} = {513FDE47-ABE6-448D-88C0-E4E620E30FB0}
+		{1DB1CC2E-F1B8-45C5-A6C6-F48ECDFE9E94} = {ACD99B8E-2740-4BDE-B7B3-8F11343DB270}
+		{92629BB6-0161-4796-A8DD-F05980D87672} = {73CB2A9A-F92A-47BC-B3C8-E7677B371897}
+		{B58C88AF-27B3-415B-812C-FC4CBB633762} = {92629BB6-0161-4796-A8DD-F05980D87672}
+		{A42A7397-9FFC-4E57-97F2-1C458E5C5EDF} = {8D661515-7E45-4BF4-89B9-DE2C07CC27AD}
+		{AA07F90B-33D2-42F1-A8DE-9B00C1689FAB} = {A42A7397-9FFC-4E57-97F2-1C458E5C5EDF}
+		{ACED0703-C8AD-4F88-8341-8159F4663322} = {D8B2BA5C-87E7-445B-8275-78DDAD1A5DA6}
+		{C3DE24A7-FC24-48D5-9E5C-B1873B6151A4} = {ACED0703-C8AD-4F88-8341-8159F4663322}
+		{F38033A2-C26D-4C0E-93B8-6DADC630F288} = {73CB2A9A-F92A-47BC-B3C8-E7677B371897}
+		{540AC8CE-1228-4814-A85A-3CD5D48D6E07} = {F38033A2-C26D-4C0E-93B8-6DADC630F288}
 	EndGlobalSection
 EndGlobal

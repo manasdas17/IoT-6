@@ -24,8 +24,10 @@ namespace ST.IoT.Data.Stlth.Api.Tests
             {
                 new DeleteAllNodesAndEdgesStrategy(db),
                 new CreateMetaNodesStrategy(db),
+                new CreateMetaEdgesStrategy(db),
+
                 new LoadMetaNodesStrategy(db),
-                new AddModelUsersStrategy(db),
+                new AddModelDataStrategy(db),
             };
             strategies.ForEach(s => s.ExecuteAsync().Wait());
 

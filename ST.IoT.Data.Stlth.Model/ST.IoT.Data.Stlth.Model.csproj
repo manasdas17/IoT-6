@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,8 +44,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Meta.cs" />
+    <Compile Include="CachedPropertyValue.cs" />
+    <Compile Include="Community.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="MetaEdge.cs" />
+    <Compile Include="MetaNode.cs" />
+    <Compile Include="MetaRel.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="NodeFactory.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelNode.cs" />
+    <Compile Include="StlthNodeInternals.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

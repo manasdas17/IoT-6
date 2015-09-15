@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using ST.IoT.Data.Stlth.Model;
 
 namespace ST.IoT.Data.Stlth.Api.Strategies
 {
@@ -19,9 +20,11 @@ namespace ST.IoT.Data.Stlth.Api.Strategies
         public async Task ExecuteAsync()
         {
             _client.Connect();
-            await _client.NodeAsync(StlthDataOperation.POST, StlthNodeType.MetaRoot, StlthBuiltinNodeLabels.Root);
-            await _client.NodeAsync(StlthDataOperation.POST, StlthNodeType.Meta, StlthBuiltinNodeLabels.Person);
-            await _client.NodeAsync(StlthDataOperation.POST, StlthNodeType.Meta, StlthBuiltinNodeLabels.Post);
+
+            await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Person, DescribeAsNeoJSON<Person>.describe());
+            await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Post, DescribeAsNeoJSON<Post>.describe());
+            await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Group, DescribeAsNeoJSON<Group>.describe());
+            await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Community, DescribeAsNeoJSON<Community>.describe());
             _client.Disconnect();
         }
     }

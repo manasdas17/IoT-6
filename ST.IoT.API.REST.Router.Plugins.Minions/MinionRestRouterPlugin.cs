@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json.Linq;
 using NLog;
 using ST.IoT.API.REST.Router.Plugins.Interfaces;
+using ST.IoT.API.REST.Util.UrlPatterns;
 using ST.IoT.Services.Minions.Endpoints;
 using ST.IoT.Services.Minions.Messages;
 
@@ -23,82 +24,6 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public class UrlPatternDispatcher
-        {
-            public class UriPattern
-            {
-                public HttpMethod Method { get; set; }
-                public string[] Parts { get; set; }
-                public Func<HttpRequestMessage, Task<HttpResponseMessage>> Handler { get; set; }
-
-
-                public bool match(HttpRequestMessage request)
-                {
-                    if (request.Method != Method)
-                    {
-                        return false;
-                    }
-                    var segments = request.RequestUri.Segments;
-                    if (segments.Length < Parts.Length)
-                    {
-                        return false;
-                    }
-                    var i = 0;
-                    foreach (var part in Parts)
-                    {
-                        if (part != segments[i]) return false;
-                        i++;
-                    }
-                    return true;
-                }
-            }
-
-            private List<UriPattern> _patterns;
-
-            public UrlPatternDispatcher(MinionRestRouterPlugin outer)
-            {
-                _patterns = new List<UriPattern>()
-                {
-                    new UriPattern()
-                    {
-                        Method = HttpMethod.Put,
-                        Parts = new[] {"/", "quote/", "for/"},
-                        Handler = outer.doQuoteFor,
-                    },
-                    new UriPattern()
-                    {
-                        Method = HttpMethod.Get,
-                        Parts = new[] {"/", "get/", "latest/", "quote/", "for/"},
-                        Handler = outer.doGetLatestQuoteFor,
-                    },
-                    new UriPattern()
-                    {
-                        Method = HttpMethod.Get,
-                        Parts = new[] {"/", "get/", "quotes/", "for/"},
-                        Handler = outer.doGetQuotesFor,
-                    },
-                    new UriPattern()
-                    {
-                        Method = HttpMethod.Get,
-                        Parts = new[] {"/", "listen/", "for/", "quotes/", "from/"},
-                        Handler = outer.doGetQuotesFor,
-                    },
-                };
-            }
-
-            public UriPattern handle(HttpRequestMessage request)
-            {
-                foreach (var pattern in _patterns)
-                {
-                    if (pattern.match(request))
-                    {
-                        return pattern;
-                    }
-                }
-                return null;
-            }
-        }
-
         private UrlPatternDispatcher _patternDispatcher;
         private ForwardToMinionsServiceEndpoint _forwarder;
 
@@ -107,7 +32,33 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
         {
             _logger.Info("Creating send endpoint");
             
-            _patternDispatcher = new UrlPatternDispatcher(this);
+            _patternDispatcher = new UrlPatternDispatcher(
+                                new [] {
+                    new UrlPatternDispatcher.UriPattern()
+                    {
+                        Method = HttpMethod.Put,
+                        Parts = new[] {"/", "quote/", "for/"},
+                        Handler = doQuoteFor,
+                    },
+                    new UrlPatternDispatcher.UriPattern()
+                    {
+                        Method = HttpMethod.Get,
+                        Parts = new[] {"/", "get/", "latest/", "quote/", "for/"},
+                        Handler = doGetLatestQuoteFor,
+                    },
+                    new UrlPatternDispatcher.UriPattern()
+                    {
+                        Method = HttpMethod.Get,
+                        Parts = new[] {"/", "get/", "quotes/", "for/"},
+                        Handler = doGetQuotesFor,
+                    },
+                    new UrlPatternDispatcher.UriPattern()
+                    {
+                        Method = HttpMethod.Get,
+                        Parts = new[] {"/", "listen/", "for/", "quotes/", "from/"},
+                        Handler = doGetQuotesFor,
+                    }
+                });
 
             _forwarder = forwarder as ForwardToMinionsServiceEndpoint;
         }
