@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C20B6531-56C5-4CFF-8BB0-2DD86081985D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MqttLib.Portable</RootNamespace>
+    <AssemblyName>MqttLib.Portable</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CompleteArgs.cs">
+      <Link>CompleteArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\MQTTStreamExceptions.cs">
+      <Link>Core\MQTTStreamExceptions.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\NotConnectedException.cs">
+      <Link>Core\NotConnectedException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\QoSManager.cs">
+      <Link>Core\QoSManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\StreamFactory.cs">
+      <Link>Core\StreamFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\StreamManager.cs">
+      <Link>Core\StreamManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Subscription.cs">
+      <Link>Core\Subscription.cs</Link>
+    </Compile>
+    <Compile Include="..\IMqtt.cs">
+      <Link>IMqtt.cs</Link>
+    </Compile>
+    <Compile Include="..\IMqttConnectDisconnect.cs">
+      <Link>IMqttConnectDisconnect.cs</Link>
+    </Compile>
+    <Compile Include="..\IMqttPublisher.cs">
+      <Link>IMqttPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\IMqttShared.cs">
+      <Link>IMqttShared.cs</Link>
+    </Compile>
+    <Compile Include="..\IMqttSharedSubscriber.cs">
+      <Link>IMqttSharedSubscriber.cs</Link>
+    </Compile>
+    <Compile Include="..\IMqttSubscriber.cs">
+      <Link>IMqttSubscriber.cs</Link>
+    </Compile>
+    <Compile Include="..\IPersistence.cs">
+      <Link>IPersistence.cs</Link>
+    </Compile>
+    <Compile Include="..\Mqtt.cs">
+      <Link>Mqtt.cs</Link>
+    </Compile>
+    <Compile Include="..\MqttBroker.cs">
+      <Link>MqttBroker.cs</Link>
+    </Compile>
+    <Compile Include="..\MqttBrokerUnavailableException.cs">
+      <Link>MqttBrokerUnavailableException.cs</Link>
+    </Compile>
+    <Compile Include="..\MqttClientFactory.cs">
+      <Link>MqttClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MqttDelegates.cs">
+      <Link>MqttDelegates.cs</Link>
+    </Compile>
+    <Compile Include="..\MqttException.cs">
+      <Link>MqttException.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
