@@ -34,6 +34,8 @@ namespace ST.IoT.Subscriptions.Agents.PushUpdates.Core
                 var subscriptions = _subscriptions[id].Values.ToList();
                 subscriptions.ForEach(s => s.pushUpdate(request.Thing));
             }
+
+            await Task.FromResult<int>(0);
         }
 
         public T subscribe(

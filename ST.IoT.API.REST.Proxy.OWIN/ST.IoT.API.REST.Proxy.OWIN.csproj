@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ST.IoT.API.REST.Proxy.OWIN</RootNamespace>
     <AssemblyName>ST.IoT.API.REST.Proxy.OWIN</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -123,6 +123,10 @@
     <ProjectReference Include="..\ST.IoT.Messaging.Messages.REST.Routing\ST.IoT.Messaging.Messages.REST.Routing.csproj">
       <Project>{6b75f104-47ae-4c3c-b33d-e88d18bfcc52}</Project>
       <Name>ST.IoT.Messaging.Messages.REST.Routing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Messaging.Security\ST.IoT.Messaging.Security.csproj">
+      <Project>{6d6db8df-6dc3-4744-8d3d-e39a8585f7ba}</Project>
+      <Name>ST.IoT.Messaging.Security</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

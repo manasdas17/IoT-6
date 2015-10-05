@@ -17,7 +17,7 @@ namespace ST.IoT.Data.Stlth.Api.Strategies
 
         public async Task ExecuteAsync()
         {
-            
+            await Task.FromResult<int>(0);
         }
     }
 }

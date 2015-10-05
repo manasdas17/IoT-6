@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ST.IoT.Data.Neo</RootNamespace>
     <AssemblyName>ST.IoT.Data.Neo</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>b541d5f9</NuGetPackageImportStamp>
     <TargetFrameworkProfile />

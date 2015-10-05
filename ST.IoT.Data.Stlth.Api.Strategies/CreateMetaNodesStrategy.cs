@@ -25,6 +25,10 @@ namespace ST.IoT.Data.Stlth.Api.Strategies
             await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Post, DescribeAsNeoJSON<Post>.describe());
             await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Group, DescribeAsNeoJSON<Group>.describe());
             await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Community, DescribeAsNeoJSON<Community>.describe());
+            await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Space, DescribeAsNeoJSON<Room>.describe());
+            await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Timeline, DescribeAsNeoJSON<Timeline>.describe());
+            await _client.MetaNodeAsync(StlthDataOperation.POST, StlthBuiltinNodeLabels.Thing, DescribeAsNeoJSON<Thing>.describe());
+
             _client.Disconnect();
         }
     }

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ST.IoT.Services.Stlth.API.StlthSharp</RootNamespace>
     <AssemblyName>ST.IoT.Services.Stlth.API.StlthSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -35,6 +35,10 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,11 +49,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StlthSharpFacade.cs" />
+    <Compile Include="AddGroupToCommunityCommand.cs" />
+    <Compile Include="AddGroupToCommunityCommandResult.cs" />
+    <Compile Include="AddPersonToCommunityCommandResult.cs" />
+    <Compile Include="AddPersonToCommunityCommand.cs" />
+    <Compile Include="AddPersonToCommunityRequestBuilder.cs" />
+    <Compile Include="AddPersonToCommunityResult.cs" />
+    <Compile Include="AddThingToGroupCommand.cs" />
+    <Compile Include="CommandResult.cs" />
+    <Compile Include="GroupRequestBuilder.cs" />
+    <Compile Include="NewCommunityCommand.cs" />
+    <Compile Include="CommunityQuery.cs" />
+    <Compile Include="CommunityQuerySpacesAll.cs" />
+    <Compile Include="CommunityRequestBuilder.cs" />
+    <Compile Include="CommunitySpaceQueryBuilder.cs" />
+    <Compile Include="NewCommunityCommandResult.cs" />
+    <Compile Include="NewGroupCommand.cs" />
+    <Compile Include="NewGroupCommandResult.cs" />
+    <Compile Include="NewPersonCommand.cs" />
+    <Compile Include="NewPersonCommandResult.cs" />
+    <Compile Include="NewThingCommand.cs" />
+    <Compile Include="NewThingCommandResult.cs" />
+    <Compile Include="PersonRequestBuilder.cs" />
+    <Compile Include="StlthCommand.cs" />
+    <Compile Include="StlthQuery.cs" />
+    <Compile Include="StlthRequestBuilder.cs" />
+    <Compile Include="StlthRestRequestExecutor.cs" />
+    <Compile Include="StlthRestSocialApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThingRequestBuilder.cs" />
+    <Compile Include="WallRequestBuilder.cs" />
+    <Compile Include="WallRequestForCommunityCommand.cs" />
+    <Compile Include="WallRequestForCommunityResult.cs" />
+    <Compile Include="WithCommunityRequestBuilder.cs" />
+    <Compile Include="WithGroupAddThingCommandBuilder.cs" />
+    <Compile Include="WithGroupAddThingCommandResult.cs" />
+    <Compile Include="WithGroupRequestBuilder.cs" />
+    <Compile Include="WithThingRequestBuilder.cs" />
+    <Compile Include="WithThingUpdateRequestBuilder.cs" />
+    <Compile Include="WithThingUpdateResult.cs" />
+    <Compile Include="WithThingUpdateWithinGroupRequestBuilder.cs" />
+    <Compile Include="WithThingUpdateWithinGroupResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Data.Stlth.Model\ST.IoT.Data.Stlth.Model.csproj">
+      <Project>{300421de-8fcb-4b1d-93ca-dded8cda5c19}</Project>
+      <Name>ST.IoT.Data.Stlth.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Data.Stlth.Social.Model\ST.IoT.Data.Stlth.Social.Model.csproj">
+      <Project>{bb9f5e16-97e6-4ad0-b250-a8c1d5ec713e}</Project>
+      <Name>ST.IoT.Data.Stlth.Social.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

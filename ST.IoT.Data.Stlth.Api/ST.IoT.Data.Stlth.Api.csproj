@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,14 +70,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StlthRestApiRequestProcessor.cs" />
+    <Compile Include="IStlthDataClient.cs" />
+    <Compile Include="NodeResult.cs" />
+    <Compile Include="RelateResult.cs" />
     <Compile Include="Route.cs" />
+    <Compile Include="StlthQueryTemplates.cs" />
     <Compile Include="StlthRestRequestFactory.cs" />
     <Compile Include="StlthDataClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StlthQueryTemplates.cs" />
-    <Compile Include="StlthRestApiClient.cs" />
-    <Compile Include="StlthRouter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -44,7 +44,7 @@ namespace ST.IoT.API.REST.PushRequestHttpHandler
             var thingID = request.RequestUri.Segments[5];
 
             response.Content = _updateManager.subscribe(thingID, new HttpChunkedSubscriptionHandle(), cancellationToken).PushStream;
-            return response;
+            return await Task.FromResult(response);
         }
     }
 }

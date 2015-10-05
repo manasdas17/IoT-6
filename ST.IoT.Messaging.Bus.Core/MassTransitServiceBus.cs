@@ -119,7 +119,7 @@ namespace ST.IoT.Messaging.Bus.Core
 
         public async Task SendAsync<Request>(Request request)
         {
-            wire();
+            await Task.FromResult<int>(0);
         }
 
         protected override void wire()
@@ -207,8 +207,6 @@ namespace ST.IoT.Messaging.Bus.Core
             });
         }
     }
-
-
     public class RabbitMqConsumeEndpointConfigurator : EndpointConfigurator
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
@@ -252,7 +250,7 @@ namespace ST.IoT.Messaging.Bus.Core
             {
                 _logger.Info("Adding receive consumer: {0}", epc.ConsumerType);
                 receiverConfigure.Consumer(
-                    epc.ConsumerType, 
+                    epc.ConsumerType,
                     t => epc.createConsumer());
             });
         }

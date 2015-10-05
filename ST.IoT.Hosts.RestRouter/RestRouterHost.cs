@@ -18,7 +18,6 @@ using ST.IoT.API.REST.Router.Messaging.Endpoints;
 using ST.IoT.API.REST.Router.Plugins.Interfaces;
 using ST.IoT.Hosts.Interfaces;
 using ST.IoT.Messaging.Bus.Core;
-using ST.IoT.Messaging.Busses.Factories.MTRMQ;
 using ST.IoT.Messaging.Messages.REST.Routing;
 
 namespace ST.IoT.Hosts.RestRouter

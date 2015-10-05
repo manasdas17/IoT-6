@@ -58,7 +58,7 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
                         Parts = new[] {"/", "listen/", "for/", "quotes/", "from/"},
                         Handler = doGetQuotesFor,
                     }
-                });
+                }, null);
 
             _forwarder = forwarder as ForwardToMinionsServiceEndpoint;
         }
@@ -73,7 +73,9 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
             _logger.Info("received message");
             _logger.Info(request);
 
-            var handler = _patternDispatcher.handle(request);
+            var segments = getSegments(request);
+
+            var handler = _patternDispatcher.getHandler(request, segments);
             if (handler == null)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.BadRequest);
@@ -81,11 +83,20 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
                 return response;
             }
 
-            var result = await handler.Handler(request);
+            var result = await handler.Handler(request, segments);
             return result;
         }
 
-        public async Task<HttpResponseMessage> doQuoteFor(HttpRequestMessage request)
+        private string[] getSegments(HttpRequestMessage request)
+        {
+            var urlSegments = request.RequestUri.Segments;
+            var trimmed = urlSegments.Select(s => s.TrimEnd(new char[] { '/' })).ToArray();
+            var nonEmpty = trimmed.Where(s => s.Length > 0).ToArray();
+            return nonEmpty;
+        }
+
+
+        public async Task<HttpResponseMessage> doQuoteFor(HttpRequestMessage request, string[] segments)
         {
             var uri = request.RequestUri;
             if (uri.Segments.Length != 4)
@@ -134,7 +145,7 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
             }
         }
 
-        public async Task<HttpResponseMessage> doGetLatestQuoteFor(HttpRequestMessage request)
+        public async Task<HttpResponseMessage> doGetLatestQuoteFor(HttpRequestMessage request, string[] segments)
         {
             var uri = request.RequestUri;
             if (uri.Segments.Length != 6)
@@ -170,7 +181,7 @@ namespace ST.IoT.API.REST.Router.Plugins.Minions
             }
         }
 
-        public async Task<HttpResponseMessage> doGetQuotesFor(HttpRequestMessage request)
+        public async Task<HttpResponseMessage> doGetQuotesFor(HttpRequestMessage request, string[] segments)
         {
             var uri = request.RequestUri;
             if (uri.Segments.Length != 5)

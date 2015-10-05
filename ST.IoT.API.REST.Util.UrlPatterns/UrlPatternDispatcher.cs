@@ -13,42 +13,66 @@ namespace ST.IoT.API.REST.Util.UrlPatterns
         {
             public HttpMethod Method { get; set; }
             public string[] Parts { get; set; }
-            public Func<HttpRequestMessage, Task<HttpResponseMessage>> Handler { get; set; }
+            public Func<HttpRequestMessage, string[], Task<HttpResponseMessage>> Handler { get; set; }
+            public Func<string, string, bool> PartLookup { get; set; } 
 
-
-            public bool match(HttpRequestMessage request)
+            public bool match(HttpRequestMessage request, string[] segments, Func<string, string, bool> segmentEvaluator)
             {
                 if (request.Method != Method)
                 {
                     return false;
                 }
-                var segments = request.RequestUri.Segments;
-                if (segments.Length < Parts.Length)
+                //var segments = request.RequestUri.Segments;
+                if (segments.Length != Parts.Length)
                 {
                     return false;
                 }
-                var i = 0;
-                foreach (var part in Parts)
+                /*
+                for (var i = 0; i< Parts.Length; i++)
                 {
+                    var part = Parts[i];
+                    if (part.StartsWith("{{") && part.EndsWith("}}") && PartLookup != null)
+                        return PartLookup(part.Substring(2, part.Length - 4), segments[i]);
+                    if (part.StartsWith("{") && part.EndsWith("}")) continue;
                     if (part != segments[i]) return false;
-                    i++;
                 }
+                */
+                for (var i = 0; i < Parts.Length; i++)
+                {
+                    if (Parts[i] != segments[i]) continue;
+                    if (Parts[i].StartsWith("{") && Parts[i].EndsWith("}"))
+                    {
+                        if (!segmentEvaluator(Parts[i], segments[i])) return false;
+                    }
+                }
+
                 return true;
             }
         }
 
         private List<UriPattern> _patterns;
 
-        public UrlPatternDispatcher(IEnumerable<UriPattern> patterns)
+        public enum SegmentEvaluationResult
         {
-            _patterns = new List<UriPattern>(patterns);
+            Any,
+            NodeId,
+            NodeType,
+            RelationshipType
         }
 
-        public UriPattern handle(HttpRequestMessage request)
+        private readonly Func<string, string, bool> _segmentEvaluator;
+
+        public UrlPatternDispatcher(IEnumerable<UriPattern> patterns, Func<string, string, bool> segmentEvaluator)
+        {
+            _patterns = new List<UriPattern>(patterns);
+            _segmentEvaluator = segmentEvaluator;
+        }
+
+        public UriPattern getHandler(HttpRequestMessage request, string[] segments)
         {
             foreach (var pattern in _patterns)
             {
-                if (pattern.match(request))
+                if (pattern.match(request, segments, _segmentEvaluator))
                 {
                     return pattern;
                 }

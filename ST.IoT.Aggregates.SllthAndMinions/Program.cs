@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ST.IoT.Services.Stlth.API.StlthSharp
+namespace ST.IoT.Aggregates.SllthAndMinions
 {
-    public class StlthSharpFacade
+    class Program
     {
-        public List<string> GetNodeTypeNames()
+        static void Main(string[] args)
         {
-            return null;
         }
     }
 }

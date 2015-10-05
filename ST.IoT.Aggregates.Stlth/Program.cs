@@ -54,13 +54,13 @@ namespace ST.IoT.Aggregates.Stlth
             // wire them
             RestProxyServiceHost.wire(kernel);
             RestRouterHost.wire(kernel);
-            MinionsServiceHost.wire(kernel);
+            //MinionsServiceHost.wire(kernel);
             StlthServiceHost.wire(kernel);
 
             //start em up!
             RestProxyServiceHost.start();
             RestRouterHost.start();
-            MinionsServiceHost.start();
+            //MinionsServiceHost.start();
             StlthServiceHost.start();
 
             //var sr = new SignalRThingsUpdateHost();
@@ -72,7 +72,7 @@ namespace ST.IoT.Aggregates.Stlth
             _logger.Info("Shutting down");
 
             RestRouterHost.stop();
-            MinionsServiceHost.stop();
+            //MinionsServiceHost.stop();
             RestProxyServiceHost.stop();
             StlthServiceHost.stop();
 

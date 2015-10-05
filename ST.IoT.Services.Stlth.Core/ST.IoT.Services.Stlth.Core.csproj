@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ST.IoT.Services.Stlth.Core</RootNamespace>
     <AssemblyName>ST.IoT.Services.Stlth.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -50,21 +50,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreRequestProcessor.cs" />
+    <Compile Include="IStlhRestMessageEndpoint.cs" />
+    <Compile Include="IStlthService.cs" />
+    <Compile Include="IStlthSocialService.cs" />
+    <Compile Include="SocialRequestProcessor.cs" />
+    <Compile Include="StlthConsumeRestMessageEndpoint.cs" />
+    <Compile Include="StlthRequestProcessor.cs" />
+    <Compile Include="StlthRestApiEndpoint.cs" />
     <Compile Include="StlthService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.API.REST.Util.UrlPatterns\ST.IoT.API.REST.Util.UrlPatterns.csproj">
+      <Project>{c3de24a7-fc24-48d5-9e5c-b1873b6151a4}</Project>
+      <Name>ST.IoT.API.REST.Util.UrlPatterns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Data.Stlth.Api\ST.IoT.Data.Stlth.Api.csproj">
+      <Project>{06731106-f8b8-4ec9-8468-2054b7f7754d}</Project>
+      <Name>ST.IoT.Data.Stlth.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Data.Stlth.Model\ST.IoT.Data.Stlth.Model.csproj">
+      <Project>{300421de-8fcb-4b1d-93ca-dded8cda5c19}</Project>
+      <Name>ST.IoT.Data.Stlth.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
       <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
       <Name>ST.IoT.Messaging.Bus.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Services.Stlth.API.REST\ST.IoT.Services.Stlth.API.REST.csproj">
-      <Project>{06cad210-5473-4ed4-890c-7b692e37ae0f}</Project>
-      <Name>ST.IoT.Services.Stlth.API.REST</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Services.Stlth.API.StlthSharp\ST.IoT.Services.Stlth.API.StlthSharp.csproj">
-      <Project>{8c7691fd-7ef4-40b7-92e6-72ddd76edcb6}</Project>
-      <Name>ST.IoT.Services.Stlth.API.StlthSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Stlth.Endpoints\ST.IoT.Services.Stlth.Endpoints.csproj">
       <Project>{c7290067-0ff7-4959-8894-345d73e8e41b}</Project>

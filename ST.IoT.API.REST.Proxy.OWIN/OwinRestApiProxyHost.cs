@@ -11,6 +11,7 @@ using ST.IoT.API.REST.Proxy.Interfaces;
 using ST.IoT.API.REST.Router.Messaging.Endpoints;
 using ST.IoT.Messaging.Bus.Core;
 using ST.IoT.Messaging.Messages.REST.Routing;
+using ST.IoT.Messaging.Security;
 
 namespace ST.IoT.API.REST.Proxy.OWIN
 {
@@ -22,14 +23,19 @@ namespace ST.IoT.API.REST.Proxy.OWIN
 
 
         private SendToRestRouterEndpoint _forwarder;
+        private IRestAuthorizer _authorizer;
 
         [ImportingConstructor]
-        public OwinRestApiProxyHost(ISendToRestRouterEndpoint forwarder,
+        public OwinRestApiProxyHost(
+            ISendToRestRouterEndpoint forwarder,
+            IRestAuthorizer authorizer,
             string baseAddress = "http://*:8080/")
         {
             // defaults
             BaseAddress = baseAddress;
+
             _forwarder = forwarder as SendToRestRouterEndpoint;
+            _authorizer = authorizer;
 
             _logger.Info("Created on address: " + BaseAddress);
             _logger.Info("Using a " + forwarder);
@@ -44,7 +50,7 @@ namespace ST.IoT.API.REST.Proxy.OWIN
             ServicePointManager.UseNagleAlgorithm = false;
             ServicePointManager.Expect100Continue = false;
 
-            Proxy.Start(BaseAddress, _forwarder);
+            Proxy.Start(BaseAddress, _forwarder, _authorizer);
 
             _forwarder.Start();
 

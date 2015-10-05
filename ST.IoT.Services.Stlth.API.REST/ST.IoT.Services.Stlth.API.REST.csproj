@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.API.REST.Util.UrlPatterns\ST.IoT.API.REST.Util.UrlPatterns.csproj">
+      <Project>{c3de24a7-fc24-48d5-9e5c-b1873b6151a4}</Project>
+      <Name>ST.IoT.API.REST.Util.UrlPatterns</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Services.Stlth.Data.Layer.Neo\ST.IoT.Services.Stlth.Data.Layer.Neo.csproj">
       <Project>{dd5a7e2e-153e-4bc3-904f-51cbd6398a94}</Project>
       <Name>ST.IoT.Services.Stlth.Data.Layer.Neo</Name>

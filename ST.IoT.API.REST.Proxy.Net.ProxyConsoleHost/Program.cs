@@ -13,7 +13,7 @@ namespace ST.IoT.API.REST.Proxy.RestProxyConsoleHost
 {
     class Program
     {
-        private static IKernel _kernel;
+        private static IKernel _kernel = null;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         static void Main(string[] args)

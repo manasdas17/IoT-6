@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ST.IoT.Hosts.RestRouter</RootNamespace>
     <AssemblyName>ST.IoT.Hosts.RestRouter</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -120,10 +120,6 @@
     <ProjectReference Include="..\ST.IoT.Messaging.Bus.Core\ST.IoT.Messaging.Bus.Core.csproj">
       <Project>{2268b2cd-c4a1-41fa-9a67-ec78912afded}</Project>
       <Name>ST.IoT.Messaging.Bus.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ST.IoT.Messaging.Busses.Factories.MTRMQ\ST.IoT.Messaging.Busses.Factories.MTRMQ.csproj">
-      <Project>{9886da28-3b8d-4d00-b896-76a2eb74d6bf}</Project>
-      <Name>ST.IoT.Messaging.Busses.Factories.MTRMQ</Name>
     </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Messaging.Messages.REST.Routing\ST.IoT.Messaging.Messages.REST.Routing.csproj">
       <Project>{6b75f104-47ae-4c3c-b33d-e88d18bfcc52}</Project>

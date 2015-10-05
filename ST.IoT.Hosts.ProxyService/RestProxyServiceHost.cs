@@ -14,6 +14,7 @@ using ST.IoT.API.REST.Router.Messaging.Endpoints;
 using ST.IoT.Hosts.Interfaces;
 using ST.IoT.Messaging.Bus.Core;
 using ST.IoT.Messaging.Messages.REST.Routing;
+using ST.IoT.Messaging.Security;
 
 namespace ST.IoT.Hosts.RestProxyService
 {
@@ -55,6 +56,7 @@ namespace ST.IoT.Hosts.RestProxyService
             _kernel.Bind<ISendToRestRouterEndpoint>().To<SendToRestRouterEndpoint>();
             _kernel.Bind<IRestApiProxyHost>().To<OwinRestApiProxyHost>();
             _kernel.Bind<IRestProxyServiceHost>().To<RestProxyServiceHost>();
+            _kernel.Bind<IRestAuthorizer>().To<RestRouterTokenAuth>();
         }
 
         public static void start(IKernel kernel = null)

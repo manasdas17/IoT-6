@@ -15,85 +15,6 @@ using ST.IoT.Data.Stlth.Model;
 
 namespace ST.IoT.Data.Stlth.Api
 {
-    public interface IStlthDataClient
-    {
-        void Connect();
-        void Disconnect();
-        Task MetaNodeAsync(StlthDataOperation operation, string nodeClass, string definition = "");
-        Task MetaRelAsync(StlthDataOperation operation, string name, string fromNodeClass, string toNodeClass);
-
-        Task<NodeResult> NodePostAsync(string nodeLabel, string json = "", string context = "");
-        Task<NodeResult> NodeGetAsync(string nodeID);
-        Task<NodeResult> NodePutAsync(string nodeLabel, string json = "", string context = "");
-        Task<NodeResult> NodeDeleteAsync(string nodeID);
-
-        Task MetaEdgeAsync(StlthDataOperation operation, string nodeLabel = "", string json = "");
-        Task EdgeAsync(StlthDataOperation operation, StlthElementType elementType, string nodeLabel = "", string json = "");
-
-        //Task RelationAsync(StlthDataOperation operation, StlthElementType elementType, string fromNodeLabel = "",string toNodeLabel = "", string relationName = "");
-        Task LoadMetaNodesAsync();
-        Task LoadMetaEdgesAsync();
-        Task LoadMetaRelsAsync();
-        Task ExecuteCypherAsync(string cypher);
-        Task<string> ExecuteCypherWithResultAsStringAsync(string cypher);
-
-        Task<Model.Node> GetNodeByIdAsync(string id);
-        Task<IEnumerable<Model.Node>> GetNodesOfTypeAsync(string name);
-
-        //Task<RelateResult> RelateAsync(StlthDataOperation operation, string fromNodeId, string toNodeId, string relationshipTypeName, string relationshipContext);
-
-        string TenantID { get; }
-
-        Task<NodeResult> RelPostAsync(string fromNodeID, string relationshipName, string toNodeID);
-        Task<NodeResult> RelDeleteAsync(string relID);
-        Task<NodeResult> RelGetAsync(string relationshipName, string fromNodeID = "", string toNodeID = "");
-
-        ICypherFluentQuery Cypher { get; }
-
-        Task<long> AllocateIDsAsync(int count = 1);
-    }
-
-    public class RelateResult
-    {
-        public HttpStatusCode StatusCode { get; set; }
-        public string Response { get; set; }
-    }
-
-    public class NodeResult
-    {
-        public HttpStatusCode StatusCode { get; private set; }
-        public Model.Node Node { get; private set; }
-        public string Message { get; private set; }
-        public string Rel { get; private set; }
-        public string ID { get; private set; }
-        public IEnumerable<JObject> ResultSet { get; private set; }
-
-        public NodeResult(HttpStatusCode statusCode)
-        {
-            StatusCode = statusCode;
-        }
-        public NodeResult(HttpStatusCode statusCode, Model.Node node)
-        {
-            StatusCode = statusCode;
-            Node = node;
-        }
-        public NodeResult(HttpStatusCode statusCode, string id, string labelName = "")
-        {
-            StatusCode = statusCode;
-            ID = id;
-            Rel = "/" + labelName + "/" + id.ToString();
-        }
-        public NodeResult(HttpStatusCode statusCode, string message)
-        {
-            StatusCode = statusCode;
-            Message = message;
-        }
-        public NodeResult(HttpStatusCode statusCode, IEnumerable<JObject> resultSet)
-        {
-            StatusCode = statusCode;
-            ResultSet = resultSet;
-        }
-    }
 
     public static class StlthBuiltinRelNames
     {
@@ -115,6 +36,10 @@ namespace ST.IoT.Data.Stlth.Api
         public const string Post = "Post";
         public const string Group = "Group";
         public const string Community = "Community";
+        public const string Space = "Space";
+        public const string Timeline = "Timeline";
+        public const string MediaCollection = "MediaCollection";
+        public const string Thing = "Thing";
     }
 
     public static class StlthBuiltinEdgeLabels
@@ -155,15 +80,25 @@ namespace ST.IoT.Data.Stlth.Api
         private readonly string _url = "";
         private readonly Dictionary<string, object> _emptyParameters = new Dictionary<string, object>();
 
-        private readonly ConcurrentDictionary<string, MetaNode> _metaNodes = new ConcurrentDictionary<string, MetaNode>();
-        private readonly ConcurrentDictionary<string, MetaEdge> _metaEdges = new ConcurrentDictionary<string, MetaEdge>();
+        private readonly ConcurrentDictionary<string, MetaNode> _metaNodes =
+            new ConcurrentDictionary<string, MetaNode>();
+
+        private readonly ConcurrentDictionary<string, MetaEdge> _metaEdges =
+            new ConcurrentDictionary<string, MetaEdge>();
+
         private readonly ConcurrentDictionary<string, MetaRel> _metaRels = new ConcurrentDictionary<string, MetaRel>();
 
-        public List<string> NodeLabels { get { return _metaNodes.Values.Select(n => n.Name).ToList(); } } 
+        public List<string> NodeLabels
+        {
+            get { return _metaNodes.Values.Select(n => n.Name).ToList(); }
+        }
 
         public string TenantID { get; private set; }
 
-        public ICypherFluentQuery Cypher {  get { return _client.Cypher; } }
+        public ICypherFluentQuery Cypher
+        {
+            get { return _client.Cypher; }
+        }
 
         public object Rel { get; private set; }
 
@@ -183,6 +118,14 @@ namespace ST.IoT.Data.Stlth.Api
             disconnect();
         }
 
+        public async Task InitializeAsync()
+        {
+            Connect();
+
+            await LoadMetaNodesAsync();
+            await LoadMetaEdgesAsync();
+            await LoadMetaRelsAsync();
+        }
 
         public async Task ExecuteCypherAsync(string cypher)
         {
@@ -270,7 +213,7 @@ namespace ST.IoT.Data.Stlth.Api
             _logger.Trace(query.Query.DebugQueryText);
 
             var results = await query.ResultsAsync;
-           
+
             _metaRels.Clear();
 
             results.Select(r =>
@@ -323,7 +266,8 @@ namespace ST.IoT.Data.Stlth.Api
             var i = 1;
             foreach (var t in types)
             {
-                var p1 = string.Format("(et{0}:stlth:Global:Meta:Edge:Class:{1}:EdgeType:{2} {{Name: '{2}'}})", i, edgeClass, t);
+                var p1 = string.Format("(et{0}:stlth:Global:Meta:Edge:Class:{1}:EdgeType:{2} {{Name: '{2}'}})", i,
+                    edgeClass, t);
                 var p2 = string.Format("(me)-[:META_EDGE_TYPE]->(et{0})", i);
                 query = query.Create(p1).Create(p2);
                 i++;
@@ -342,7 +286,8 @@ namespace ST.IoT.Data.Stlth.Api
             }
         }
 
-        public async Task MetaRelAsync(StlthDataOperation operation, string name, string fromClassName, string toClassName)
+        public async Task MetaRelAsync(StlthDataOperation operation, string name, string fromClassName,
+            string toClassName)
         {
             var query = _client
                 .Cypher
@@ -409,29 +354,36 @@ create (mr)-[r:META_INSTANCES]->(n)
             }
         }
 
-        public async Task<NodeResult> NodePostAsync(string nodeLabel, string json = "", string context = "")
+        public async Task<NodeResult> NodePostAsync(string nodeLabel, string json = null, string context = "", string tenantID = null)
         {
-            if (!_metaNodes.ContainsKey(nodeLabel))
-                throw new Exception("The database does not contain a class definition for :" + nodeLabel);
-
-            var id = await AllocateIDsAsync(1);
-            var query = _client
-                .Cypher
-                .Match(string.Format("(r:stlth:{0}:Data:Nodes)", TenantID))
-                .Merge(string.Format("(nlr:stlth:{0}:Data:Node:{1}:Root {{Name: '{1}'}})", TenantID, nodeLabel))
-                .OnCreate()
-                .Set("nlr.CreatedAt=timestamp()")
-                .Merge(string.Format("(r)-[:NODE_CLASS_INSTANCES_ROOT]->(nlr)"))
-                .Create(string.Format("(n:stlth:{0}:Data:Node:{1} {{ID: '{2}', CreatedAt: timestamp()}})", TenantID, nodeLabel, id))
-                .Create("(nlr)-[:NODE_TYPE_INSTANCES]->(n)")
-                .Create(string.Format("(im:stlth:{0}:Data:Node:{1}:InstanceRoot {{ClassName: '{1}', ID: '{2}', CreatedAt: timestamp(), Context: '{3}'}})", TenantID, nodeLabel, id, context))
-                .Create(string.Format("(n)-[:NODE_INSTANCE_DATA {{CreatedAt: timestamp(), ID: '{0}'}}]->(im)", id+1))
-                .Create(String.Format("(i:stlth:{0}:Data:Node:{1}:Instance {2})", TenantID, nodeLabel, json))
-                .Create("(im)-[:NODE_DATA_INSTANCES {CreatedAt: timestamp()}]->(i)");
+            string qt = null;
 
             try
             {
-                _logger.Trace(query.Query.DebugQueryText);
+                if (!_metaNodes.ContainsKey(nodeLabel))
+                    throw new Exception("The database does not contain a class definition for :" + nodeLabel);
+
+                tenantID = getTenantID(tenantID);
+
+                var neoJson = DescribeAsNeoJSON.describe(JObject.Parse(json));
+
+                var id = await AllocateIDsAsync(1);
+                var query = _client
+                    .Cypher
+                    .Match(string.Format("(r:stlth:{0}:Data:Nodes)", tenantID))
+                    .Merge(string.Format("(nlr:stlth:{0}:Data:Node:{1}:Root {{Name: '{1}'}})", tenantID, nodeLabel))
+                    .OnCreate()
+                    .Set("nlr.CreatedAt=timestamp()")
+                    .Merge(string.Format("(r)-[:NODE_CLASS_INSTANCES_ROOT]->(nlr)"))
+                    .Create(string.Format("(n:stlth:{0}:Data:Node:{1}:TypeInstances {{ID: '{2}', CreatedAt: timestamp()}})", tenantID, nodeLabel, id))
+                    .Create("(nlr)-[:NODE_TYPE_INSTANCES]->(n)")
+                    .Create(string.Format("(im:stlth:{0}:Data:Node:{1}:InstancesRoot {{ClassName: '{1}', ID: '{2}', CreatedAt: timestamp(), Context: '{3}'}})",tenantID, nodeLabel, id, context))
+                    .Create(string.Format("(n)-[:NODE_INSTANCE_DATA {{CreatedAt: timestamp(), ID: '{0}'}}]->(im)",id + 1))
+                    .Create(String.Format("(i:stlth:{0}:Data:Node:{1}:Instance {2})", tenantID, nodeLabel, neoJson))
+                    .Create("(im)-[:NODE_DATA_INSTANCES {CreatedAt: timestamp()}]->(i)");
+
+                qt = query.Query.DebugQueryText;
+                _logger.Trace(qt);
 
                 await query.ExecuteWithoutResultsAsync();
 
@@ -445,13 +397,15 @@ create (mr)-[r:META_INSTANCES]->(n)
             }
         }
 
-        public async Task<NodeResult> NodePutAsync(string nodeID, string json = "", string context = "")
+        public async Task<NodeResult> NodePutAsync(string nodeID, string json = "", string context = "", string tenantID = null)
         {
             try
             {
                 var query = _client
                     .Cypher
-                    .Match(string.Format("(n:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})-[r:NODE_DATA_INSTANCES]->()", TenantID, nodeID))
+                    .Match(
+                        string.Format("(n:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})-[r:NODE_DATA_INSTANCES]->()",
+                            getTenantID(tenantID), nodeID))
                     .With("n.ClassName as ClassName")
                     .Return<string>(ClassName => ClassName.As<string>());
 
@@ -459,9 +413,11 @@ create (mr)-[r:META_INSTANCES]->(n)
 
                 var query2 = _client
                     .Cypher
-                        .Match(string.Format("(n:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})-[r:NODE_DATA_INSTANCES]->()", TenantID, nodeID))
-                        .Create(String.Format("(i:stlth:{0}:Data:Node:{1}:Instance {2})", TenantID, className,  json))
-                        .Create("(n)-[:NODE_DATA_INSTANCES {CreatedAt: timestamp()}]->(i)");
+                    .Match(
+                        string.Format("(n:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})-[r:NODE_DATA_INSTANCES]->()",
+                            getTenantID(tenantID), nodeID))
+                    .Create(String.Format("(i:stlth:{0}:Data:Node:{1}:Instance {2})", getTenantID(tenantID), className, json))
+                    .Create("(n)-[:NODE_DATA_INSTANCES {CreatedAt: timestamp()}]->(i)");
 
                 _logger.Trace(query2.Query.DebugQueryText);
 
@@ -477,13 +433,15 @@ create (mr)-[r:META_INSTANCES]->(n)
             }
         }
 
-        public async Task<NodeResult> NodeDeleteAsync(string nodeID)
+        public async Task<NodeResult> NodeDeleteAsync(string nodeID, string tenantID = null)
         {
             try
             {
                 var query = _client
                     .Cypher
-                    .Match(string.Format("()-[r0]-(p)-[r1]->(n:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})-[r2]->(d)", TenantID, nodeID))
+                    .Match(
+                        string.Format("()-[r0]-(p)-[r1]->(n:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})-[r2]->(d)",
+                             getTenantID(tenantID), nodeID))
                     .Delete("r0, r1, r2, p, n, d");
 
                 await query.ExecuteWithoutResultsAsync();
@@ -497,17 +455,49 @@ create (mr)-[r:META_INSTANCES]->(n)
             }
         }
 
-        public async Task<NodeResult> NodeGetAsync(string nodeID)
+        public async Task<NodeResult> NodeGetAsync(string nodeID, string tenantID = null)
         {
             try
             {
-                var node = await GetNodeByIdAsync(nodeID);
+                var node = await GetNodeByIdAsync(nodeID, getTenantID(tenantID));
                 return new NodeResult(HttpStatusCode.OK, node);
             }
             catch (Exception ex)
             {
                 return new NodeResult(HttpStatusCode.InternalServerError, ex.InnerException.Message);
                 throw;
+            }
+        }
+
+        public async Task<NodeResult> QueryNodesAsync(string nodeType, string properties, string tenantID = null)
+        {
+            string qt = null;
+
+            try
+            {
+                var query = _client
+                    .Cypher
+                    .Match(string.Format("(n:stlth:{0}:Node:Data:{1}:InstancesRoot)-[r:NODE_DATA_INSTANCES]->()",
+                            getTenantID(tenantID), nodeType))
+                    .With("max(r.CreatedAt) as newestTime")
+                    .Match(string.Format("(n) -[r: NODE_DATA_INSTANCES {{ CreatedAt: newestTime }}]->(i {0})", DescribeAsNeoJSON.describe(JObject.Parse(properties))))
+                    .Return((n, i) =>
+                        new
+                        {
+                            Node = n.As<string>(),
+                            Data = i.As<string>()
+                        });
+                qt = query.Query.DebugQueryText;
+                _logger.Trace(qt);
+
+                var results = await query.ResultsAsync;
+                var nodes = results.Select(r => NodeFactory.create(new StlthNodeInternals(r.Node, r.Data))).ToArray();
+                
+                return new NodeResult(HttpStatusCode.OK, nodes);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -654,6 +644,7 @@ create (mr)-[r:META_INSTANCES]->(n)
         private void disconnect()
         {
         }
+
         /*
         public async Task RelationAsync(StlthDataOperation operation, StlthElementType elementType,
             string fromNodeLabel = "", string toNodeLabel = "", string relationName = "")
@@ -681,6 +672,7 @@ create (rr)-[f:REL_METADATA]->(rn)
             }
         }
         */
+
         public async Task<string> ExecuteCypherWithResultAsStringAsync(string cypher)
         {
             var result = await executeCypherWithResultsAsStringAsync(cypher);
@@ -698,25 +690,26 @@ return i2
 
 
 
-        public async Task<Model.Node> GetNodeByIdAsync(string nodeId)
+        public async Task<Model.Node> GetNodeByIdAsync(string nodeId, string tenantID = null)
         {
             try
             {
                 var query = _client
                     .Cypher
-                    .Match(string.Format("(n:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})-[r:NODE_DATA_INSTANCES]->()", TenantID, nodeId))
+                    .Match(string.Format("(n:stlth:{0}:Node:Data:InstancesRoot {{ID: '{1}'}})-[r:NODE_DATA_INSTANCES]->()",
+                            getTenantID(tenantID), nodeId))
                     .With("max(r.CreatedAt) as newestTime")
                     .Match("(n) -[r: NODE_DATA_INSTANCES { CreatedAt: newestTime}]->(i)")
                     .Return((n, i) =>
-                            new
-                            {
-                                Node = n.As<string>(),
-                                Data = i.As<string>()
-                            });
+                        new
+                        {
+                            Node = n.As<string>(),
+                            Data = i.As<string>()
+                        });
                 var results = await query.ResultsAsync;
                 var rawnode = results.Select(r => new StlthNodeInternals(r.Node, r.Data)).FirstOrDefault();
                 dynamic node = NodeFactory.create(rawnode);
-                return node; 
+                return node;
             }
             catch (Exception ex)
             {
@@ -724,64 +717,90 @@ return i2
             }
         }
 
-        public async Task<IEnumerable<Model.Node>> GetNodesOfTypeAsync(string typeName)
+        private string getTenantID(string tenantID)
         {
+            return tenantID ?? TenantID;
+        }
+
+        public async Task<NodeResult> GetNodesOfTypeAsync(string typeName, int skip = 0, int limit = 100, string tenantID = null)
+        {
+            var query = _client.Cypher
+                .Match(string.Format(@"(n:stlth:{0}:Node:{1}:Data:InstanceRoot)", getTenantID(tenantID), typeName))
+                .Match(string.Format("(n)-[r:NODE_DATA_INSTANCES]->(d)"))
+                .Return((n, d) =>
+                    new
+                    {
+                        Node = n.As<string>(),
+                        Data = d.As<string>()
+                    })
+                .Skip(skip)
+                .Limit(limit);
+
             try
             {
-                var query = _client.Cypher
-                    .Match(string.Format(@"(n:stlth:Node:{0}:Instance)", typeName))
-                    .Match(string.Format("(n)-[r:{0}_INSTANCE_DATA]->(d)", typeName))
-                    .Return((n, d) =>
-                            new
-                            {
-                                Node = n.As<string>(),
-                                Data = d.As<string>()
-                            });
-
                 _logger.Trace(query.Query.DebugQueryText);
+
                 var results = await query.ResultsAsync;
                 var rawnode = results.Select(r => new StlthNodeInternals(r.Node, r.Data)).ToArray();
 
                 var nodes = NodeFactory.create(rawnode);
 
-                var n1 = nodes.First();
-
-                return nodes;
-
+                return new NodeResult(HttpStatusCode.OK, nodes);
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.Error(ex.Message);
+                if (ex.InnerException != null) _logger.Error(ex.InnerException.Message);
+                return new NodeResult(HttpStatusCode.InternalServerError, ex.InnerException.Message);
             }
         }
 
-        public async Task<NodeResult> RelPostAsync(string fromNodeID, string relationshipName, string toNodeID)
+        public async Task<RelateResult> RelPostAsync(string fromNodeID, string relationshipName, string toNodeID, string tenantID = null)
         {
-            if (!_metaRels.ContainsKey(relationshipName)) throw new Exception("Unknown relationship type name: " + relationshipName);
+            var createNewRelationship = false;
+            if (relationshipName == null)
+            {
+                _logger.Info("Not relationship named, so using default_relationship");
+                relationshipName = "default_relationship";
+            }
+            else
+            if (!_metaRels.ContainsKey(relationshipName))
+            {
+                _logger.Warn("Relationship name does not exist: " + relationshipName);
+                _logger.Warn("Creating a new relationship between the types of these nodes with name: " + relationshipName);
+                createNewRelationship = true;
+            }
 
             try
             {
                 var id = await AllocateIDsAsync(1);
 
+                tenantID = getTenantID(tenantID);
+
                 // should check if these exist and throw exception?
-                var fromNode = await GetNodeByIdAsync(fromNodeID);
-                var toNode = await GetNodeByIdAsync(toNodeID);
+                var fromNode = await GetNodeByIdAsync(fromNodeID, tenantID);
+                var toNode = await GetNodeByIdAsync(toNodeID, tenantID);
+
+                if (createNewRelationship)
+                {
+                    await MetaRelAsync(StlthDataOperation.PUT, relationshipName, fromNode.ClassName, toNode.ClassName);
+                }
 
                 var query = _client.Cypher
                     //.Match(string.Format(@"(glblRel:stlth:Global:Rel {{Name: '{0}'}})", relationshipName))  // the global metadata node for the specified relationship name
-                    .Match(string.Format(@"(relDataRoot:stlth:{0}:Tenant:Data:Rels)", TenantID)) // root for data in the  tenant for rels
-                    .Match(string.Format(@"(fromNodeRoot)-[:NODE_INSTANCE_DATA]-(fromNode:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})", TenantID, fromNodeID))  // data node for the source
-                    .Match(string.Format(@"(toNodeRoot)-[:NODE_INSTANCE_DATA]-(toNode:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})", TenantID, toNodeID))  // data node for the source
+                    .Match(string.Format(@"(relDataRoot:stlth:{0}:Tenant:Data:Rels)", getTenantID(tenantID))) // root for data in the  tenant for rels
+                    .Match(string.Format(@"(fromNodeRoot)-[:NODE_INSTANCE_DATA]-(fromNode:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})", tenantID, fromNodeID))  // data node for the source
+                    .Match(string.Format(@"(toNodeRoot)-[:NODE_INSTANCE_DATA]-(toNode:stlth:{0}:Node:Data:InstanceRoot {{ID: '{1}'}})", tenantID, toNodeID))  // data node for the source
                                                                                                                                                               //.Match(string.Format(@"(toNode:stlth:{0}:Node:Data {{ID: '{1}'}})", TenantID, toNodeID))  // data node for the target
                     .Create(string.Format(@"(relNode:stlth:{0}:Data:Rel:{1}:{2}:Instance {{ID: '{3}', RelName: '{4}', FromID: '{5}', ToID: '{6}'}})", // create a new rel node instance
-                                          TenantID, fromNode.ClassName, toNode.ClassName, id, relationshipName, fromNodeID, toNodeID))
+                                          tenantID, fromNode.ClassName, toNode.ClassName, id, relationshipName, fromNodeID, toNodeID))
                     .Create(string.Format(@"(fromNodeRoot)-[:FROM_RELATION_INSTANCE]->(relNode)"))
                     .Create(string.Format(@"(relNode)-[:TO_RELATION_INSTANCE]->(toNodeRoot)"))
                     .Create(string.Format(@"(relDataRoot)-[:RELATION_INSTANCE]->(relNode)"));
 
                 _logger.Trace(query.Query.DebugQueryText);
                 await query.ExecuteWithoutResultsAsync();
-                return new NodeResult(HttpStatusCode.OK, id: id.ToString());
+                return new RelateResult(HttpStatusCode.OK, id: id.ToString());
             }
             catch (Exception ex)
             {
@@ -789,19 +808,19 @@ return i2
             }
         }
 
-        public async Task<NodeResult> RelDeleteAsync(string relID)
+        public async Task<RelateResult> RelDeleteAsync(string relID, string tenantID)
         {
             try
             {
                 var query = _client.Cypher
-                    .Match(string.Format(@"(relDataRoot:stlth:{0}:Tenant:Data:Rels)", TenantID))
+                    .Match(string.Format(@"(relDataRoot:stlth:{0}:Tenant:Data:Rels)", getTenantID(tenantID)))
                     .Match(string.Format(@"(relDataRoot)-[r:RELATION_INSTANCE]->(relNode {{ID: '{0}'}})", relID))
                     .Match(string.Format(@"(from)-[fromRel:FROM_RELATION_INSTANCE]->(relNode)-[toRel:TO_RELATION_INSTANCE]->(to)"))
                     .Delete("r, fromRel, toRel, relNode");
 
                 _logger.Trace(query.Query.DebugQueryText);
                 await query.ExecuteWithoutResultsAsync();
-                return new NodeResult(HttpStatusCode.OK);
+                return new RelateResult(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -809,18 +828,97 @@ return i2
             }
         }
 
-        public async Task<NodeResult> RelGetAsync(string relationshipName, string fromNodeID = "", string toNodeID = "")
+        public async Task<RelateResult> RelGetAsync(string relationshipName, string fromNodeID = "", string toNodeID = "", string tenantID = null, bool alsoNodes = false)
+        {
+            return !alsoNodes
+                ? await relGetWithNodesAsync(relationshipName, fromNodeID, toNodeID, tenantID)
+                : await relGetWithNodesAsync(relationshipName, fromNodeID, toNodeID, tenantID);
+        }
+
+        private async Task<RelateResult> relGetWithNodesAsync(string relationshipName, string fromNodeID, string toNodeID, string tenantID)
+        {
+            /*
+MATCH(relDataRoot: stlth:Stlth: Tenant:Data: Rels) -[:RELATION_INSTANCE] - (relNode { RelName: 'Friend', FromID: '2'})
+MATCH(relNode) -[:FROM_RELATION_INSTANCE] - (fromNode)
+MATCH(relNode) -[:TO_RELATION_INSTANCE] - (toNode)
+MATCH(fromNode) -[:NODE_INSTANCE_DATA] - () -[rFrom: NODE_DATA_INSTANCES]->()
+MATCH(toNode) -[:NODE_INSTANCE_DATA] - () -[rTo: NODE_DATA_INSTANCES]->()
+WITH relNode, fromNode, toNode, max(rFrom.CreatedAt) as fromNewestTime, max(rTo.CreatedAt) as toNewestTime
+MATCH(fromNode) -[:NODE_INSTANCE_DATA]-() -[:NODE_DATA_INSTANCES { CreatedAt: fromNewestTime}]->(fromInstanceData)
+MATCH(toNode) -[:NODE_INSTANCE_DATA] - () -[:NODE_DATA_INSTANCES { CreatedAt: toNewestTime}]->(toInstanceData)
+return relNode, fromNode, fromInstanceData, toNode, toInstanceData
+*/
+
+            try
+            {
+
+                var query = _client.Cypher
+                    .Match(string.Format(@"(relDataRoot:stlth:{0}:Tenant:Data:Rels)-[:RELATION_INSTANCE]-(relNode {1})", getTenantID(tenantID), genRelQueryParams(relationshipName, fromNodeID, toNodeID)))
+                    .Match("(relNode) -[:FROM_RELATION_INSTANCE] - (fromNode)")
+                    .Match("(relNode) -[:TO_RELATION_INSTANCE] - (toNode)")
+                    .Match("(fromNode) -[:NODE_INSTANCE_DATA] - () -[rFrom: NODE_DATA_INSTANCES]->()")
+                    .Match("(toNode) -[:NODE_INSTANCE_DATA] - () -[rTo: NODE_DATA_INSTANCES]->()")
+                    .With("relNode, fromNode, toNode, max(rFrom.CreatedAt) as fromNewestTime, max(rTo.CreatedAt) as toNewestTime")
+                    .Match("(fromNode) -[:NODE_INSTANCE_DATA]-(fni) -[:NODE_DATA_INSTANCES { CreatedAt: fromNewestTime}]->(fromInstanceData)")
+                    .Match("(toNode) -[:NODE_INSTANCE_DATA] - (tni) -[:NODE_DATA_INSTANCES { CreatedAt: toNewestTime}]->(toInstanceData)")
+                    .Return((relNode, fni, fromInstanceData, tni, toInstanceData) =>
+                        new
+                        {
+                            RelNode = relNode.As<string>(),
+                            FromNode = fni.As<string>(),
+                            FromInstanceData = fromInstanceData.As<string>(),
+                            ToNode = tni.As<string>(),
+                            ToInstanceData = toInstanceData.As<string>()
+                        });
+                
+                _logger.Trace(query.Query.DebugQueryText);
+
+                var results = await query.ResultsAsync;
+
+                var relations = results.Select(r => new Rel(JObject.Parse(r.RelNode)["data"].ToString())).ToArray();
+
+                var fromNodes = results.Select(r =>
+                {
+                    var jo1 = JObject.Parse(r.FromNode).ToString();
+                    var jo2 = JObject.Parse(r.FromInstanceData).ToString();
+                    return NodeFactory.create(new StlthNodeInternals(jo1.ToString(), jo2.ToString()));
+                }).ToArray();
+
+                var toNodes = results.Select(r =>
+                {
+                    var jo1 = JObject.Parse(r.ToNode).ToString();
+                    var jo2 = JObject.Parse(r.ToInstanceData).ToString();
+                    return NodeFactory.create(new StlthNodeInternals(jo1.ToString(), jo2.ToString()));
+                }).ToArray();
+
+                var ret = new RelateResult(HttpStatusCode.Accepted,
+                    relations: relations,
+                    fromNodes: fromNodes.DistinctBy(n => n.ID),
+                    toNodes: toNodes.DistinctBy(n => n.ID));
+
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private async Task<RelateResult> relGetAsync(string relationshipName, string fromNodeID, string toNodeID, string tenantID)
         {
             try
             {
+
                 var query = _client.Cypher
-                    .Match(string.Format(@"(relDataRoot:stlth:{0}:Tenant:Data:Rels)-[:RELATION_INSTANCE]-(relNode {1})", TenantID, genRelQueryParams(relationshipName, fromNodeID, toNodeID)))
+                    .Match(string.Format(@"(relDataRoot:stlth:{0}:Tenant:Data:Rels)-[:RELATION_INSTANCE]-(relNode {1})", getTenantID(tenantID), genRelQueryParams(relationshipName, fromNodeID, toNodeID)))
                     .Return(relNode => relNode.As<string>());
 
                 _logger.Trace(query.Query.DebugQueryText);
 
                 var results = await query.ResultsAsync;
-                return new NodeResult(HttpStatusCode.OK, results.Select(r => JObject.Parse(r)));
+                var result = new RelateResult(HttpStatusCode.OK, results.Select(r => new Rel(r)));
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -838,6 +936,30 @@ return i2
                 !string.IsNullOrEmpty(toNodeID) ? "ToID: '" + toNodeID + "'" : "",
             }.Where(s => !string.IsNullOrEmpty(s));
             return "{" + string.Join(", ", parts) + "}";
+        }
+
+        public async Task<bool> IsNodeTypeNameAsync(string nodeTypeName)
+        {
+            return await Task.FromResult(_metaNodes.ContainsKey(nodeTypeName));
+        }
+        public async Task<bool> IsRelTypeNameAsync(string nodeTypeName)
+        {
+            return await Task.FromResult(_metaNodes.ContainsKey(nodeTypeName));
+        }
+    }
+
+    public static class LinqExtensions
+    {
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
         }
     }
 }

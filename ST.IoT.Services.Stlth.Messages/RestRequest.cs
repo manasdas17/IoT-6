@@ -11,6 +11,7 @@ namespace ST.IoT.Services.Stlth.Messages
     public class RestRequest
     {
         public byte[] AsByteArray { get; set; }
+        public string TenantID { get; set; }
 
         public HttpRequestMessage Request
         {

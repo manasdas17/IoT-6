@@ -25,6 +25,7 @@ namespace ST.IoT.Services.Stlth.Runners.ConsoleRunner
 
             new Program().run();
         }
+
         private void run()
         {
             try

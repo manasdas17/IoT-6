@@ -40,6 +40,10 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
@@ -60,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddModelDataStrategy.cs" />
+    <Compile Include="BuildModelStlthCommunityStrategy.cs" />
     <Compile Include="CreateTenantRootStrategy.cs" />
     <Compile Include="CreateMetaRelsStrategy.cs" />
     <Compile Include="CreateTenantStrategy.cs" />
@@ -85,6 +90,18 @@
     <ProjectReference Include="..\ST.IoT.Data.Stlth.Model\ST.IoT.Data.Stlth.Model.csproj">
       <Project>{300421de-8fcb-4b1d-93ca-dded8cda5c19}</Project>
       <Name>ST.IoT.Data.Stlth.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Data.Stlth.Social.Model\ST.IoT.Data.Stlth.Social.Model.csproj">
+      <Project>{bb9f5e16-97e6-4ad0-b250-a8c1d5ec713e}</Project>
+      <Name>ST.IoT.Data.Stlth.Social.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Stlth.API.StlthSharp\ST.IoT.Services.Stlth.API.StlthSharp.csproj">
+      <Project>{8c7691fd-7ef4-40b7-92e6-72ddd76edcb6}</Project>
+      <Name>ST.IoT.Services.Stlth.API.StlthSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Stlth.Data.Neo4jUtils\ST.IoT.Stlth.Data.Neo4jUtils.csproj">
+      <Project>{713dbcb5-5942-4153-919c-d918f52b5e14}</Project>
+      <Name>ST.IoT.Stlth.Data.Neo4jUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

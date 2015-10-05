@@ -91,7 +91,7 @@ namespace ST.IoT.Services.Minions
                     ex.Message);
             }
 
-            return response;
+            return await Task.FromResult(response);
         }
 
         private MinionsResponseMessage quote_for(JObject request, MinionsRequestMessage message)

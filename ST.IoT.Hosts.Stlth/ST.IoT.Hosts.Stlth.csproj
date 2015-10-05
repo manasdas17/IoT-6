@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ST.IoT.Hosts.Stlth</RootNamespace>
     <AssemblyName>ST.IoT.Hosts.Stlth</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -44,6 +44,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,6 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ST.IoT.Data.Stlth.Api\ST.IoT.Data.Stlth.Api.csproj">
+      <Project>{06731106-f8b8-4ec9-8468-2054b7f7754d}</Project>
+      <Name>ST.IoT.Data.Stlth.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Hosts.Interfaces\ST.IoT.Hosts.Interfaces.csproj">
       <Project>{0ecbfd73-630b-4871-8cc0-c6d9488291fe}</Project>
       <Name>ST.IoT.Hosts.Interfaces</Name>
@@ -72,6 +77,10 @@
     <ProjectReference Include="..\ST.IoT.Services.Stlth.Endpoints\ST.IoT.Services.Stlth.Endpoints.csproj">
       <Project>{c7290067-0ff7-4959-8894-345d73e8e41b}</Project>
       <Name>ST.IoT.Services.Stlth.Endpoints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ST.IoT.Services.Stlth.Messages\ST.IoT.Services.Stlth.Messages.csproj">
+      <Project>{cd0e8be6-0894-4731-a7a0-cb204a7d8e38}</Project>
+      <Name>ST.IoT.Services.Stlth.Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

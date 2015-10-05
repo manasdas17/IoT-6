@@ -29,7 +29,7 @@ namespace ST.IoT.Services.Stlth.RestRouterPlugin
         public bool CanHandle(HttpRequestMessage request)
         {
             var uri = request.RequestUri.Host.ToString().ToLower();
-            return uri.StartsWith("stlth.") || uri.StartsWith("command.stlth.") || uri.StartsWith("data.stlth.");
+            return uri.StartsWith("stlth.") || uri.StartsWith("command.stlth.") || uri.StartsWith("data.stlth.") || uri.StartsWith("social.api.stlth.") || uri.StartsWith("core.api.stlth.");
         }
 
         public async Task<HttpResponseMessage> HandleAsync(HttpRequestMessage request)
