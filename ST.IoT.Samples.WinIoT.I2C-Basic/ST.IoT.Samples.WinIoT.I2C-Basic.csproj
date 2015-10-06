@@ -135,6 +135,10 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\External\m2mqtt-master\M2Mqtt\M2Mqtt.Xamarin.csproj">
+      <Project>{0238f0e3-a02b-428d-8a3f-410d8f15bb50}</Project>
+      <Name>M2Mqtt.Xamarin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ST.IoT.Samples.WinIoT.I2C.Utils\ST.IoT.Samples.WinIoT.I2C.Utils.csproj">
       <Project>{ff62b3c2-b5e6-42ce-894c-d7750a20c3d8}</Project>
       <Name>ST.IoT.Samples.WinIoT.I2C.Utils</Name>

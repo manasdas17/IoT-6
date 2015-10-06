@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="Black">
+        <Button x:Name="btnStart" Foreground="White" Click="ButtonBase_OnClick" FontSize="40">Start</Button>
+        <Button x:Name="btnStop" Foreground="White" Click="btnStop_OnClick" FontSize="40" HorizontalAlignment="Right">Stop</Button>
     </Grid>
 </Page>

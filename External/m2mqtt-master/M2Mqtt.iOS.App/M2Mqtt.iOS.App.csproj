@@ -120,6 +120,10 @@
       <Project>{0238F0E3-A02B-428D-8A3F-410D8F15BB50}</Project>
       <Name>M2Mqtt.Xamarin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MqttDotNet.Xamarin.iOS\MqttDotNet.Xamarin.iOS.csproj">
+      <Project>{CE78800A-361C-41B3-9F80-C6A57A73B4CC}</Project>
+      <Name>MqttDotNet.Xamarin.iOS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

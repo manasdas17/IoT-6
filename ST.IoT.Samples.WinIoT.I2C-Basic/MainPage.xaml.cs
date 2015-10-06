@@ -16,7 +16,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using Windows.Devices.I2c;
+using Windows.UI.Text.Core;
 using ST.IoT.Samples.WinIoT.I2C.Utils;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,6 +34,19 @@ namespace ST.IoT.Samples.WinIoT.I2C_Basic
         public MainPage()
         {
             this.InitializeComponent();
+
+            _mqtt = new MqttClient("m11.cloudmqtt.com", 12360, false, MqttSslProtocols.None);
+            _mqtt.ConnectionClosed += (sender, args) => { };
+            _mqtt.MqttMsgSubscribed += (sender, args) => { };
+            _mqtt.MqttMsgPublishReceived += (sender, args) =>
+            {
+
+            };
+            _mqtt.Connect("1", "mike", "cloudmqtt");
+            _mqtt.Subscribe(new[] { "mqttdotnet/pubtest/#" }, new[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
+
+            btnStart.IsEnabled = true;
+            btnStop.IsEnabled = false;
 
             initGPIO();
             initI2C();
@@ -389,12 +405,18 @@ namespace ST.IoT.Samples.WinIoT.I2C_Basic
                 //PeriodicTaskFactory.Start(draw, 1000);
 
             //draw();
-            drawSpaceInvader();
         }
 
+
+        private bool _run = false;
         private int _frame = 0;
         private void drawSpaceInvader()
         {
+            if (!_run)
+            {
+                clear(_device);
+                return;
+            }
             //Array.Copy(_spaceInvaderFrames.Frames[0].Values, _buffer, 8);
             for (var i = 0; i < 8; i++)
             {
@@ -407,9 +429,11 @@ namespace ST.IoT.Samples.WinIoT.I2C_Basic
         }
 
         private int count = 0;
+        private MqttClient _mqtt;
+
         private void draw()
         {
-            clear(_device, false);
+            //clear(_device, false);
 
             var x = (count < 8) ? count : 15 - count - 1;
             for (var y = 0; y < 8; y++) setPixel(_device, x, y);
@@ -489,6 +513,21 @@ namespace ST.IoT.Samples.WinIoT.I2C_Basic
             if (row > 7) return;
             _buffer[row] = value;
             if (update) writeDisplay(device);
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            btnStart.IsEnabled = false;
+            btnStop.IsEnabled = true;
+            _run = true;
+            drawSpaceInvader();
+        }
+
+        private void btnStop_OnClick(object sender, RoutedEventArgs e)
+        {
+            _run = false;
+            btnStart.IsEnabled = true;
+            btnStop.IsEnabled = false;
         }
     }
 }

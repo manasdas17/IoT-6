@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DE7D273F-AF2F-4381-8AE4-5B93314DFA3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MqttDotNet.UWP</RootNamespace>
+    <AssemblyName>MqttDotNet.UWP</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\External\MqttLib\CompleteArgs.cs">
+      <Link>CompleteArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\IPersistentMessage.cs">
+      <Link>Core\Messages\IPersistentMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MessageFactory.cs">
+      <Link>Core\Messages\MessageFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttAcknowledgeMessage.cs">
+      <Link>Core\Messages\MqttAcknowledgeMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttConnackMessage.cs">
+      <Link>Core\Messages\MqttConnackMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttConnectMessage.cs">
+      <Link>Core\Messages\MqttConnectMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttDisconnectMessage.cs">
+      <Link>Core\Messages\MqttDisconnectMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttMessage.cs">
+      <Link>Core\Messages\MqttMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttMessageReceivedEventArgs.cs">
+      <Link>Core\Messages\MqttMessageReceivedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPingReqMessage.cs">
+      <Link>Core\Messages\MqttPingReqMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPingRespMessage.cs">
+      <Link>Core\Messages\MqttPingRespMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPubackMessage.cs">
+      <Link>Core\Messages\MqttPubackMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPubcompMessage.cs">
+      <Link>Core\Messages\MqttPubcompMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPublishMessage.cs">
+      <Link>Core\Messages\MqttPublishMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPubrecMessage.cs">
+      <Link>Core\Messages\MqttPubrecMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPubrelMessage.cs">
+      <Link>Core\Messages\MqttPubrelMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttSubackMessage.cs">
+      <Link>Core\Messages\MqttSubackMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttSubscribeMessage.cs">
+      <Link>Core\Messages\MqttSubscribeMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttUnsubackMessage.cs">
+      <Link>Core\Messages\MqttUnsubackMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttUnsubscribeMessage.cs">
+      <Link>Core\Messages\MqttUnsubscribeMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\MQTTStreamExceptions.cs">
+      <Link>Core\MQTTStreamExceptions.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\NotConnectedException.cs">
+      <Link>Core\NotConnectedException.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\QoSManager.cs">
+      <Link>Core\QoSManager.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\StreamFactory.cs">
+      <Link>Core\StreamFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\StreamManager.cs">
+      <Link>Core\StreamManager.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Subscription.cs">
+      <Link>Core\Subscription.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqtt.cs">
+      <Link>IMqtt.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttConnectDisconnect.cs">
+      <Link>IMqttConnectDisconnect.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttPublisher.cs">
+      <Link>IMqttPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttShared.cs">
+      <Link>IMqttShared.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttSharedSubscriber.cs">
+      <Link>IMqttSharedSubscriber.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttSubscriber.cs">
+      <Link>IMqttSubscriber.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IPersistence.cs">
+      <Link>IPersistence.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Logger\FileLog.cs">
+      <Link>Logger\FileLog.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Logger\ILog.cs">
+      <Link>Logger\ILog.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Logger\Log.cs">
+      <Link>Logger\Log.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MatchTree\Topic.cs">
+      <Link>MatchTree\Topic.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MatchTree\TopicNode.cs">
+      <Link>MatchTree\TopicNode.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MatchTree\TopicTree.cs">
+      <Link>MatchTree\TopicTree.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Mqtt.cs">
+      <Link>Mqtt.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttBroker.cs">
+      <Link>MqttBroker.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttBrokerUnavailableException.cs">
+      <Link>MqttBrokerUnavailableException.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttClientFactory.cs">
+      <Link>MqttClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttDelegates.cs">
+      <Link>MqttDelegates.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttException.cs">
+      <Link>MqttException.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttNotConnectedException.cs">
+      <Link>MqttNotConnectedException.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttParcel.cs">
+      <Link>MqttParcel.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttPayload.cs">
+      <Link>MqttPayload.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\PublishArrivedArgs.cs">
+      <Link>PublishArrivedArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\QoS.cs">
+      <Link>QoS.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Properties\MqttDotNet.UWP.rd.xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

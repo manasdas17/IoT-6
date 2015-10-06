@@ -6,6 +6,12 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security;
 
+#if WINDOWS_UWP
+
+using Windows.Networking;
+using Windows.Networking.Sockets;
+#endif
+
 #if WITH_BLUETOOTH
 using InTheHand.Net.Sockets;
 using InTheHand.Net;
@@ -95,7 +101,7 @@ namespace MqttLib.Core
                     throw new UnsupportedProtocolException(scheme + " is not supported at this time.");
             }
         }
-
+#if !WINDOWS_UWP
         private static NetworkStream CreateTcpStreams( Hashtable parms )
         {
             string host = (string)parms[PARAM_HOST];
@@ -116,6 +122,20 @@ namespace MqttLib.Core
                 throw e;
             }
         }
+#endif
+
+#if WINDOWS_UWP
+        private static Stream CreateTcpStreams(Hashtable parms)
+        {
+            string host = (string)parms[PARAM_HOST];
+            int port = Convert.ToInt32(parms[PARAM_PORT]);
+
+            var ss = new StreamSocket();
+            var t = ss.ConnectAsync(new HostName(host), port.ToString()).AsTask();
+
+            return null;
+        }
+#endif
 
 #if WITH_BLUETOOTH
         private static NetworkStream CreateBluetoothStreams(Hashtable parms)
