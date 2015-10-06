@@ -1,0 +1,20 @@
+﻿<Properties StartupItem="ccmqttexWatchKitExtension/ccmqttexWatchKitExtension.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone6s.9.0" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ccmqttex/ViewController.cs">
+    <Files>
+      <File FileName="ccmqttex/ViewController.cs" Line="37" Column="4" />
+      <File FileName="ccmqttexWatchKitExtension/InterfaceController.cs" Line="1" Column="1" />
+      <File FileName="../../../External/WormholeSharp/WormHoleSharp/Wormhole.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Volumes/D/Projects/ST/ST.IoT/Demos/MQTT-Watch/ccmqttex/ccmqttexWatchKitExtension/InterfaceController.cs" line="43" column="1" />
+      <Breakpoint file="/Volumes/D/Projects/ST/ST.IoT/External/WormholeSharp/WormHoleSharp/Wormhole.cs" line="41" column="1" />
+      <Breakpoint file="/Volumes/D/Projects/ST/ST.IoT/Demos/MQTT-Watch/ccmqttex/ccmqttex/ViewController.cs" line="28" column="1" />
+      <Breakpoint file="/Volumes/D/Projects/ST/ST.IoT/Demos/MQTT-Watch/ccmqttex/ccmqttex/ViewController.cs" line="25" column="87" />
+      <Breakpoint file="/Volumes/D/Projects/ST/ST.IoT/Demos/MQTT-Watch/ccmqttex/ccmqttex/ViewController.cs" line="43" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

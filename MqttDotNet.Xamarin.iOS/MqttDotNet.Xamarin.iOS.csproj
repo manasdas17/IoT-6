@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{721F0913-1E9D-446C-A007-66A45FB67A01}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MqttDotNet.Xamarin.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>MqttDotNet.Xamarin.iOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\External\MqttLib\CompleteArgs.cs">
+      <Link>CompleteArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\IPersistentMessage.cs">
+      <Link>Core\Messages\IPersistentMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MessageFactory.cs">
+      <Link>Core\Messages\MessageFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttAcknowledgeMessage.cs">
+      <Link>Core\Messages\MqttAcknowledgeMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttConnackMessage.cs">
+      <Link>Core\Messages\MqttConnackMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttConnectMessage.cs">
+      <Link>Core\Messages\MqttConnectMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttDisconnectMessage.cs">
+      <Link>Core\Messages\MqttDisconnectMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttMessage.cs">
+      <Link>Core\Messages\MqttMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttMessageReceivedEventArgs.cs">
+      <Link>Core\Messages\MqttMessageReceivedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPingReqMessage.cs">
+      <Link>Core\Messages\MqttPingReqMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPingRespMessage.cs">
+      <Link>Core\Messages\MqttPingRespMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPubackMessage.cs">
+      <Link>Core\Messages\MqttPubackMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPubcompMessage.cs">
+      <Link>Core\Messages\MqttPubcompMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPublishMessage.cs">
+      <Link>Core\Messages\MqttPublishMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPubrecMessage.cs">
+      <Link>Core\Messages\MqttPubrecMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttPubrelMessage.cs">
+      <Link>Core\Messages\MqttPubrelMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttSubackMessage.cs">
+      <Link>Core\Messages\MqttSubackMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttSubscribeMessage.cs">
+      <Link>Core\Messages\MqttSubscribeMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttUnsubackMessage.cs">
+      <Link>Core\Messages\MqttUnsubackMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Messages\MqttUnsubscribeMessage.cs">
+      <Link>Core\Messages\MqttUnsubscribeMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\MQTTStreamExceptions.cs">
+      <Link>Core\MQTTStreamExceptions.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\NotConnectedException.cs">
+      <Link>Core\NotConnectedException.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\QoSManager.cs">
+      <Link>Core\QoSManager.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\StreamFactory.cs">
+      <Link>Core\StreamFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\StreamManager.cs">
+      <Link>Core\StreamManager.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Core\Subscription.cs">
+      <Link>Core\Subscription.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqtt.cs">
+      <Link>IMqtt.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttConnectDisconnect.cs">
+      <Link>IMqttConnectDisconnect.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttPublisher.cs">
+      <Link>IMqttPublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttShared.cs">
+      <Link>IMqttShared.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttSharedSubscriber.cs">
+      <Link>IMqttSharedSubscriber.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IMqttSubscriber.cs">
+      <Link>IMqttSubscriber.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\IPersistence.cs">
+      <Link>IPersistence.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Logger\FileLog.cs">
+      <Link>Logger\FileLog.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Logger\ILog.cs">
+      <Link>Logger\ILog.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Logger\Log.cs">
+      <Link>Logger\Log.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MatchTree\Topic.cs">
+      <Link>MatchTree\Topic.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MatchTree\TopicNode.cs">
+      <Link>MatchTree\TopicNode.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MatchTree\TopicTree.cs">
+      <Link>MatchTree\TopicTree.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\Mqtt.cs">
+      <Link>Mqtt.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttBroker.cs">
+      <Link>MqttBroker.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttBrokerUnavailableException.cs">
+      <Link>MqttBrokerUnavailableException.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttClientFactory.cs">
+      <Link>MqttClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttDelegates.cs">
+      <Link>MqttDelegates.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttException.cs">
+      <Link>MqttException.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttNotConnectedException.cs">
+      <Link>MqttNotConnectedException.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttParcel.cs">
+      <Link>MqttParcel.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\MqttPayload.cs">
+      <Link>MqttPayload.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\PublishArrivedArgs.cs">
+      <Link>PublishArrivedArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\External\MqttLib\QoS.cs">
+      <Link>QoS.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+</Project>
