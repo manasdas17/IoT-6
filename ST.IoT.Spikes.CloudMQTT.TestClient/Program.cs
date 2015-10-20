@@ -28,16 +28,20 @@ namespace ST.IoT.Spikes.CloudMQTT.TestClient
             _client.Connected += _client_Connected;
             _client.ConnectionLost += _client_ConnectionLost;
             _client.PublishArrived += ClientOnPublishArrived;
-            
+             
             _client.Connect(true);
             */
 
             _mqtt = new MqttClient("m11.cloudmqtt.com", 12360, false, MqttSslProtocols.None);
             _mqtt.ConnectionClosed += (sender, args) => { };
-            _mqtt.MqttMsgSubscribed += (sender, args) => { };
-            _mqtt.MqttMsgPublishReceived += (sender, args) =>
+            _mqtt.MqttMsgSubscribed += (sender, args) =>
             {
+                Console.WriteLine("Subscribed: " + args.MessageId);
+            };
+            _mqtt.MqttMsgPublishReceived += (sender, args) =>
 
+            {
+                Console.WriteLine("got message: " + System.Text.Encoding.Default.GetString(args.Message));
             };
             _mqtt.Connect("1", "mike", "cloudmqtt");
             _mqtt.Subscribe(new[] {"mqttdotnet/pubtest/#"}, new[] {MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE});
